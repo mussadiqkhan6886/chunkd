@@ -2,8 +2,8 @@
 
 @theme {
     --color-primary:  #0A0A0A;
-    --color-secondary:  #FFF7EE;
-    --color-soft:  #FF6F91;
+    --color-secondary:  #FFFFF0;
+    --color-soft:  rgb(255, 185, 205);
 }
 
 @layer  utilities{

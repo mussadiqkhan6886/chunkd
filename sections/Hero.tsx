@@ -4,8 +4,8 @@ import SplitText from '@/components/mainComp/ui/SplitText'
 
 const Hero = () => {
   return (
-    <section className='width relative pt-30 h-[80vh] bg-soft/40' > 
-      <div className="absolute md:z-40 left-1/2 top-1/2 -translate-x-1/2 translate-y-20 flex items-center flex-col gap-4">
+    <section className='width relative pt-30 h-[80vh] bg-soft/80' > 
+      <div className="absolute  left-1/2 top-1/2 -translate-x-1/2 translate-y-20 flex items-center flex-col gap-4">
         <SplitText
           text="Delicious Cookies!"
           className="text-5xl font-bold text-center"
@@ -20,7 +20,7 @@ const Hero = () => {
           textAlign="center"
         />
         <p>Get Delicius cookies now with mouth watery ability</p>
-        <Link className='orderButtonStyle z-40' href={"/"}>Order Now</Link>
+        <Link className='orderButtonStyle hidden lg:block z-40' href={"/"}>Order Now</Link>
       </div>
     </section>
   )
