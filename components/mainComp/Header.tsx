@@ -1,5 +1,3 @@
-'use client';
-
 import HeaderAnimation from './HeaderAnimation';
 
 const Header = () => {

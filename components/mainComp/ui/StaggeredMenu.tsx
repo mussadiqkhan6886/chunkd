@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import Image from 'next/image';
@@ -335,6 +337,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     openRef.current = target;
     setOpen(target);
 
+    isFixed = true
+
     if (target) {
       onMenuOpen?.();
       playOpen();
@@ -462,14 +466,14 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
             />
           </div>
           <button>
-            <Link className='bg-black text-secondary px-4 text-sm uppercase py-3 rounded-lg' href={"/"}>Order Now</Link>
+            <Link className='orderButtonStyle' href={"/"}>Order Now</Link>
           </button>
         </header>
 
         <aside
           id="staggered-menu-panel"
           ref={panelRef}
-          className="staggered-menu-panel absolute top-0 right-0 h-full flex flex-col p-[6em_2em_2em_2em] overflow-y-auto z-10 backdrop-blur-[12px]"
+          className={`staggered-menu-panel absolute top-0 right-0  flex flex-col p-[6em_2em_2em_2em] overflow-y-auto z-10 backdrop-blur-[12px] h-screen w-screen`}
           style={{ WebkitBackdropFilter: 'blur(12px)' }}
           aria-hidden={!open}
         >

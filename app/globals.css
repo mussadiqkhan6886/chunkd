@@ -8,6 +8,9 @@
 
 @layer  utilities{
     .width{
-        @apply max-w-7xl mx-auto
+        @apply max-w-[1480px] mx-auto
+    }
+    .orderButtonStyle{
+        @apply bg-black text-secondary px-4 text-sm uppercase py-3 rounded-full cursor-pointer
     }
 }

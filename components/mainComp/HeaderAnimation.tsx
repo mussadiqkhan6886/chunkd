@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react'
 import { menuItems } from '@/lib/constants';
 import StaggeredMenu from './ui/StaggeredMenu';
