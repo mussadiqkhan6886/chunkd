@@ -6,3 +6,8 @@
     --color-soft:  #FF6F91;
 }
 
+@layer  utilities{
+    .width{
+        @apply max-w-7xl mx-auto
+    }
+}
