@@ -7,10 +7,10 @@ const Hero = () => {
     <section className='width relative pt-30 h-[80vh] bg-soft/80' > 
       <div className="absolute  left-1/2 top-1/2 -translate-x-1/2 translate-y-20 flex items-center flex-col gap-4">
         <SplitText
-          text="Delicious Cookies!"
+          text="Thick, gooey, small-batch cookies for serious cravings!"
           className="text-5xl font-bold text-center"
-          delay={100}
-          duration={0.6}
+          delay={50}
+          duration={0.1}
           ease="power3.out"
           splitType="chars"
           from={{ opacity: 0, y: 40 }}
@@ -19,7 +19,7 @@ const Hero = () => {
           rootMargin="-100px"
           textAlign="center"
         />
-        <p>Get Delicius cookies now with mouth watery ability</p>
+        <p>Baked in limited batches. Crafted with premium ingredients. Delivered across Lahore</p>
         <Link className='orderButtonStyle hidden lg:block z-40' href={"/"}>Order Now</Link>
       </div>
     </section>

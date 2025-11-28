@@ -18,7 +18,10 @@ const Drops = () => {
             <DropButton startTime = {cookie.startTime} endTime={cookie.endTime} />
             </div>
             <div className='text-center px-3'>
-              <h3 className='text-xl font-semibold'>{cookie.name}</h3>
+              <div className='flex justify-between pb-2 items-center'>
+                <h3 className='text-xl font-semibold'>{cookie.name}</h3>
+                <h3>Rs.{cookie.price}</h3>
+              </div>
               <p className='text-sm text-gray-800'>{cookie.description}</p>
             </div>
           </div>

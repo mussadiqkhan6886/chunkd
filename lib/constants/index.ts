@@ -12,6 +12,7 @@ export const menuItems = [
 export const limitedCookieDrops = [
   {
     id: 1,
+    price: 500,
     name: "Choco Lava Burst",
     image: "/images/choco-lava-burst.png",
     description: "A premium double-baked cookie packed with Belgian dark chocolate. Only 200 boxes this drop.",
@@ -20,6 +21,7 @@ export const limitedCookieDrops = [
   },
   {
     id: 2,
+    price: 500,
     name: "Salted Caramel Swirl",
     image: "/images/salted-caramel-swirl.png",
     description: "Sweet, salty, crunchy — the perfect balance. Baked fresh in small-batch limited runs.",
@@ -28,6 +30,7 @@ export const limitedCookieDrops = [
   },
   {
     id: 3,
+    price: 500,
     name: "Peanut Butter Crunch",
     image: "/images/peanut-butter-crunch.png",
     description: "A crunchy peanut butter cookie with chocolate chips. Limited to only 150 boxes.",
@@ -147,3 +150,65 @@ export const steps = [
       description: "Freshly baked and delivered across Lahore."
     }
   ];
+
+  
+export const items = [
+  { id: "1", img: "https://picsum.photos/600/400?random=1", url: "https://example.com/item-1", height: 420 },
+  { id: "2", img: "https://picsum.photos/600/400?random=2", url: "https://example.com/item-2", height: 310 },
+  { id: "3", img: "https://picsum.photos/600/400?random=3", url: "https://example.com/item-3", height: 550 },
+  { id: "4", img: "https://picsum.photos/600/400?random=4", url: "https://example.com/item-4", height: 290 },
+  { id: "5", img: "https://picsum.photos/600/400?random=5", url: "https://example.com/item-5", height: 480 },
+  { id: "6", img: "https://picsum.photos/600/400?random=6", url: "https://example.com/item-6", height: 360 },
+  { id: "7", img: "https://picsum.photos/600/400?random=7", url: "https://example.com/item-7", height: 520 },
+  { id: "8", img: "https://picsum.photos/600/400?random=8", url: "https://example.com/item-8", height: 400 },
+  { id: "9", img: "https://picsum.photos/600/400?random=9", url: "https://example.com/item-9", height: 520 },
+  { id: "10", img: "https://picsum.photos/600/400?random=10", url: "https://example.com/item-10", height: 470 },
+  { id: "11", img: "https://picsum.photos/600/400?random=11", url: "https://example.com/item-11", height: 270 },
+  { id: "12", img: "https://picsum.photos/600/400?random=12", url: "https://example.com/item-12", height: 270 }
+];
+
+export const reviews = [
+  {
+    id: "1",
+    name: "Ali Khan",
+    role: "Food Enthusiast",
+    comment: "Absolutely loved the cookies! Fresh and delicious.",
+    avatar: "https://i.pravatar.cc/150?img=1"
+  },
+  {
+    id: "2",
+    name: "Sara Ahmed",
+    role: "Baker",
+    comment: "The flavors are unique and baked perfectly. Highly recommend!",
+    avatar: "https://i.pravatar.cc/150?img=2"
+  },
+  {
+    id: "3",
+    name: "Hamza Iqbal",
+    role: "Customer",
+    comment: "Fast delivery and amazing taste. Will order again!",
+    avatar: "https://i.pravatar.cc/150?img=3"
+  },
+  {
+    id: "4",
+    name: "Zara Khan",
+    role: "Cookie Lover",
+    comment: "My kids loved them! Soft, chewy, and sweet.",
+    avatar: "https://i.pravatar.cc/150?img=4"
+  },
+  {
+    id: "5",
+    name: "Usman Ali",
+    role: "Sweet Tooth",
+    comment: "Quality is top notch. Definitely the best cookies in Lahore!",
+    avatar: "https://i.pravatar.cc/150?img=5"
+  },
+  {
+    id: "6",
+    name: "Ayesha Malik",
+    role: "Food Blogger",
+    comment: "Beautifully baked and the packaging is so cute!",
+    avatar: "https://i.pravatar.cc/150?img=6"
+  }
+];
+
