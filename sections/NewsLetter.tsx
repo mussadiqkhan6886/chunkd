@@ -27,7 +27,7 @@ const Newsletter = () => {
             Join the Chunk'd Drop List
           </h2>
           <p className="mb-6 text-lg bg-gradient-to-r from-white to-pink-300 bg-clip-text text-transparent">
-            Be the first to know when new flavours go live. No spam, just cravings.
+            Be the first to know when new flavours go live. No spam, just cravings
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row justify-center gap-4">
