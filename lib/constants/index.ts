@@ -105,3 +105,22 @@ export const bestSellerCookies = [
     createdAt: '2025-09-22T09:00:00Z'
   }
 ];
+
+export const buildYourBoxOptions = [
+  {
+    id: "box-4",
+    name: "Build Your Box — 4 Cookie Pack",
+    size: 4,
+    description:
+      "Create your perfect mini box! Pick any 4 freshly baked cookies from our signature menu. Mix, match, and craft your own flavor experience — ideal for gifting, cravings, or trying new flavors.",
+    price: "Depending On Cookies Flavour", // in PKR or your currency of choice
+  },
+  {
+    id: "box-6",
+    name: "Build Your Box — 6 Cookie Pack",
+    size: 6,
+    description:
+      "The ultimate cookie treat. Choose any 6 premium cookies to build your dream box. More cookies, more flavor, more happiness — perfect for sharing or indulging all by yourself.",
+    price: "Depending On Cookies Flavour", // in PKR or your currency
+  }
+];
