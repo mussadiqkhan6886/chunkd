@@ -5,7 +5,7 @@ const BuildYourBox = () => {
   return (
     <section className='width'>
       <h2 className='sectionTitle'>Build Your Own Box</h2>
-      <div className="px-10 mt-10">
+      <div className="lg:px-10 mt-10">
         {buildYourBoxOptions.map((item, index) => (
           <div
             key={item.id}

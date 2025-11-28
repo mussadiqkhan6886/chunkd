@@ -8,7 +8,7 @@ const Trending = () => {
       <h2 className='sectionTitle'>Best seller</h2>
       <div className='grid grid-cols-1 md:grid-cols-2 max-w-7xl mx-auto'>
         {bestSellerCookies.map(cookie => (
-          <div key={cookie.id} className='flex flex-col p-10 items-center gap-6 border border-soft/30'>
+          <div key={cookie.id} className='flex flex-col p-6 lg:p-10 items-center gap-6 border border-soft/30'>
             <Link href={"/"} className='w-full block h-[450px] bg-soft/50'>
               {/* <Image  /> */}
             </Link>

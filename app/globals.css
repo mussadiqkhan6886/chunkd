@@ -17,7 +17,7 @@
         @apply bg-transparent border border-black text-black px-4 text-sm uppercase py-3 rounded-full cursor-pointer text-center
     }
     .sectionTitle{
-        @apply my-6 font-[900] text-left ml-9 text-[70px] uppercase
+        @apply my-6 font-[900] text-left ml-4 md:ml-9 text-[35px] sm:text-[40px] md:text-[60px] lg:text-[70px] uppercase
     }
 }
 
