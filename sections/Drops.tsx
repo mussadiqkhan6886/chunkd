@@ -6,7 +6,7 @@ import React from 'react'
 
 const Drops = () => {
   return (
-    <section className='width py-18'>
+    <section className='width'>
       <h2 className='sectionTitle'>Limited Flavours</h2>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto'>
         {limitedCookieDrops.map(cookie => (
