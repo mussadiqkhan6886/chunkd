@@ -1,3 +1,5 @@
+import { LuPackage, LuCookie, LuTruck } from "react-icons/lu";
+
 export const menuItems = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
     { label: 'Menu', ariaLabel: 'View our Menu', link: '/menu' },
@@ -124,3 +126,24 @@ export const buildYourBoxOptions = [
     price: "Depending On Cookies Flavour", // in PKR or your currency
   }
 ];
+
+export const steps = [
+    {
+      id: 1,
+      icon: LuPackage,
+      title: "Pick Your Box",
+      description: "Choose between our Box of 4 or Box of 6 cookies."
+    },
+    {
+      id: 2,
+      icon: LuCookie,
+      title: "Choose Your Flavours",
+      description: "Mix & match your favorites — we bake fresh instantly."
+    },
+    {
+      id: 3,
+      icon: LuTruck,
+      title: "Fresh Delivery",
+      description: "Freshly baked and delivered across Lahore."
+    }
+  ];
