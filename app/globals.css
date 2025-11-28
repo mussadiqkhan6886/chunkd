@@ -11,6 +11,36 @@
         @apply max-w-[1480px] mx-auto
     }
     .orderButtonStyle{
-        @apply bg-black text-secondary px-4 text-sm uppercase py-3 rounded-full cursor-pointer
+        @apply bg-black text-secondary px-4 text-sm uppercase py-3 rounded-full cursor-pointer text-center
     }
+    .discoverButtonStyle{
+        @apply bg-transparent border border-black text-black px-4 text-sm uppercase py-3 rounded-full cursor-pointer text-center
+    }
+    .sectionTitle{
+        @apply my-6 font-[900] text-left ml-9 text-[70px] uppercase
+    }
+}
+
+/* GLOBAL SCROLLBAR STYLING */
+html {
+  scrollbar-width: thin;                /* Firefox */
+  scrollbar-color: #FF8AA3 #FFE6EE;      /* Firefox: thumb + track */
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;    /* scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: #FFE6EE;   /* light pink background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF8AA3;   /* pink thumb */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF6F91;   /* darker on hover */
 }
