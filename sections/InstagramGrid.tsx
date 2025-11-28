@@ -8,7 +8,7 @@ const InstagramGrid = () => {
 
 
   return (
-    <section className='width px-10'>
+    <section className='width bg-black text-white px-10'>
       <h2 className='sectionTitle'>Media</h2>
       <Masonry
         items={items}
