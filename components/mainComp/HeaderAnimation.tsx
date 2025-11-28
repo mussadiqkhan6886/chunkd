@@ -6,7 +6,7 @@ import StaggeredMenu from './ui/StaggeredMenu';
 const HeaderAnimation = () => {
   return (
 
-<div style={{ height: '100vh'}}>
+<div>
   <StaggeredMenu
   isFixed={true}
     position="left"
