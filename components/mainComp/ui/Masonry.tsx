@@ -4,15 +4,28 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 're
 import { gsap } from 'gsap';
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
-  const get = () => values[queries.findIndex(q => matchMedia(q).matches)] ?? defaultValue;
+  // helper function only runs in browser
+  const getValue = () => {
+    if (typeof window === 'undefined') return defaultValue;
+    const index = queries.findIndex(q => window.matchMedia(q).matches);
+    return values[index] ?? defaultValue;
+  };
 
-  const [value, setValue] = useState<number>(get);
+  const [value, setValue] = useState<number>(getValue);
 
   useEffect(() => {
-    const handler = () => setValue(get);
-    queries.forEach(q => matchMedia(q).addEventListener('change', handler));
-    return () => queries.forEach(q => matchMedia(q).removeEventListener('change', handler));
-  }, [queries]);
+    if (typeof window === 'undefined') return;
+
+    const handlers: Array<() => void> = [];
+    queries.forEach((q, i) => {
+      const mql = window.matchMedia(q);
+      const handler = () => setValue(getValue);
+      mql.addEventListener('change', handler);
+      handlers.push(() => mql.removeEventListener('change', handler));
+    });
+
+    return () => handlers.forEach(fn => fn());
+  }, [queries, values]);
 
   return value;
 };
@@ -216,7 +229,7 @@ const Masonry: React.FC<MasonryProps> = ({
   };
 
   return (
-    <div ref={containerRef} className="relative w-full h-full">
+    <div ref={containerRef} className="relative w-full h-screen">
       {grid.map(item => (
         <div
           key={item.id}
