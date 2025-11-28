@@ -96,15 +96,14 @@ const MenuPage = () => {
       </div>
     </div>
   ) : (
-    <Link
-        href={"/"}
+    <div
       key={cookie.id}
       className="flex flex-col  justify-between border border-soft relative"
     >
       {/* Image Placeholder */}
-      <div className="bg-soft/50 h-[400px] flex items-center justify-center text-gray-400 font-bold">
+      <Link href={"/"} className="bg-soft/50 h-[400px] flex items-center justify-center text-gray-400 font-bold">
         Image
-      </div>
+      </Link>
 
       {/* Hot Seller Badge */}
       {cookie.hotSeller && (
@@ -128,7 +127,7 @@ const MenuPage = () => {
         </div>
 
       </div>
-    </Link>
+    </div>
   );
 })}
 
