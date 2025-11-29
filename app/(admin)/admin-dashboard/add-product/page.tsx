@@ -181,17 +181,22 @@ const AddProduct = () => {
           />
         </div>
 
-        <div>
-          <label className="block font-semibold mb-1">Allergies</label>
-          <input
-            name="allergens"
-            type="text"
-            value={data.allergens}
-            onChange={(e) => setData(prev => ({...prev, allergens: e.target.value.split(",").map(item => item.trim())}))}
-            className="w-full border rounded-lg p-2"
-            required
-          />
-        </div>
+       <div>
+        <label className="block font-semibold mb-1">Allergies</label>
+        <input
+          name="allergens"
+          type="text"
+          value={data.allergens.join(",")} // display array as comma-separated string
+          onChange={(e) =>
+            setData(prev => ({
+              ...prev,
+              allergens: e.target.value.split(",").map(item => item.trim()), // update array
+            }))
+          }
+          className="w-full border rounded-lg p-2"
+          required
+        />
+      </div>
         <div>
           <label className="block font-semibold mb-1">Heating</label>
           <input

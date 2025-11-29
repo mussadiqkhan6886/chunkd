@@ -21,7 +21,7 @@ const CookieSchema = new mongoose.Schema(
     storage: { type: String, default: "" },
     heating: { type: String, default: "" },
     totalLimit: {type: Number, default: null},
-    soldCount: {type: Number, default: null},
+    soldCount: {type: Number, default: 0},
     active: { type: Boolean, default: true }
   },
   { timestamps: true }
