@@ -27,7 +27,7 @@ const HeaderWithMenu = () => {
     >
       {/* Left: Menu Icon */}
       <button
-        className="font-semibold text-3xl text-black"
+        className="font-semibold text-2xl w-[66px] md:text-3xl text-black"
         onClick={() => setIsOpen(prev => !prev)}
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
       >
@@ -37,7 +37,8 @@ const HeaderWithMenu = () => {
 
       {/* Middle: Logo */}
       <div className="flex-shrink-0">
-        <Image src="/logo.png" alt="Logo" width={80} height={40} />
+        <Image src="/logo.png" alt="Logo" className='hidden md:block' width={80} height={40} />
+        <Image src="/logo.png" alt="Logo" className='block md:hidden' width={70} height={70} />
       </div>
 
       <div></div>
@@ -52,12 +53,12 @@ const HeaderWithMenu = () => {
         >
           <Link
             href="/menu"
-            className="orderButtonStyle "
+            className="orderButtonStyle text-[13px] md:text-sm"
           >
             Order 
           </Link>
         </motion.div>
-      ): <div className='w-[75px]'></div>}
+      ): <div className='w-[70px] md:w-[75px]'></div>}
     </AnimatePresence>
 
       {/* Aside Menu */}
