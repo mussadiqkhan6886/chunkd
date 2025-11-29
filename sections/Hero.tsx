@@ -20,7 +20,7 @@ const Hero = () => {
           textAlign="center"
         />
         <p className='text-center px-10 md:px-0'>Baked in limited batches. Crafted with premium ingredients. Delivered across Lahore</p>
-        <Link className='orderButtonStyle' href={"/"}>Order Now</Link>
+        <Link className='orderButtonStyle' href={"/menu"}>Order Now</Link>
       </div>
     </section>
   )

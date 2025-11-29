@@ -49,7 +49,7 @@ const HeaderWithMenu = () => {
           transition={{ duration: 1, ease: 'easeOut', delay:0.3 }}
         >
           <Link
-            href="/order"
+            href="/menu"
             className="orderButtonStyle "
           >
             Order Now
