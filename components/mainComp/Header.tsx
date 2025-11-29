@@ -21,7 +21,7 @@ const HeaderWithMenu = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 transition-colors duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 flex justify-around items-center  transition-colors duration-300 ${
         scrolled ? 'bg-soft' : 'bg-transparent'
       }`}
     >
@@ -33,12 +33,14 @@ const HeaderWithMenu = () => {
       >
         <FiMenu />
       </button>
+      <div></div>
 
       {/* Middle: Logo */}
       <div className="flex-shrink-0">
-        <Image src="/logo.jpg" alt="Logo" width={80} height={40} />
+        <Image src="/logo.png" alt="Logo" width={80} height={40} />
       </div>
 
+      <div></div>
       {/* Right: CTA */}
       <AnimatePresence>
       {scrolled ? (
@@ -52,10 +54,10 @@ const HeaderWithMenu = () => {
             href="/menu"
             className="orderButtonStyle "
           >
-            Order Now
+            Order 
           </Link>
         </motion.div>
-      ): <div className='w-[110px]'></div>}
+      ): <div className='w-[75px]'></div>}
     </AnimatePresence>
 
       {/* Aside Menu */}
@@ -73,7 +75,7 @@ const HeaderWithMenu = () => {
                 <Link
                   key={item.link}
                   href={item.link}
-                  className="text-2xl uppercase font-medium hover:text-soft transition-colors"
+                  className="text-2xl capitalize font-medium hover:text-soft transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.label}
