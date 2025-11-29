@@ -1,26 +1,10 @@
 'use client';
 
+import { Cookie, cookieData } from '@/lib/constants';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaSearch, FaCheck, FaClock } from 'react-icons/fa';
 
-type Cookie = {
-  id: number;
-  name: string;
-  flavour: string;
-    price: string
-  status: 'Available' | 'Pre-Order' | 'Sold Out';
-  hotSeller: boolean,
-};
-
-const cookieData: Cookie[] = [
-  { id: 1, price: "200", hotSeller: true, name: 'Chocolate Chip', flavour: 'Classic', status: 'Available' },
-  { id: 2, price: "200", hotSeller: false, name: 'Red Velvet', flavour: 'Berry', status: 'Pre-Order' },
-  { id: 3, price: "200", hotSeller: false, name: 'Oatmeal Raisin', flavour: 'Healthy', status: 'Sold Out' },
-  { id: 4, price: "200", hotSeller: false, name: 'Peanut Butter', flavour: 'Nutty', status: 'Available' },
-  { id: 5, price: "200", hotSeller: true, name: 'Double Chocolate', flavour: 'Choco', status: 'Pre-Order' },
-  { id: 6, price: "200", hotSeller: false, name: 'Sugar Cookie', flavour: 'Sweet', status: 'Available' },
-];
 
 const MenuPage = () => {
   const [search, setSearch] = useState('');
@@ -101,7 +85,7 @@ const MenuPage = () => {
       className="flex flex-col  justify-between border border-soft relative"
     >
       {/* Image Placeholder */}
-      <Link href={"/"} className="bg-soft/50 h-[400px] flex items-center justify-center text-gray-400 font-bold">
+      <Link href={`/menu/${cookie.slug}`} className="bg-soft/50 h-[400px] flex items-center justify-center text-gray-400 font-bold">
         Image
       </Link>
 

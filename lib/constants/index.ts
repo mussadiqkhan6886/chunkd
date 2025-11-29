@@ -218,3 +218,21 @@ export const reviews = [
   }
 ];
 
+export type Cookie = {
+  id: number;
+  slug: string;
+  name: string;
+  flavour: string;
+  price: string;
+  status: 'Available' | 'Pre-Order' | 'Sold Out';
+  hotSeller: boolean;
+};
+
+export const cookieData: Cookie[] = [
+  { id: 1, slug: "chocolate-chip", price: "200", hotSeller: true,  name: 'Chocolate Chip', flavour: 'Classic', status: 'Available' },
+  { id: 2, slug: "red-velvet",     price: "200", hotSeller: false, name: 'Red Velvet', flavour: 'Classic', status: 'Pre-Order' },
+  { id: 3, slug: "oatmeal-raisin", price: "200", hotSeller: false, name: 'Oatmeal Raisin', flavour: 'Classic', status: 'Sold Out' },
+  { id: 4, slug: "peanut-butter",  price: "200", hotSeller: false, name: 'Peanut Butter', flavour: 'Classic', status: 'Available' },
+  { id: 5, slug: "double-choc",    price: "200", hotSeller: true,  name: 'Double Chocolate', flavour: 'Limited Drop', status: 'Pre-Order' },
+  { id: 6, slug: "sugar-cookie",   price: "200", hotSeller: false, name: 'Sugar Cookie', flavour: 'Limited Drop', status: 'Available' },
+];
