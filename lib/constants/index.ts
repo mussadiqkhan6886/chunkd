@@ -9,35 +9,41 @@ export const menuItems = [
     { label: 'Cart', ariaLabel: 'View Your Cart', link: '/cart' },
 ];
 
-export const limitedCookieDrops = [
+export const dropsData = [
   {
     id: 1,
-    price: 500,
-    name: "Choco Lava Burst",
-    image: "/images/choco-lava-burst.png",
-    description: "A premium double-baked cookie packed with Belgian dark chocolate. Only 200 boxes this drop.",
-    startTime: "2025-12-01T12:00:00Z", // ISO format
-    endTime: "2025-12-03T12:00:00Z",
+    title: "Ruby Velvet Chunk",
+    description: "A limited deep-red cookie with cream cheese swirls.",
+    releaseDate: "2025-12-05T00:00:00", // drop starts
+    durationDays: 7, // becomes 'Sold Out' after 7 days
+    soldOut: false,
   },
   {
     id: 2,
-    price: 500,
-    name: "Salted Caramel Swirl",
-    image: "/images/salted-caramel-swirl.png",
-    description: "Sweet, salty, crunchy — the perfect balance. Baked fresh in small-batch limited runs.",
-    startTime: "2025-11-28T12:00:00Z",
-    endTime: "2025-11-29T12:00:00Z",
+    title: "Choco Lava Blast",
+    description: "Molten chocolate core—baked only for real chocolate addicts.",
+    releaseDate: "2025-10-10T00:00:00",
+    durationDays: 7,
+    soldOut: true,
   },
   {
     id: 3,
-    price: 500,
-    name: "Peanut Butter Crunch",
-    image: "/images/peanut-butter-crunch.png",
-    description: "A crunchy peanut butter cookie with chocolate chips. Limited to only 150 boxes.",
-    startTime: "2025-11-20T12:00:00Z",
-    endTime: "2025-11-22T12:00:00Z",
+    title: "Double Velvet Chunk",
+    description: "A limited deep-red cookie with cream cheese swirls.",
+    releaseDate: "2025-11-25T00:00:00", // drop starts
+    durationDays: 7, // becomes 'Sold Out' after 7 days
+    soldOut: false,
+  },
+  {
+    id: 4,
+    title: "Choco Lava Blast",
+    description: "Molten chocolate core—baked only for real chocolate addicts.",
+    releaseDate: "2025-12-10T00:00:00",
+    durationDays: 7,
+    soldOut: false,
   },
 ];
+
 
 // data/bestSellers.js
 export const bestSellerCookies = [
