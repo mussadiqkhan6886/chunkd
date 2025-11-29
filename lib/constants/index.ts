@@ -68,6 +68,7 @@ export const items = [
 export const reviews = [
   {
     id: "1",
+    stars: "5",
     name: "Ali Khan",
     role: "Food Enthusiast",
     comment: "Absolutely loved the cookies! Fresh and delicious.",
@@ -75,6 +76,7 @@ export const reviews = [
   },
   {
     id: "2",
+    stars: "5",
     name: "Sara Ahmed",
     role: "Baker",
     comment: "The flavors are unique and baked perfectly. Highly recommend!",
@@ -82,6 +84,7 @@ export const reviews = [
   },
   {
     id: "3",
+    stars: "5",
     name: "Hamza Iqbal",
     role: "Customer",
     comment: "Fast delivery and amazing taste. Will order again!",
@@ -89,6 +92,7 @@ export const reviews = [
   },
   {
     id: "4",
+    stars: "4",
     name: "Zara Khan",
     role: "Cookie Lover",
     comment: "My kids loved them! Soft, chewy, and sweet.",
@@ -96,6 +100,7 @@ export const reviews = [
   },
   {
     id: "5",
+    stars: "3",
     name: "Usman Ali",
     role: "Sweet Tooth",
     comment: "Quality is top notch. Definitely the best cookies in Lahore!",
@@ -103,6 +108,7 @@ export const reviews = [
   },
   {
     id: "6",
+    stars: "3",
     name: "Ayesha Malik",
     role: "Food Blogger",
     comment: "Beautifully baked and the packaging is so cute!",
