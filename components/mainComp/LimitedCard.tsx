@@ -1,51 +1,30 @@
 'use client';
 
-import { dropsData } from '@/lib/constants';
+import { cookies } from '@/lib/constants';
+import { useDrop } from '@/lib/context/contextAPI';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
+import AddToCart from './AddToCart';
 
-const LimitedCard = () => {
-    const [now, setNow] = useState(new Date());
+type Props = {
+  data: any,
+  button: boolean
+}
 
-    const [mounted, setMounted] = useState(false);
+const LimitedCard = ({data, button}: Props) => {
 
-    useEffect(() => {
-    setMounted(true);
-    }, []);
-
+  const [mounted ,setMounted] = useState(false)
 
   useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(interval);
-  }, []);
+    setMounted(true)
+  }, [])
 
-  //@ts-ignore
-  const getStatus = (drop: any) => {
-    const release = new Date(drop.releaseDate);
-    const end = new Date(release);
-    end.setDate(end.getDate() + drop.durationDays);
+  const {getStatus, getCountdown} = useDrop()
 
-    if (now < release) return "Coming Soon";
-    if (now >= release && now < end && !drop.soldOut) return "Live";
-    return "Sold Out";
-  };
-
-  //@ts-ignore
-  const getCountdown = (drop: any) => {
-    const release = new Date(drop.releaseDate);
-    const diff = release.getTime() - now.getTime();
-
-    if (diff <= 0) return "00 : 00 : 00 : 00";
-
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
-
-    return `${d}d : ${h}h : ${m}m : ${s}s`;
-  };
   return (
     <>
-      {dropsData.map((drop) => {
+    <div className="grid max-w-5xl mx-auto grid-cols-1 md:grid-cols-2 gap-10">
+      {data.map((drop: CookieType) => {
           const status = getStatus(drop);
           const countdown = getCountdown(drop);
           const release = new Date(drop.releaseDate);
@@ -53,16 +32,21 @@ const LimitedCard = () => {
           return (
             <div
               key={drop.id}
-              className="border border-soft/40 rounded-2xl overflow-hidden bg-white shadow-sm"
+              className="border border-soft/40 rounded-2xl overflow-hidden bg-white"
             >
               {/* Image Placeholder */}
-              <div className="h-70 bg-soft/30 flex items-center justify-center text-gray-500 font-semibold">
+              { drop.soldOut ? <div className="h-70 bg-soft/30 flex items-center justify-center text-gray-500 font-semibold">
                 Limited Drop Image
-              </div>
+              </div> : <Link href={`/drops/${drop.slug}`} className="h-70 bg-soft/30 flex items-center justify-center text-gray-500 font-semibold">
+                Limited Drop Image
+              </Link>}
 
               {/* Info */}
               <div className="p-6">
-                <h2 className="text-3xl font-bold mb-1">{drop.title}</h2>
+                <div className='flex justify-between mb-1 items-center'>
+                <h2 className="text-3xl font-bold ">{drop.title}</h2>
+                <h2 className='font-semibold text-lg'>Rs.{drop.price}</h2>
+                </div>
                 <p className="text-gray-600 mb-4">{drop.description}</p>
 
                 {/* Status Badge */}
@@ -73,7 +57,7 @@ const LimitedCard = () => {
                       ? "bg-yellow-200 text-yellow-800"
                       : status === "Live"
                       ? "bg-green-200 text-green-800"
-                      : "bg-red-200 text-red-800"
+                      : "bg-red-200  text-red-800"
                   }`}
                 >
                   {status}
@@ -87,23 +71,7 @@ const LimitedCard = () => {
                 )}
 
                 {/* CTA Button */}
-                {status === "Coming Soon" && (
-                  <button className="mt-5 w-full py-3 rounded-xl bg-black text-white font-semibold ">
-                    Pre-Order
-                  </button>
-                )}
-
-                {status === "Live" && !drop.soldOut && (
-                  <button className="mt-5 w-full py-3 rounded-xl bg-soft text-white font-semibold hover:bg-soft/90 transition">
-                    Buy Now
-                  </button>
-                )}
-
-                {status === "Sold Out" && (
-                  <button className="mt-5 w-full py-3 rounded-xl bg-gray-300 text-gray-600 font-semibold cursor-not-allowed">
-                    Sold Out
-                  </button>
-                )}
+                <AddToCart status={status} />
 
                 {/* Release Date */}
                 <p className="text-sm text-gray-500 mt-4">
@@ -113,6 +81,8 @@ const LimitedCard = () => {
             </div>
           );
         })}
+        </div>
+        {(cookies.length > 4 && button) && <Link href={"/drops"} className='discoverButtonStyle mt-7'>View All</Link>}
     </>
   )
 }

@@ -17,8 +17,8 @@ const DeliveryTiming = () => {
     currentTime.getHours() < deliveryEndHour;
 
   return (
-    <section className="width bg-black text-soft">
-      <h2 className="sectionTitle">Delivery & Cut-off Time</h2>
+    <section className="width bg-black text-secondary">
+      <h2 className="sectionTitle text-soft">Delivery & Cut-off Time</h2>
       <div className="flex flex-col max-w-2xl px-10 md:px-0 mx-auto items-center gap-3">
         <div className="flex w-full justify-between items-center p-3 border rounded-md">
           <span className='uppercase font-medium'>Delivery</span>

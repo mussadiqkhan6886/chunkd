@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { mainFont } from "@/lib/font/font";
+import { DropProvider } from "@/lib/context/contextAPI";
 
 
 export const metadata: Metadata = {
@@ -18,7 +19,9 @@ export default function RootLayout({
       <body
         className={`${mainFont.className} antialiased`}
       >
+        <DropProvider>
         {children}
+        </DropProvider>
 
       </body>
     </html>

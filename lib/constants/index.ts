@@ -9,114 +9,6 @@ export const menuItems = [
     { label: 'Cart', ariaLabel: 'View Your Cart', link: '/cart' },
 ];
 
-export const dropsData = [
-  {
-    id: 1,
-    title: "Ruby Velvet Chunk",
-    description: "A limited deep-red cookie with cream cheese swirls.",
-    releaseDate: "2025-12-05T00:00:00", // drop starts
-    durationDays: 7, // becomes 'Sold Out' after 7 days
-    soldOut: false,
-  },
-  {
-    id: 2,
-    title: "Choco Lava Blast",
-    description: "Molten chocolate core—baked only for real chocolate addicts.",
-    releaseDate: "2025-10-10T00:00:00",
-    durationDays: 7,
-    soldOut: true,
-  },
-  {
-    id: 3,
-    title: "Double Velvet Chunk",
-    description: "A limited deep-red cookie with cream cheese swirls.",
-    releaseDate: "2025-11-25T00:00:00", // drop starts
-    durationDays: 7, // becomes 'Sold Out' after 7 days
-    soldOut: false,
-  },
-  {
-    id: 4,
-    title: "Choco Lava Blast",
-    description: "Molten chocolate core—baked only for real chocolate addicts.",
-    releaseDate: "2025-12-10T00:00:00",
-    durationDays: 7,
-    soldOut: false,
-  },
-];
-
-
-// data/bestSellers.js
-export const bestSellerCookies = [
-  {
-    id: 'cs-001',
-    name: 'Choco Lava Burst',
-    image: '/images/choco-lava-burst.png', // replace with actual path
-    description: 'Double-baked Belgian dark chocolate cookie with a molten center — rich, gooey, and decadent.',
-    price: 12.99,            // price per box (or per unit) in USD (change currency as needed)
-    currency: 'USD',
-    rating: 4.9,             // average rating (out of 5)
-    reviews: 842,
-    tags: ['chocolate', 'limited', 'bestseller', 'vegan-friendly'],
-    inStock: true,
-    stockLeft: 48,           // numeric stock indicator
-    calories: 320,           // per serving
-    ingredients: ['flour', 'sugar', 'butter', 'belgian dark chocolate', 'cocoa', 'egg', 'salt'],
-    bestseller: true,
-    createdAt: '2025-10-12T09:00:00Z'
-  },
-  {
-    id: 'cs-0010',
-    name: 'Choco Lava Burst',
-    image: '/images/choco-lava-burst.png', // replace with actual path
-    description: 'Double-baked Belgian dark chocolate cookie with a molten center — rich, gooey, and decadent.',
-    price: 12.99,            // price per box (or per unit) in USD (change currency as needed)
-    currency: 'USD',
-    rating: 4.9,             // average rating (out of 5)
-    reviews: 842,
-    tags: ['chocolate', 'limited', 'bestseller', 'vegan-friendly'],
-    inStock: true,
-    stockLeft: 48,           // numeric stock indicator
-    calories: 320,           // per serving
-    ingredients: ['flour', 'sugar', 'butter', 'belgian dark chocolate', 'cocoa', 'egg', 'salt'],
-    bestseller: true,
-    createdAt: '2025-10-12T09:00:00Z'
-  },
-  {
-    id: 'cs-005',
-    name: 'Lemon Lava Burst',
-    image: '/images/choco-lava-burst.png', // replace with actual path
-    description: 'Double-baked Belgian dark chocolate cookie with a molten center — rich, gooey, and decadent.',
-    price: 122.99,            // price per box (or per unit) in USD (change currency as needed)
-    currency: 'USD',
-    rating: 4.9,             // average rating (out of 5)
-    reviews: 842,
-    tags: ['chocolate', 'limited', 'bestseller', 'vegan-friendly'],
-    inStock: true,
-    stockLeft: 48,           // numeric stock indicator
-    calories: 320,           // per serving
-    ingredients: ['flour', 'sugar', 'butter', 'belgian dark chocolate', 'cocoa', 'egg', 'salt'],
-    bestseller: true,
-    createdAt: '2025-10-12T09:00:00Z'
-  },
-  {
-    id: 'cs-002',
-    name: 'Salted Caramel Swirl',
-    image: '/images/salted-caramel-swirl.png',
-    description: 'Buttery cookie with ribbons of salted caramel and a sprinkle of sea salt for the perfect sweet-salty hit.',
-    price: 11.5,
-    currency: 'USD',
-    rating: 4.8,
-    reviews: 610,
-    tags: ['caramel', 'small-batch', 'bestseller'],
-    inStock: true,
-    stockLeft: 120,
-    calories: 290,
-    ingredients: ['flour', 'sugar', 'butter', 'caramel', 'sea salt', 'egg', 'vanilla'],
-    bestseller: true,
-    createdAt: '2025-09-22T09:00:00Z'
-  }
-];
-
 export const buildYourBoxOptions = [
   {
     id: "box-4",
@@ -218,21 +110,317 @@ export const reviews = [
   }
 ];
 
-export type Cookie = {
-  id: number;
-  slug: string;
-  name: string;
-  flavour: string;
-  price: string;
-  status: 'Available' | 'Pre-Order' | 'Sold Out';
-  hotSeller: boolean;
-};
+export const cookies = [
+  {
+    id: 1,
+    slug: "ruby-velvet-chunk",
+    price: 200,
+    title: "Ruby Velvet Chunk",
+    category: "limited",
+    status: "active",
+    hotSeller: true,
+    description: "A limited deep-red cookie with cream cheese swirls.",
+    releaseDate: "2025-12-05T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Eggs", "Gluten"],
+    storage: "Store in an airtight container for up to 3 days.",
+    heating: "Warm in microwave for 8–10 seconds for best taste.",
+  },
+  {
+    id: 2,
+    slug: "choco-lava-blast",
+    price: 200,
+    title: "Choco Lava Blast",
+    category: "limited",
+    status: "inactive",
+    hotSeller: false,
+    description: "Molten chocolate core for real chocolate addicts.",
+    releaseDate: "2025-10-10T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Eggs", "Gluten", "Soy"],
+    storage: "Keep refrigerated for up to 5 days.",
+    heating: "Microwave for 12 seconds for a molten center.",
+  },
+  {
+    id: 3,
+    slug: "double-velvet-chunk",
+    price: 200,
+    title: "Double Velvet Chunk",
+    category: "limited",
+    status: "active",
+    hotSeller: false,
+    description: "A limited deep-red cookie with cream cheese swirls.",
+    releaseDate: "2025-11-25T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Eggs", "Gluten"],
+    storage: "Store in a cool dry place; lasts 3–4 days.",
+    heating: "Warm for 6–8 seconds for a soft center.",
+  },
+  {
+    id: 4,
+    slug: "classic-choco-lava",
+    price: 200,
+    title: "Choco Lava Blast Classic",
+    category: "classic",
+    status: "active",
+    hotSeller: true,
+    soldOut: true,
+    description: "Molten chocolate core—classic version.",
+    releaseDate: "2025-12-10T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Eggs", "Gluten", "Soy"],
+    storage: "Best stored in a cool place; consume within 4 days.",
+    heating: "Heat for 10 seconds for lava center.",
+  },
+  {
+    id: 5,
+    slug: "chocolate-chip",
+    price: 200,
+    title: "Chocolate Chip",
+    category: "classic",
+    status: "active",
+    hotSeller: true,
+    description: "Crispy edges, soft center, packed with chocolate.",
+    releaseDate: "2025-01-01T00:00:00",
+    durationDays: 999,
+    allergens: ["Milk", "Eggs", "Gluten"],
+    storage: "Store for 3–4 days in airtight container.",
+    heating: "Microwave for 5–7 seconds.",
+  },
+  {
+    id: 6,
+    slug: "red-velvet",
+    price: 200,
+    title: "Red Velvet",
+    category: "classic",
+    status: "inactive",
+    hotSeller: false,
+    description: "Smooth velvety cookie with cream cheese hints.",
+    releaseDate: "2025-01-10T00:00:00",
+    durationDays: 999,
+    allergens: ["Milk", "Eggs", "Gluten"],
+    storage: "Keep in cool place for 3 days.",
+    heating: "Heat 5–6 seconds.",
+  },
+  {
+    id: 7,
+    slug: "oatmeal-raisin",
+    price: 200,
+    title: "Oatmeal Raisin",
+    category: "classic",
+    status: "active",
+    hotSeller: false,
+    description: "Chewy oatmeal cookie loaded with raisins.",
+    releaseDate: "2025-01-15T00:00:00",
+    durationDays: 999,
+    allergens: ["Gluten"],
+    storage: "Store for 3 days.",
+    heating: "No heating needed.",
+  },
+  {
+    id: 8,
+    slug: "peanut-butter",
+    price: 200,
+    title: "Peanut Butter",
+    category: "classic",
+    status: "active",
+    hotSeller: false,
+    description: "Soft peanut butter cookie for PB lovers.",
+    releaseDate: "2025-01-20T00:00:00",
+    durationDays: 999,
+    allergens: ["Peanuts", "Milk", "Eggs"],
+    storage: "Store airtight for 5 days.",
+    heating: "Microwave 4 seconds.",
+  },
+  {
+    id: 9,
+    slug: "double-chocolate",
+    price: 200,
+    title: "Double Chocolate",
+    category: "limited",
+    status: "inactive",
+    hotSeller: true,
+    description: "Dark & milk chocolate blend cookie.",
+    releaseDate: "2025-02-15T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Eggs", "Gluten", "Soy"],
+    storage: "Store for 3 days.",
+    heating: "Heat 8 seconds.",
+  },
+  {
+    id: 10,
+    slug: "sugar-cookie",
+    price: 200,
+    title: "Sugar Cookie",
+    category: "limited",
+    status: "active",
+    hotSeller: false,
+    description: "Soft buttery sugar cookie.",
+    releaseDate: "2025-03-01T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Eggs"],
+    storage: "Store airtight for 3 days.",
+    heating: "Heat 4 seconds.",
+  },
+  {
+    id: 11,
+    slug: "white-choc-macadamia",
+    price: 200,
+    title: "White Chocolate Macadamia",
+    category: "classic",
+    status: "active",
+    hotSeller: true,
+    description: "Creamy white chocolate with crunchy macadamia.",
+    releaseDate: "2025-01-10T00:00:00",
+    durationDays: 999,
+    allergens: ["Milk", "Nuts", "Gluten"],
+    storage: "Store for 4 days.",
+    heating: "Heat 6 seconds.",
+  },
+  {
+    id: 12,
+    slug: "salted-caramel-crunch",
+    price: 200,
+    title: "Salted Caramel Crunch",
+    category: "limited",
+    status: "active",
+    hotSeller: true,
+    description: "Caramel-packed cookie with sea salt flakes.",
+    releaseDate: "2025-12-12T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Gluten"],
+    storage: "Refrigerate for 4 days.",
+    heating: "Heat 7 seconds.",
+  },
+  {
+    id: 13,
+    slug: "mint-chocolate",
+    price: 200,
+    title: "Mint Chocolate",
+    category: "classic",
+    status: "inactive",
+    hotSeller: false,
+    description: "Refreshing mint mixed with dark chocolate.",
+    releaseDate: "2025-03-15T00:00:00",
+    durationDays: 999,
+    allergens: ["Milk", "Gluten"],
+    storage: "Store 3 days.",
+    heating: "Heat 5 seconds.",
+  },
+  {
+    id: 14,
+    slug: "brownie-blast",
+    price: 200,
+    title: "Brownie Blast",
+    category: "limited",
+    status: "active",
+    hotSeller: true,
+    description: "Brownie-like cookie with gooey center.",
+    releaseDate: "2025-11-20T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Eggs", "Gluten"],
+    storage: "Store airtight 3 days.",
+    heating: "Heat 9 seconds.",
+  },
+  {
+    id: 15,
+    slug: "strawberry-dream",
+    price: 200,
+    title: "Strawberry Dream",
+    category: "classic",
+    status: "active",
+    hotSeller: false,
+    description: "Strawberry infused soft cookie.",
+    releaseDate: "2025-02-05T00:00:00",
+    durationDays: 999,
+    allergens: ["Milk", "Eggs"],
+    storage: "Store 3 days.",
+    heating: "Heat 4 seconds.",
+  },
+  {
+    id: 16,
+    slug: "nutella-core",
+    price: 200,
+    title: "Nutella Core",
+    category: "limited",
+    status: "active",
+    hotSeller: true,
+    description: "A thick cookie stuffed with Nutella.",
+    releaseDate: "2025-12-20T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Hazelnuts", "Gluten"],
+    storage: "Store 3 days.",
+    heating: "Heat 10 seconds.",
+  },
+  {
+    id: 17,
+    slug: "banana-choc-chip",
+    price: 200,
+    title: "Banana Chocolate Chip",
+    category: "classic",
+    status: "inactive",
+    hotSeller: false,
+    description: "Banana flavored cookie with choco chips.",
+    releaseDate: "2025-01-25T00:00:00",
+    durationDays: 999,
+    allergens: ["Milk", "Eggs"],
+    storage: "Store 2 days.",
+    heating: "Heat 3 seconds.",
+  },
+  {
+    id: 18,
+    slug: "coffee-crunch",
+    price: 200,
+    title: "Coffee Crunch",
+    category: "classic",
+    status: "active",
+    hotSeller: true,
+    description: "Coffee-infused cookie with a crunchy bite.",
+    releaseDate: "2025-02-10T00:00:00",
+    durationDays: 999,
+    allergens: ["Milk", "Gluten"],
+    storage: "Store 4 days.",
+    heating: "Heat 5 seconds.",
+  },
+  {
+    id: 19,
+    slug: "lotus-biscoff",
+    price: 200,
+    title: "Lotus Biscoff",
+    category: "limited",
+    status: "active",
+    hotSeller: true,
+    description: "Caramelized Biscoff paste inside a soft cookie.",
+    releaseDate: "2025-12-30T00:00:00",
+    durationDays: 7,
+    allergens: ["Soy", "Gluten"],
+    storage: "Store 3–4 days.",
+    heating: "Heat 7 seconds.",
+  },
+  {
+    id: 20,
+    slug: "oreo-stuffed",
+    price: 200,
+    title: "Oreo Stuffed Cookie",
+    category: "limited",
+    status: "inactive",
+    hotSeller: false,
+    description: "A full Oreo stuffed inside a soft cookie.",
+    releaseDate: "2025-11-10T00:00:00",
+    durationDays: 7,
+    allergens: ["Milk", "Eggs", "Gluten", "Soy"],
+    storage: "Store 3 days.",
+    heating: "Heat 6 seconds.",
+  }
+].map(cookie => {
+  const now = new Date();
+  const release = new Date(cookie.releaseDate);
+  const end = new Date(release);
+  end.setDate(end.getDate() + cookie.durationDays);
 
-export const cookieData: Cookie[] = [
-  { id: 1, slug: "chocolate-chip", price: "200", hotSeller: true,  name: 'Chocolate Chip', flavour: 'Classic', status: 'Available' },
-  { id: 2, slug: "red-velvet",     price: "200", hotSeller: false, name: 'Red Velvet', flavour: 'Classic', status: 'Pre-Order' },
-  { id: 3, slug: "oatmeal-raisin", price: "200", hotSeller: false, name: 'Oatmeal Raisin', flavour: 'Classic', status: 'Sold Out' },
-  { id: 4, slug: "peanut-butter",  price: "200", hotSeller: false, name: 'Peanut Butter', flavour: 'Classic', status: 'Available' },
-  { id: 5, slug: "double-choc",    price: "200", hotSeller: true,  name: 'Double Chocolate', flavour: 'Limited Drop', status: 'Pre-Order' },
-  { id: 6, slug: "sugar-cookie",   price: "200", hotSeller: false, name: 'Sugar Cookie', flavour: 'Limited Drop', status: 'Available' },
-];
+  return {
+    ...cookie,
+    soldOut: now >= end
+  };
+});
+

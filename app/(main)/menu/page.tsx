@@ -1,27 +1,25 @@
 'use client';
 
-import { Cookie, cookieData } from '@/lib/constants';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaSearch, FaCheck, FaClock } from 'react-icons/fa';
+import { cookies } from '@/lib/constants';
+import { useDrop } from '@/lib/context/contextAPI';
+import AddToCart from '@/components/mainComp/AddToCart';
 
 
 const MenuPage = () => {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<'All' | 'Available' | 'Pre-Order' | 'Sold Out'>('All');
-  const [box, setBox] = useState<Cookie[]>([]);
+  const [box, setBox] = useState<CookieType[]>([]);
 
-  const filteredCookies = cookieData.filter(cookie => {
-    const matchesSearch = cookie.name.toLowerCase().includes(search.toLowerCase());
+  const filteredCookies = cookies.filter(cookie => {
+    const matchesSearch = cookie.title.toLowerCase().includes(search.toLowerCase());
     const matchesFilter = filter === 'All' || cookie.status === filter;
     return matchesSearch && matchesFilter;
   });
 
-  const handleAddToBox = (cookie: Cookie) => {
-    if (!box.find(c => c.id === cookie.id)) {
-      setBox([...box, cookie]);
-    }
-  };
+  const {getStatus} = useDrop()
 
   return (
     <main className="bg-secondary pt-24">
@@ -59,7 +57,8 @@ const MenuPage = () => {
       {/* Grid of Cookies */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-7xl mx-auto">
         {filteredCookies.map(cookie => {
-  return cookie.status === "Sold Out" ? (
+          const status = getStatus(cookie)
+  return cookie.soldOut ? (
     <div
       key={cookie.id}
       className="flex flex-col justify-between items-center text-center border border-soft relative opacity-60"
@@ -75,7 +74,7 @@ const MenuPage = () => {
       </div>
 
       <div className="p-1">
-        <h2 className="text-xl font-semibold mb-1">{cookie.name}</h2>
+        <h2 className="text-xl font-semibold mb-1">{cookie.title}</h2>
         <p className="text-sm text-gray-500">Will Be Back Soon</p>
       </div>
     </div>
@@ -85,7 +84,7 @@ const MenuPage = () => {
       className="flex flex-col  justify-between border border-soft relative"
     >
       {/* Image Placeholder */}
-      <Link href={`/menu/${cookie.slug}`} className="bg-soft/50 h-[400px] flex items-center justify-center text-gray-400 font-bold">
+      <Link href={`/${cookie.category === "limited" ? "drops" : "menu"}/${cookie.slug}`} className="bg-soft/50 h-[400px] flex items-center justify-center text-gray-400 font-bold">
         Image
       </Link>
 
@@ -99,17 +98,13 @@ const MenuPage = () => {
       {/* Cookie Info */}
       <div className="p-3">
         <div className="flex justify-between items-center">
-          <h2 >{cookie.name}</h2>
-           <button
-          onClick={() => handleAddToBox(cookie)}
-          aria-label='add cookie to basket'
-          className="mt-4 w-10  py-2 rounded-full font-semibold text-white bg-soft/80 hover:bg-soft transition z-40"
-        >
-          +
-        </button>
+          <h2 >{cookie.title}</h2>
           <h2 className="font-semibold text-lg md:text-xl">Rs.{cookie.price}</h2>
         </div>
-
+        <div>
+          <p className='text-gray-500 text-[13px]'>Category: {cookie.category}</p>
+        </div>
+         <AddToCart status={status} />
       </div>
     </div>
   );
@@ -123,7 +118,7 @@ const MenuPage = () => {
           <h3 className="font-bold mb-2">Your Box ({box.length})</h3>
           <ul className="text-sm">
             {box.map(item => (
-              <li key={item.id}>{item.name}</li>
+              <li key={item.id}>{item.title}</li>
             ))}
           </ul>
         </div>

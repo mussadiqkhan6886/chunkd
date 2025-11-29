@@ -1,8 +1,10 @@
 'use client';
 
 import LimitedCard from '@/components/mainComp/LimitedCard';
+import { cookies } from '@/lib/constants';
 
 const DropsPage = () => {
+  const res = cookies.filter(item => item.category === "limited")
 
   return (
     <main className="max-w-7xl mx-auto pt-30 p-5">
@@ -15,8 +17,8 @@ const DropsPage = () => {
       </p>
 
       {/* Drops Grid */}
-      <div className="grid max-w-5xl mx-auto grid-cols-1 md:grid-cols-2 gap-10">
-        <LimitedCard />
+      <div >
+        <LimitedCard data={res} button={false} />
       </div>
     </main>
   );

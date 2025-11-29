@@ -1,4 +1,5 @@
 import { buildYourBoxOptions } from '@/lib/constants'
+import Link from 'next/link'
 import React from 'react'
 
 const BuildYourBox = () => {
@@ -30,7 +31,7 @@ const BuildYourBox = () => {
               </p>
 
               <div className="flex items-center justify-between mt-4">
-                <button className="orderButtonStyle">Build Now</button>
+                <Link href={"/build-box"} className="orderButtonStyle">Build Now</Link>
               </div>
             </div>
           </div>
