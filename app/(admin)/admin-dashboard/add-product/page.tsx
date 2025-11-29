@@ -4,18 +4,6 @@ import React, { ChangeEvent, useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import Image from "next/image";
 import imageCompression from "browser-image-compression";
-import { collections } from "@/lib/constants";
-
-interface ColorSize {
-  name: string;
-  stock: number;
-}
-
-interface Variant {
-  color?: string;
-  size?: string;
-  stock: number;
-}
 
 const AddProduct = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -24,20 +12,15 @@ const AddProduct = () => {
   const [result, setResult] = useState("");
 
   const [data, setData] = useState({
-    collection: "",
-    collectionSlug: "",
+    title: "",
     slug: "",
-    name: "",
     description: "",
     price: "",
-    discountPrice: "",
-    onSale: false,
-    inStock: true,
+    category: "classic",
     images: [] as string[],
-    bundle: false,
-    colors: [] as ColorSize[],
-    sizes: [] as ColorSize[],
-    variants: [] as Variant[],
+    allergens: [] as string[],
+    storage: "",
+    heating: ""
   });
 
   // Slug generator
@@ -51,42 +34,15 @@ const AddProduct = () => {
       .replace(/^-|-$/g, "");
 
   // Auto computed slugs
-  const productSlug = useMemo(() => toSlug(data.name), [data.name]);
-  const collectionSlug = useMemo(() => toSlug(data.collection), [data.collection]);
+  const productSlug = useMemo(() => toSlug(data.title), [data.title]);
 
   // Update slugs into state ONLY when needed
   useEffect(() => {
     setData((prev) => ({
       ...prev,
       slug: productSlug,
-      collectionSlug: collectionSlug,
     }));
-  }, [productSlug, collectionSlug]);
-
-  // Auto-generate variants whenever colors or sizes change
-  useEffect(() => {
-    const newVariants: Variant[] = [];
-
-    if (data.colors.length && data.sizes.length) {
-      data.colors.forEach((color) => {
-        data.sizes.forEach((size) => {
-          newVariants.push({
-            color: color.name,
-            size: size.name,
-            stock: Math.min(color.stock, size.stock), // or customize logic
-          });
-        });
-      });
-    } else if (data.colors.length) {
-      data.colors.forEach((color) => newVariants.push({ color: color.name, stock: color.stock }));
-    } else if (data.sizes.length) {
-      data.sizes.forEach((size) => newVariants.push({ size: size.name, stock: size.stock }));
-    } else {
-      newVariants.push({ stock: 0 });
-    }
-
-    setData((prev) => ({ ...prev, variants: newVariants }));
-  }, [data.colors, data.sizes]);
+  }, [productSlug]);
 
   // Generic input change handler
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -98,28 +54,7 @@ const AddProduct = () => {
     }));
   };
 
-  // Handle color/size changes
-  const handleColorChange = (index: number, field: "name" | "stock", value: string | number) => {
-    const updated = [...data.colors];
-    // @ts-ignore
-    updated[index][field] = field === "stock" ? Number(value) : String(value);
-    setData({ ...data, colors: updated });
-  };
-
-  const handleSizeChange = (index: number, field: "name" | "stock", value: string | number) => {
-    const updated = [...data.sizes];
-    // @ts-ignore
-    updated[index][field] = field === "stock" ? Number(value) : String(value);
-    setData({ ...data, sizes: updated });
-  };
-
-  // Add/remove color or size
-  const addColor = () => setData({ ...data, colors: [...data.colors, { name: "", stock: 0 }] });
-  const addSize = () => setData({ ...data, sizes: [...data.sizes, { name: "", stock: 0 }] });
-  const removeColor = (index: number) => setData({ ...data, colors: data.colors.filter((_, i) => i !== index) });
-  const removeSize = (index: number) => setData({ ...data, sizes: data.sizes.filter((_, i) => i !== index) });
-
-  // Image selection & previews
+ 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const selectedFiles = Array.from(e.target.files);
@@ -161,20 +96,14 @@ const AddProduct = () => {
       if (res.status === 201) {
         setResult("✅ Product added successfully!");
         setData({
-          collection: "",
-          collectionSlug: "",
           slug: "",
-          name: "",
+          title: "",
           description: "",
           price: "",
-          discountPrice: "",
-          onSale: false,
-          inStock: true,
           images: [],
-          bundle: false,
-          colors: [],
-          sizes: [],
-          variants: [],
+          allergens: [],
+          storage: "",
+          heating: ""
         });
         setFiles([]);
         setPreviews([]);
@@ -194,39 +123,21 @@ const AddProduct = () => {
       <form className="grid gap-4 w-full md:w-[50%]" onSubmit={handleSubmit}>
         {/* Collection */}
         <div>
-          <label className="block font-semibold mb-1">Collection Title</label>
-          <select
-            name="collection"
-            value={data.collection}
-            onChange={handleChange}
-            className="w-full border rounded-lg p-2"
-            required
-          >
-            <option value="">Select Collection</option>
-            {collections.slice(0, 7).map((col) => (
-              <option key={col.link} value={col.title}>
-                {col.title}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block font-semibold mb-1">Collection Slug</label>
+          <label className="block font-semibold mb-1">Type: </label>
           <input
-            name="collectionSlug"
-            value={data.collectionSlug}
+            name="category"
+            value={data.category}
+            onChange={handleChange}
+            className="w-full border rounded-lg p-2 cursor-not-allowed bg-gray-100"
             readOnly
-            className="w-full border rounded-lg p-2 bg-gray-100"
           />
         </div>
-
         {/* Product Name & Slug */}
         <div>
-          <label className="block font-semibold mb-1">Product Name</label>
+          <label className="block font-semibold mb-1">Cookie Name</label>
           <input
-            name="name"
-            value={data.name}
+            name="title"
+            value={data.title}
             onChange={handleChange}
             type="text"
             className="w-full border rounded-lg p-2"
@@ -240,7 +151,7 @@ const AddProduct = () => {
             name="slug"
             value={data.slug}
             readOnly
-            className="w-full border rounded-lg p-2 bg-gray-100"
+            className="w-full border rounded-lg p-2 cursor-not-allowed bg-gray-100"
           />
         </div>
 
@@ -270,97 +181,45 @@ const AddProduct = () => {
           />
         </div>
 
-        {/* Checkboxes */}
-        <div className="flex items-center gap-2">
-          <input type="checkbox" name="onSale" checked={data.onSale} onChange={handleChange} />
-          <label className="font-semibold">On Sale</label>
+        <div>
+          <label className="block font-semibold mb-1">Allergies</label>
+          <input
+            name="allergens"
+            type="text"
+            value={data.allergens}
+            onChange={(e) => setData(prev => ({...prev, allergens: e.target.value.split(",").map(item => item.trim())}))}
+            className="w-full border rounded-lg p-2"
+            required
+          />
         </div>
-        <div className="flex items-center gap-2">
-          <input type="checkbox" name="inStock" checked={data.inStock} onChange={handleChange} />
-          <label className="font-semibold">In Stock</label>
+        <div>
+          <label className="block font-semibold mb-1">Heating</label>
+          <input
+            name="heating"
+            type="text"
+            value={data.heating}
+            onChange={handleChange}
+            className="w-full border rounded-lg p-2"
+            required
+          />
         </div>
-        <div className="flex items-center gap-2">
-          <input type="checkbox" name="bundle" checked={data.bundle} onChange={handleChange} />
-          <label className="font-semibold">Bundle</label>
+        <div>
+          <label className="block font-semibold mb-1">Storage</label>
+          <input
+            name="storage"
+            type="text"
+            value={data.storage}
+            onChange={handleChange}
+            className="w-full border rounded-lg p-2"
+            required
+          />
         </div>
 
-        {data.onSale && (
-          <div>
-            <label className="block font-semibold mb-1">Discount Price</label>
-            <input
-              name="discountPrice"
-              type="number"
-              value={data.discountPrice}
-              onChange={handleChange}
-              className="w-full border rounded-lg p-2"
-              required
-            />
-          </div>
-        )}
 
-        {/* Colors */}
-        {data.collection !== "Formals" && <div>
-          <label className="block font-semibold mb-2">Colors</label>
-          {data.colors.map((clr, i) => (
-            <div key={i} className="flex items-center gap-2 mb-2">
-              <input
-                type="text"
-                value={clr.name}
-                onChange={(e) => handleColorChange(i, "name", e.target.value)}
-                placeholder={`Color ${i + 1}`}
-                className="border rounded-lg p-2 w-32"
-              />
-              <input
-                type="number"
-                value={clr.stock}
-                onChange={(e) => handleColorChange(i, "stock", e.target.value)}
-                placeholder="Stock"
-                className="border rounded-lg p-2 w-20"
-                min={0}
-              />
-              <button type="button" onClick={() => removeColor(i)} className="text-red-500">
-                ✕
-              </button>
-            </div>
-          ))}
-          <button type="button" onClick={addColor} className="text-sm text-blue-600">
-            + Add Color
-          </button>
-        </div>}
-
-        {/* Sizes */}
-       {data.collection === "Formals" && (<div>
-          <label className="block font-semibold mb-2">Sizes</label>
-          {data.sizes.map((sz, i) => (
-            <div key={i} className="flex items-center gap-2 mb-2">
-              <input
-                type="text"
-                value={sz.name}
-                onChange={(e) => handleSizeChange(i, "name", e.target.value)}
-                placeholder={`Size ${i + 1}`}
-                className="border rounded-lg p-2 w-32"
-              />
-              <input
-                type="number"
-                value={sz.stock}
-                onChange={(e) => handleSizeChange(i, "stock", e.target.value)}
-                placeholder="Stock"
-                className="border rounded-lg p-2 w-20"
-                min={0}
-              />
-              <button type="button" onClick={() => removeSize(i)} className="text-red-500">
-                ✕
-              </button>
-            </div>
-          ))}
-          <button type="button" onClick={addSize} className="text-sm text-blue-600">
-            + Add Size
-          </button>
-        </div>)}
 
         {/* Images */}
         <div>
-          <label className="block font-semibold mb-1">Product Images</label>
+          <label className="block font-semibold mb-1">Cookie Images</label>
           <input type="file" multiple accept="image/*" required onChange={handleImageChange} className="w-full border rounded-lg p-2" />
           {previews.length > 0 && (
             <div className="flex flex-wrap gap-3 mt-4">
