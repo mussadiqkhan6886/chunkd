@@ -44,7 +44,7 @@ const LimitedCard = ({data, button}: Props) => {
               {/* Info */}
               <div className="p-6">
                 <div className='flex justify-between mb-1 items-center'>
-                <h2 className="text-3xl font-bold ">{drop.title}</h2>
+                <h2 className="text-xl md:text-3xl font-bold ">{drop.title}</h2>
                 <h2 className='font-semibold text-lg'>Rs.{drop.price}</h2>
                 </div>
                 <p className="text-gray-600 mb-4">{drop.description}</p>

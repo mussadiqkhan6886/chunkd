@@ -24,14 +24,14 @@ const MenuPage = () => {
   return (
     <main className="bg-secondary pt-24">
       {/* Header */}
-      <div className='py-5'>
-      <h1 className="text-6xl font-bold mb-2 text-center">Find Your Next Craving</h1>
+      <div className='py-5 px-2'>
+      <h1 className="text-4xl md:text-6xl font-bold mb-2 text-center">Find Your Next Craving</h1>
       <p className='text-center '>Discover our full lineup of Chunk’d cookies — from classics to limited-edition drops.
         <br />
         Filter, search, and explore every flavor. Add your favourites to your box and build the perfect treat.
-        </p>
+      </p>
     </div>
-      <div className="flex flex-row justify-between items-center px-10 py-4 mb-8 gap-4">
+      <div className="flex flex-row justify-between items-center px-5 md:px-10 py-4 mb-8 gap-4">
           <div className="flex items-center border border-soft bg-gray-100 rounded-lg p-2 px-3 w-full sm:w-auto">
             <FaSearch className="text-gray-400 mr-2" />
             <input
