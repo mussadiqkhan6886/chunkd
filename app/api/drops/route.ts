@@ -26,7 +26,10 @@ export async function POST(req: NextRequest) {
     const price = Number(formData.get("price"));
     const slug = formData.get("slug") as string;
     const category = formData.get("category") as string;
-    const allergens = formData.getAll("allergens") as string[]
+     const allergens = formData
+    .getAll("allergens")
+    .filter((x): x is string => typeof x === "string")
+    .map((x) => JSON.parse(x));
     const storage = formData.get("storage") as string
     const heating = formData.get("heating") as string
     const releaseDate = formData.get("releaseDate")

@@ -119,7 +119,7 @@ const AddProduct = () => {
 
   return (
     <main className="p-6 flex flex-col items-center lg:px-20 md:px-17 px-5">
-      <h1 className="text-2xl font-bold mb-6">Add New Product</h1>
+      <h1 className="text-2xl font-bold mb-6">Add New Cookie</h1>
 
       <form className="grid gap-4 w-full md:w-[50%]" onSubmit={handleSubmit}>
         {/* Collection */}
@@ -187,6 +187,7 @@ const AddProduct = () => {
         <input
           name="allergens"
           type="text"
+          placeholder="allergens separate by comma, e.g (milk, egg)"
           value={data.allergens.join(",")} // display array as comma-separated string
           onChange={(e) =>
             setData(prev => ({
@@ -238,7 +239,7 @@ const AddProduct = () => {
 
         {/* Submit */}
         <button type="submit" disabled={loading} className="bg-black text-white px-4 py-2 mt-4 rounded">
-          {loading ? "Uploading..." : "Add Product"}
+          {loading ? "Uploading..." : "Add Cookie"}
         </button>
         <p>{result}</p>
       </form>
