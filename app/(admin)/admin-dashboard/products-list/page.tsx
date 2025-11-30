@@ -12,7 +12,8 @@ export default function AdminProductsPage() {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`);
-        setProducts(res.data.data);
+        const filtered = res.data.data.filter((item: CookieType) => item.category === "classic")
+        setProducts(filtered);
       } catch (error) {
         console.error(error);
       } finally {

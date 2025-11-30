@@ -249,6 +249,7 @@ const AddProduct = () => {
         <div>
           <label className="block font-semibold mb-1">Duration</label>
           <input
+          placeholder="duration in Days"
             name="durationDays"
             type="number"
             value={data.durationDays}

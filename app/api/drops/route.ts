@@ -8,7 +8,7 @@ export const runtime = "nodejs"; // Required for Cloudinary uploads
 export const GET = async () => {
   await connectDB();
   try {
-    const res = await CookieSchema.find({});
+    const res = await CookieSchema.find({category: "limited"});
     return NextResponse.json({ message: "Fetched Data", data: res }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Failed to fetch data", error }, { status: 400 });
