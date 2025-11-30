@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -10,6 +10,21 @@ import Link from 'next/link';
 import { FiStar } from 'react-icons/fi';
 
 const Reviews = () => {
+
+  const [data, setData] = useState<reviewType[] | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/testimonials`, {next: {revalidate: 60}})
+
+      const json = await res.json()
+
+      setData(json.testimonials)
+
+    }
+
+    fetchData()
+  }, [])
 
   const createStar = (stars: number) => {
 
@@ -28,7 +43,8 @@ const Reviews = () => {
       <h2 className='sectionTitle'>Reviews</h2>
         <Link href="/add-testimonial" className='underline mr-6'>Add Review</Link>
       </div>
-      <Swiper
+      {data && data.length > 0 ? (
+        <Swiper
         modules={[Pagination]}
         pagination={{ clickable: true }}
         spaceBetween={30}
@@ -40,17 +56,17 @@ const Reviews = () => {
           1048: { slidesPerView: 3 },  // tablet and above
         }}
       >
-        {reviews.map((review, i) => (
+        {data.map((review, i) => (
           <SwiperSlide key={i}>
             <div className="flex flex-col items-center text-center p-6">
-              <div className='flex gap-2 text-yellow-500'>{createStar(parseInt(review.stars))}</div>
+              <div className='flex gap-2 text-yellow-500'>{createStar(review.rating)}</div>
               <h3 className="text-lg font-semibold">{review.name}</h3>
-              <p className="text-sm text-gray-500 mb-3">{review.role}</p>
-              <p className="text-gray-700">{review.comment}</p>
+              <p className="text-gray-700">{review.message}</p>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
+      ) : <div className="text-center text-lg font-semibold text-gray-600">No Reviews Yet</div>}
     </div>
   );
 };

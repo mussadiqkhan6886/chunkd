@@ -32,7 +32,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
             alt={`Slide ${index + 1}`}
             width={500}
             height={400}
-            className="object-cover w-full h-full object-center rounded-lg"
+            className="object-cover w-full h-full object-center"
           />
         </SwiperSlide>
       ))}

@@ -5,7 +5,7 @@ import { Home, MessageSquare, Package, PlusCircle, ShoppingBag } from 'lucide-re
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation';
 import { FiPlusSquare } from 'react-icons/fi';
-import { LuCookie } from 'react-icons/lu';
+import { LuCookie, LuImage } from 'react-icons/lu';
 
 const Header = () => {
 
@@ -16,6 +16,7 @@ const Header = () => {
     { name: 'Add Drops', href: '/admin-dashboard/add-drops', icon: <FiPlusSquare className="w-4 h-4" /> },
     { name: 'Drops', href: '/admin-dashboard/drops-list', icon: <Package className="w-4 h-4" /> },
     { name: 'Orders', href: '/admin-dashboard/orders-list', icon: <ShoppingBag className="w-4 h-4" /> },
+    // { name: 'Media', href: '/admin-dashboard/media', icon: <LuImage className="w-4 h-4" /> },
   ]
   const pathname = usePathname()
   const router = useRouter()

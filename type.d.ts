@@ -45,3 +45,10 @@ interface DropType {
   __v?: number;        // mongoose version key, optional
 }
 
+
+interface reviewType {
+  _id: string
+  name: string
+  rating: number
+  message: string
+}
