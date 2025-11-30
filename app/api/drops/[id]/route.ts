@@ -1,0 +1,143 @@
+  import { NextRequest, NextResponse } from "next/server"
+import { connectDB } from "@/lib/config/database/db"
+import { Product } from "@/lib/models/ProductSchema"
+import cloudinary from "@/lib/config/cloudinary"
+
+export const GET = async (_req: NextRequest, {params}: {params: Promise<{id: string}>}) => {
+    await connectDB()
+    const {id} = await params
+    const product = await Product.findOne({_id: id})
+
+    if (!product) {
+      return NextResponse.json({ success: false, message: "Product not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({message: "Product Found", product}, {status: 200})
+}
+
+export const PATCH = async (
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) => {
+  await connectDB();
+  const id = (await params).id;
+
+  try {
+    const contentType = req.headers.get("content-type");
+
+    // 1️⃣ Handle image deletion
+    if (contentType?.includes("application/json")) {
+          const body = await req.json();
+          if (body.action === "deleteImage") {
+            await Product.findByIdAndUpdate(id, { $pull: { images: body.imageUrl } });
+            return NextResponse.json({ success: true });
+          }
+        }
+
+    // 2️⃣ Handle form data update
+    const formData = await req.formData();
+    
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const price = Number(formData.get("price"));
+    const slug = formData.get("slug") as string;
+    const category = formData.get("category") as string;
+    const allergens = formData.getAll("allergens") as string[]
+    const storage = formData.get("storage") as string
+    const heating = formData.get("heating") as string
+    const soldOut = formData.get("soldOut") === "true";
+    const hotSeller = formData.get("hotSeller") === "true";
+    const soldCount = Number(formData.get("soldCount"))
+    const active = formData.get("active") === "true"
+    const releaseDate = formData.get("releaseDate")
+    const endDate = formData.get("endDate")
+    const durationDays = formData.get("durationDays")
+    const totalLimit = formData.get("totalLimit")
+    const files = formData.getAll("images") as File[];
+    const uploadedImages: string[] = [];
+
+    for (const file of files) {
+         if (typeof file === "string" || !file?.arrayBuffer) {
+          console.log("Skipping invalid file:", file);
+          continue; // Skip invalid entries
+        }
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const uploadRes = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream({ folder: "chunkd" }, (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
+        }).end(buffer);
+      });
+      uploadedImages.push((uploadRes as any).secure_url);
+    }
+
+     // 🔹 Fetch existing product to merge images
+    const existingProduct = await Product.findById(id);
+    if (!existingProduct) {
+      return NextResponse.json({ success: false, message: "Product not found" }, { status: 404 });
+    }
+
+    // Merge existing images with newly uploaded images
+    const updatedImages = [...existingProduct.images, ...uploadedImages];
+
+    // Build update object
+    const updateQuery = {
+      title,
+      slug,
+      description,
+      price,
+      category,
+      allergens,
+      storage,
+      heating,
+      soldOut,
+      hotSeller,
+      soldCount,
+      releaseDate,
+      endDate,
+      durationDays,
+      totalLimit,
+      active,
+      images: updatedImages, // just overwrite with merged array
+    };
+
+    // Update in DB
+    const updatedProduct = await Product.findByIdAndUpdate(id, updateQuery, { new: true });
+
+    return NextResponse.json({ success: true, message: "Product updated successfully", updatedProduct });
+  } catch (err: any) {
+    console.error("PATCH error:", err);
+    return NextResponse.json(
+      { success: false, message: "Failed to update product", error: err.message },
+      { status: 500 }
+    );
+  }
+};
+
+
+export const DELETE = async (_req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
+  await connectDB();
+  const id = (await params).id;
+
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return NextResponse.json(
+        { success: false, message: "Product not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, message: "Product deleted successfully", deletedProduct },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("DELETE error:", error);
+    return NextResponse.json(
+      { success: false, message: "Failed to delete product", error: error.message },
+      { status: 500 }
+    );
+  }
+};

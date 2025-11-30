@@ -103,7 +103,8 @@ const AddProduct = () => {
           images: [],
           allergens: [],
           storage: "",
-          heating: ""
+          heating: "",
+          category: "classic"
         });
         setFiles([]);
         setPreviews([]);

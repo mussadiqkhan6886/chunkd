@@ -21,7 +21,7 @@ const AddProduct = () => {
     allergens: [] as string[],
     storage: "",
     heating: "",
-    releaseData: "",
+    releaseDate: "",
     endDate: "",
     durationDays: "",
     totalLimit: "",
@@ -103,15 +103,16 @@ const AddProduct = () => {
           slug: "",
           title: "",
           description: "",
+          category: "limited",
           price: "",
           images: [],
           allergens: [],
           storage: "",
           heating: "",
-          releaseData: "",
-        endDate: "",
-        durationDays: "",
-        totalLimit: "",
+          releaseDate: "",
+          endDate: "",
+          durationDays: "",
+          totalLimit: "",
         });
         setFiles([]);
         setPreviews([]);
@@ -227,7 +228,7 @@ const AddProduct = () => {
           <input
             name="releaseDate"
             type="datetime-local"
-            value={data.releaseData}
+            value={data.releaseDate}
             onChange={handleChange}
             className="w-full border rounded-lg p-2"
             required

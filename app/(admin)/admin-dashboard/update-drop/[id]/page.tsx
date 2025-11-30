@@ -7,7 +7,7 @@ import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
 import { Product } from "@/lib/models/ProductSchema";
 
-const UpdateProduct = ({ params }: { params: Promise<{ id: string }> }) => {
+const UpdateDrop = ({ params }: { params: Promise<{ id: string }> }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -373,4 +373,4 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
   );
 };
 
-export default UpdateProduct;
+export default UpdateDrop;

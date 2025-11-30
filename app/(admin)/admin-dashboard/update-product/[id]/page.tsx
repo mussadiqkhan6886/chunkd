@@ -26,7 +26,8 @@ const UpdateProduct = ({ params }: { params: Promise<{ id: string }> }) => {
     heating: "",
     soldOut: false,
     hotSeller: false,
-    soldCount: ""
+    soldCount: "",
+    active: true,
   });
 
   const router = useRouter();
@@ -51,7 +52,8 @@ const UpdateProduct = ({ params }: { params: Promise<{ id: string }> }) => {
             heating: product.heating,
             soldOut: false,
             hotSeller: false,
-            soldCount: product.soldCount
+            soldCount: product.soldCount,
+            active: product.active || true
         });
 
         setExistingImages(product.images || []);
