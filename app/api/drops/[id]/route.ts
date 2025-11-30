@@ -1,12 +1,12 @@
   import { NextRequest, NextResponse } from "next/server"
-import { connectDB } from "@/lib/config/database/db"
-import { Product } from "@/lib/models/ProductSchema"
+import { connectDB } from "@/lib/config/databse"
 import cloudinary from "@/lib/config/cloudinary"
+import CookieSchema from "@/lib/models/CookieSchema"
 
 export const GET = async (_req: NextRequest, {params}: {params: Promise<{id: string}>}) => {
     await connectDB()
     const {id} = await params
-    const product = await Product.findOne({_id: id})
+    const product = await CookieSchema.findOne({_id: id})
 
     if (!product) {
       return NextResponse.json({ success: false, message: "Product not found" }, { status: 404 });
@@ -29,7 +29,7 @@ export const PATCH = async (
     if (contentType?.includes("application/json")) {
           const body = await req.json();
           if (body.action === "deleteImage") {
-            await Product.findByIdAndUpdate(id, { $pull: { images: body.imageUrl } });
+            await CookieSchema.findByIdAndUpdate(id, { $pull: { images: body.imageUrl } });
             return NextResponse.json({ success: true });
           }
         }
@@ -75,7 +75,7 @@ export const PATCH = async (
     }
 
      // 🔹 Fetch existing product to merge images
-    const existingProduct = await Product.findById(id);
+    const existingProduct = await CookieSchema.findById(id);
     if (!existingProduct) {
       return NextResponse.json({ success: false, message: "Product not found" }, { status: 404 });
     }
@@ -105,7 +105,7 @@ export const PATCH = async (
     };
 
     // Update in DB
-    const updatedProduct = await Product.findByIdAndUpdate(id, updateQuery, { new: true });
+    const updatedProduct = await CookieSchema.findByIdAndUpdate(id, updateQuery, { new: true });
 
     return NextResponse.json({ success: true, message: "Product updated successfully", updatedProduct });
   } catch (err: any) {
@@ -123,7 +123,7 @@ export const DELETE = async (_req: NextRequest, { params }: { params: Promise<{ 
   const id = (await params).id;
 
   try {
-    const deletedProduct = await Product.findByIdAndDelete(id);
+    const deletedProduct = await CookieSchema.findByIdAndDelete(id);
 
     if (!deletedProduct) {
       return NextResponse.json(

@@ -143,11 +143,11 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         formData.append("images", compressed);
       }
 
-      const res = await axios.patch(`/api/products/${id}`, formData);
+      const res = await axios.patch(`/api/drops/${id}`, formData);
 
       if (res.status === 200) {
         setResult("✅ Product updated successfully!");
-        setTimeout(() => router.push("/admin-dashboard/products-list"), 1500);
+        setTimeout(() => router.push("/admin-dashboard/drops-list"), 1500);
       }
     } catch (err) {
       console.error("Update failed:", err);
@@ -365,7 +365,7 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         </div>
 
         <button type="submit" disabled={loading} className="bg-black text-white px-4 py-2 mt-4 rounded">
-          {loading ? "Updating..." : "Update Product"}
+          {loading ? "Updating..." : "Update Drop"}
         </button>
         <p>{result}</p>
       </form>
