@@ -25,7 +25,8 @@ const SingleProduct = async ({data}: {data: DropType}) => {
     {
       $match: {
         category: data.category,       // same category
-        soldOut: false,           // only available products
+        soldOut: false,
+        active: true,           // only available products
         _id: { $ne: new mongoose.Types.ObjectId(data._id) }, // exclude current
       },
     },

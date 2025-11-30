@@ -1,10 +1,16 @@
-'use client';
-
 import LimitedCard from '@/components/mainComp/LimitedCard';
-import { cookies } from '@/lib/constants';
+import { connectDB } from '@/lib/config/databse';
+import CookieSchema from '@/lib/models/CookieSchema';
 
-const DropsPage = () => {
-  const res = cookies.filter(item => item.category === "limited")
+export const revalidate = 60
+
+const DropsPage = async () => {
+
+  await connectDB();
+
+  const res = await CookieSchema.find({category: "limited"}).lean()
+
+  const data = JSON.parse(JSON.stringify(res))
 
   return (
     <main className="max-w-7xl mx-auto pt-30 p-5">
@@ -13,12 +19,12 @@ const DropsPage = () => {
       <h1 className="text-4xl md:text-6xl font-bold text-center mb-3">This Week’s Drops</h1>
       <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
         Limited-edition flavours dropping every week.  
-        Once they’re gone — they’re gone. Stay ready, don’t miss out.
+        Once they are gone — they are gone. Stay ready, do not miss out.
       </p>
 
       {/* Drops Grid */}
       <div >
-        <LimitedCard data={res} button={false} />
+        <LimitedCard data={data} button={false} />
       </div>
     </main>
   );
