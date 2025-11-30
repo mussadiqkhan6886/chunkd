@@ -94,7 +94,7 @@ const AddProduct = () => {
         formData.append("images", compressedFile);
       }
 
-      const res = await axios.post("/api/products", formData);
+      const res = await axios.post("/api/drops", formData);
 
 
       if (res.status === 201) {

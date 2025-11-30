@@ -188,7 +188,7 @@ const AddProduct = () => {
           name="allergens"
           type="text"
           placeholder="allergens separate by comma, e.g (milk, egg)"
-          value={data.allergens.join(",")} // display array as comma-separated string
+          value={data.allergens.join(", ")} // display array as comma-separated string
           onChange={(e) =>
             setData(prev => ({
               ...prev,
@@ -209,7 +209,7 @@ const AddProduct = () => {
             className="w-full border rounded-lg p-2"
             required
           />
-        </div>
+        </div> 
         <div>
           <label className="block font-semibold mb-1">Storage</label>
           <input

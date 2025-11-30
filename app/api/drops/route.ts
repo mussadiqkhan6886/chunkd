@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Product } from "@/lib/models/ProductSchema";
-import { connectDB } from "@/lib/config/database/db";
+import { connectDB } from "@/lib/config/databse";
 import cloudinary from "@/lib/config/cloudinary";
+import CookieSchema from "@/lib/models/CookieSchema";
 
 export const runtime = "nodejs"; // Required for Cloudinary uploads
 
 export const GET = async () => {
   await connectDB();
   try {
-    const res = await Product.find({});
+    const res = await CookieSchema.find({});
     return NextResponse.json({ message: "Fetched Data", data: res }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Failed to fetch data", error }, { status: 400 });
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
         uploadedImages.push(uploadResult.secure_url);
       }
       
-      const newProduct = new Product({
+      const newProduct = new CookieSchema({
         title,
         slug,
         description,

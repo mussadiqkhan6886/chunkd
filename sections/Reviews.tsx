@@ -40,8 +40,8 @@ const Reviews = () => {
           1048: { slidesPerView: 3 },  // tablet and above
         }}
       >
-        {reviews.map((review) => (
-          <SwiperSlide key={review.id}>
+        {reviews.map((review, i) => (
+          <SwiperSlide key={i}>
             <div className="flex flex-col items-center text-center p-6">
               <div className='flex gap-2 text-yellow-500'>{createStar(parseInt(review.stars))}</div>
               <h3 className="text-lg font-semibold">{review.name}</h3>
