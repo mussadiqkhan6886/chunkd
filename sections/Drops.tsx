@@ -1,19 +1,21 @@
-import DropButton from '@/components/mainComp/DropButton'
 import LimitedCard from '@/components/mainComp/LimitedCard'
-import { cookies } from '@/lib/constants'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
 
-const Drops = () => {
+const Drops = async () => {
 
-   const res = cookies.filter(item => item.category === "limited").slice(0,4)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/drops`, {next: {revalidate: 60}})
+
+   if (!res.ok) {
+    throw new Error("Failed to fetch drops");
+  }
+  
+  const json = await res.json()
+
 
   return (
     <section className='width'>
       <h2 className='sectionTitle'>Limited Flavours</h2>
       <div className='flex flex-col items-center'>
-        <LimitedCard data={res} button={true} />
+        <LimitedCard data={json.data.slice(0,4)} button={true} />
       </div>
     </section>
   )

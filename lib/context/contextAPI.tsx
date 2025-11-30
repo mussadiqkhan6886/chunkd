@@ -3,17 +3,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 // ------------------ TYPES ------------------
-export type DropType = {
-  releaseDate: string;
-  durationDays: number;
-  soldOut: boolean;
-};
 
 // Context shape
 type DropContextType = {
   now: Date;
-  getStatus: (drop: DropType) => string;
-  getCountdown: (drop: DropType) => string;
+  getStatus: (releaseDate: string, endDate: string, soldOut: boolean, active: boolean) => string;
+  getCountdown: (releaseDate: string) => string;
 };
 
 // ------------------ DEFAULT VALUE ------------------
@@ -29,18 +24,18 @@ export const DropProvider = ({ children }: { children: React.ReactNode }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const getStatus = (drop: DropType): string => {
-    const release = new Date(drop.releaseDate);
-    const end = new Date(release);
-    end.setDate(end.getDate() + drop.durationDays);
+  const getStatus = (releaseDate: string, endDate: string, soldOut: boolean, active: boolean): string => {
+    const release = new Date(releaseDate!);
+    const end = new Date(endDate!);
+    // end.setDate(end.getDate() + durationDays!);
 
     if (now < release) return "Coming Soon";
-    if (now >= release && now < end && !drop.soldOut) return "Live";
+    if (now >= release && now < end && !soldOut && active) return "Live";
     return "Sold Out";
   };
 
-  const getCountdown = (drop: DropType): string => {
-    const release = new Date(drop.releaseDate);
+  const getCountdown = (releaseDate: string): string => {
+    const release = new Date(releaseDate!);
     const diff = release.getTime() - now.getTime();
 
     if (diff <= 0) return "00 : 00 : 00 : 00";

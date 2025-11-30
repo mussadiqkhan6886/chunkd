@@ -5,9 +5,10 @@ import { useDrop } from '@/lib/context/contextAPI';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import AddToCart from './AddToCart';
+import Image from 'next/image';
 
 type Props = {
-  data: any,
+  data: CookieType[],
   button: boolean
 }
 
@@ -25,20 +26,20 @@ const LimitedCard = ({data, button}: Props) => {
     <>
     <div className="grid max-w-5xl mx-auto grid-cols-1 md:grid-cols-2 gap-10">
       {data.map((drop: CookieType) => {
-          const status = getStatus(drop);
-          const countdown = getCountdown(drop);
-          const release = new Date(drop.releaseDate);
+          const status = getStatus(drop.releaseDate!, drop.endDate!, drop.soldOut, drop.active);
+          const countdown = getCountdown(drop.releaseDate!);
+          const release = new Date(drop.releaseDate!);
 
           return (
             <div
-              key={drop.id}
-              className="border border-soft/40 rounded-2xl overflow-hidden bg-white"
+              key={drop._id}
+              className="border relative md:w-[470px] border-soft/40 rounded-2xl overflow-hidden bg-white"
             >
-              {/* Image Placeholder */}
-              { drop.soldOut ? <div className="h-70 bg-soft/30 flex items-center justify-center text-gray-500 font-semibold">
-                Limited Drop Image
-              </div> : <Link href={`/drops/${drop.slug}`} className="h-70 bg-soft/30 flex items-center justify-center text-gray-500 font-semibold">
-                Limited Drop Image
+              { drop.soldOut || !drop.active ? <div className='h-74 relative'>
+                <Image src={drop.images[0]} alt={drop.title} width={300} height={350} className='object-center object-cover w-full h-full' />
+                <div className='bg-black/40 h-full top-0 left-0 w-full absolute text-white font-bold text-2xl flex items-center justify-center' >Out Of Stock</div>
+              </div> : <Link href={`/drops/${drop.slug}`} className="h-74 block">
+                 <Image src={drop.images[0]} alt={drop.title} width={300} height={350} className='object-center object-cover w-full h-full' />
               </Link>}
 
               {/* Info */}
@@ -47,7 +48,7 @@ const LimitedCard = ({data, button}: Props) => {
                 <h2 className="text-xl md:text-3xl font-bold ">{drop.title}</h2>
                 <h2 className='font-semibold text-lg'>Rs.{drop.price}</h2>
                 </div>
-                <p className="text-gray-600 mb-4">{drop.description}</p>
+                <p className="text-gray-600 mb-4">{drop.description.length > 50 ? drop.description.slice(0,50) + "..." : drop.description}</p>
 
                 {/* Status Badge */}
                 <span
@@ -71,7 +72,7 @@ const LimitedCard = ({data, button}: Props) => {
                 )}
 
                 {/* CTA Button */}
-                <AddToCart status={status} />
+                <AddToCart releaseDate={drop.releaseDate!} endDate={drop.endDate!} soldOut={drop.soldOut} active={drop.active} />
 
                 {/* Release Date */}
                 <p className="text-sm text-gray-500 mt-4">

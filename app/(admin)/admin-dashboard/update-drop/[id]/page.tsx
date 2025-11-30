@@ -36,6 +36,15 @@ const UpdateDrop = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const router = useRouter();
 
+  const formatDateForInput = (dateString: string | null | undefined) => {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  const offset = date.getTimezoneOffset(); // adjust for local timezone
+  const localDate = new Date(date.getTime() - offset * 60 * 1000);
+  return localDate.toISOString().slice(0, 16); // YYYY-MM-DDTHH:mm
+};
+
+
   // 🔹 Fetch product and category info
   useEffect(() => {
     const fetchProduct = async () => {
@@ -44,6 +53,7 @@ const UpdateDrop = ({ params }: { params: Promise<{ id: string }> }) => {
         const res = await axios.get(`/api/products/${id}`);
         const product = res.data.product;
         
+        console.log(product)
         setData({
             title: product.title,
             slug: product.slug,
@@ -54,13 +64,13 @@ const UpdateDrop = ({ params }: { params: Promise<{ id: string }> }) => {
             allergens: product.allergens,
             storage: product.storage,
             heating: product.heating,
-            releaseDate: product.releaseDate,
-            endDate: product.endDate,
+           releaseDate: formatDateForInput(product.releaseDate),
+           endDate: formatDateForInput(product.endDate),
             durationDays: product.durationDays,
             totalLimit: product.totalLimit,
-            soldOut: false,
-            hotSeller: false,
-            active: true,
+            soldOut: product.soldOut || false,
+            hotSeller: product.hotSeller || false,
+            active: product.active || true,
             soldCount: product.soldCount
         });
 

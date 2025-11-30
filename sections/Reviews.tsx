@@ -16,7 +16,7 @@ const Reviews = () => {
     let starsArray: ReactElement[] = [];
 
     for(let i = 0; i < stars; i++){
-      starsArray.push(<FiStar />)
+      starsArray.push(<FiStar key={i} />)
     }
 
     return starsArray

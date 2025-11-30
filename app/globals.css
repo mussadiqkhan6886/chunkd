@@ -44,3 +44,14 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #FF6F91;   /* darker on hover */
 }
+
+/* Pagination bullets */
+.swiper-pagination-bullet {
+  background-color: white !important;
+  opacity: 0.7 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: rgb(161, 2, 82)!important;
+  opacity: 1 !important;
+}

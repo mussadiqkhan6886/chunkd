@@ -1,6 +1,13 @@
+'use client';
+
+import { useDrop } from "@/lib/context/contextAPI";
 import React from "react";
 
-const AddToCart = ({ status }: { status: string }) => {
+const AddToCart = ({releaseDate, endDate, soldOut, active}: {releaseDate: string, endDate: string, soldOut: boolean, active: boolean}) => {
+
+  const {getStatus} = useDrop()
+  const status = getStatus(releaseDate, endDate, soldOut, active)
+
   return (
     <>
       {status === "Coming Soon" && (

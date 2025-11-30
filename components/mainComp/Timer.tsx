@@ -3,15 +3,17 @@
 import { useDrop } from '@/lib/context/contextAPI';
 import React, { useEffect, useState } from 'react'
 
-const Timer = ({product}: {product: CookieType}) => {
+const Timer = ({releaseDate, endDate, soldOut, active}: {releaseDate: string, endDate: string, soldOut: boolean, active: boolean}) => {
     const {getStatus, getCountdown} = useDrop()
     const [mounted, setMounted] = useState(false)
+
     useEffect(() => {
         setMounted(true)
     }, [])
 
-  const status = getStatus(product);
-  const countdown = getCountdown(product);
+  const status = getStatus(releaseDate, endDate, soldOut, active);
+  const countdown = getCountdown(releaseDate);
+
   return (
     <div>
       {mounted && status === "Coming Soon" && (
