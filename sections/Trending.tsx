@@ -1,5 +1,6 @@
 import { connectDB } from '@/lib/config/databse'
 import CookieSchema from '@/lib/models/CookieSchema'
+import Image from 'next/image';
 import Link from 'next/link'
 import React from 'react'
 
@@ -42,9 +43,9 @@ const Trending = async () => {
               ) : (
                 <Link
                   href={`/${cookie.category === "limited" ? "drops" : "menu"}/${cookie.slug}`}
-                  className="w-full block h-[450px] bg-soft/50"
+                  className="w-full block h-[450px]"
                 >
-                  {/* <Image src="" /> */}
+                  <Image src={cookie.images[0]} alt={cookie.title} width={300} height={350} className="h-full w-full object-cover object-center" />
                 </Link>
               )}
 
