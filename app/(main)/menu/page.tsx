@@ -1,12 +1,16 @@
 import FilterClient from "@/components/mainComp/Filteration";
+import { connectDB } from "@/lib/config/databse";
+import CookieSchema from "@/lib/models/CookieSchema";
+
+export const revalidate = 60;
 
 const MenuPage = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`, {
-    next: { revalidate: 60 },
-  });
 
-  const json = await res.json();
-  const cookies: CookieType[] = json.data;
+  await connectDB()
+
+  const res = await CookieSchema.find({}).lean()
+
+  const cookies = JSON.parse(JSON.stringify(res))
 
   return (
     <main className="bg-secondary pt-24">
