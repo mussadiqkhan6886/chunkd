@@ -1,6 +1,6 @@
-import { connectDB } from "@/lib/config/database/db";
-import order from "@/lib/models/OrderSchema";
 import { NextRequest, NextResponse } from "next/server";
+import { connectDB } from "@/lib/config/databse";
+import order from "@/lib/models/OrderSchema";
 
 export const DELETE = async (
   _req: NextRequest,
