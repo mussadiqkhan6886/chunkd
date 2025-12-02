@@ -6,6 +6,7 @@ import Image from "next/image";
 import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
 import { Product } from "@/lib/models/ProductSchema";
+import DateTimePicker from "@/components/mainComp/DateTimePicker";
 
 const UpdateDrop = ({ params }: { params: Promise<{ id: string }> }) => {
   const [files, setFiles] = useState<File[]>([]);
@@ -285,24 +286,18 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         </div>
         <div>
           <label className="block font-semibold mb-1">Release Date</label>
-          <input
-            name="releaseDate"
-            type="datetime-local"
+          <DateTimePicker
             value={data.releaseDate}
-            onChange={handleChange}
-            className="w-full border rounded-lg p-2"
-            required
+            placeholder="Select Release Date & Time"
+            onChange={(value) => setData((prev) => ({ ...prev, releaseDate: value }))}
           />
         </div>
         <div>
           <label className="block font-semibold mb-1">End Date</label>
-          <input
-            name="endDate"
-            type="datetime-local"
+          <DateTimePicker
             value={data.endDate}
-            onChange={handleChange}
-            className="w-full border rounded-lg p-2"
-            required
+            placeholder="Select End Date & Time"
+            onChange={(value) => setData((prev) => ({ ...prev, endDate: value }))}
           />
         </div>
         <div>

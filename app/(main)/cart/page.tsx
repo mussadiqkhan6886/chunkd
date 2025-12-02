@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useDrop } from "@/lib/context/contextAPI";
+import Link from "next/link";
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity, totalAmount } = useDrop();
@@ -150,9 +151,11 @@ const CartPage = () => {
       <div className="text-right mt-10">
         <h2 className="text-3xl font-bold">Total: Rs. {totalAmount}</h2>
 
-        <button className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl hover:bg-soft/90 transition">
+        {cart.length > 0 ? <Link href={"/checkout"} className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl hover:bg-soft/90 transition inline-block">Checkout</Link> : <button
+            disabled
+            className="mt-6 bg-soft/40 text-white px-10 py-4 text-xl rounded-2xl ">
           Checkout
-        </button>
+        </button>}
       </div>
     </main>
   );

@@ -57,7 +57,7 @@ const AddToCart = ({
         onClick={() => handleAdd("drop")}
         className="mt-5 w-full py-3 rounded-xl bg-black text-white font-semibold hover:bg-black/80 transition"
       >
-        {loading ? "Adding..." : "Pre-Order"}
+        {loading ? "Adding..." : "Add To Cart (Pre-Order)"}
       </button>
     );
 
