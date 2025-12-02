@@ -9,6 +9,8 @@ import Trending from '@/sections/Trending'
 import Works from '@/sections/Works'
 import React from 'react'
 
+export const dynamic = 'force-dynamic';
+
 const Home = () => {
   return (
     <main className='bg-secondary'>
