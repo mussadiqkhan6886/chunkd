@@ -15,7 +15,7 @@ const Drops = async () => {
     <section className='width'>
       <h2 className='sectionTitle'>Limited Flavours</h2>
       <div className='flex flex-col items-center'>
-        <LimitedCard data={json.data.slice(0,4)} button={true} />
+        <LimitedCard data={json.slice(0,4)} button={true} />
       </div>
     </section>
   )
