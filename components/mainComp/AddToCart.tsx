@@ -14,7 +14,7 @@ const AddToCart = ({releaseDate, endDate, soldOut, active}: {releaseDate: string
     {
       (releaseDate === undefined && endDate === undefined) && (
         <button className="mt-5 w-full py-3 rounded-xl bg-soft text-white font-semibold hover:bg-soft/90 transition">
-          <Link href={"/choose"}>Buy Now</Link>
+          Add To Cart
         </button>
       )
     }
@@ -26,7 +26,7 @@ const AddToCart = ({releaseDate, endDate, soldOut, active}: {releaseDate: string
 
       {status === "Live" && (
         <button className="mt-5 w-full py-3 rounded-xl bg-soft text-white font-semibold hover:bg-soft/90 transition">
-          <Link href={"/choose"}>Buy Now</Link>
+          Add To Cart
         </button>
       )}
     </>

@@ -1,22 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 
-type Flavour = {
-  id: number;
-  name: string;
-  description: string;
-  price: string
-};
-
-const flavours: Flavour[] = [
-  { id: 1,price: "200", name: "Chocolate Chip", description: "Classic gooey goodness" },
-  { id: 2,price: "200", name: "Red Velvet", description: "Rich and smooth cocoa" },
-  { id: 3,price: "200", name: "Double Chocolate", description: "A chocoholic’s dream" },
-  { id: 4,price: "200", name: "Peanut Butter", description: "Nutty, soft & creamy" },
-  { id: 5,price: "200", name: "Birthday Sprinkle", description: "Colourful & fun" },
-  { id: 6,price: "200", name: "Lotus Biscoff", description: "Caramel cookie bliss" },
-];
 
 const BuildYourBox = () => {
   const [boxSize, setBoxSize] = useState<4 | 6>(4);
@@ -33,6 +19,18 @@ const BuildYourBox = () => {
     if (!quantities[id]) return;
     setQuantities((prev) => ({ ...prev, [id]: prev[id] - 1 }));
   };
+
+  const [data, setData] = useState<CookieType[] | []>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`, {next:{revalidate: 60}})
+      const json = await res.json()
+      setData(json.data)
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <main className="max-w-7xl mx-auto pt-28 p-5">
@@ -73,24 +71,24 @@ const BuildYourBox = () => {
 
       {/* Flavour Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {flavours.map((item) => {
-          const qty = quantities[item.id] || 0;
+        {data.map((item: CookieType) => {
+          const qty = quantities[parseInt(item._id)] || 0;
 
           return (
             <div
-              key={item.id}
-              className="border border-soft/40 rounded-2xl p-5 "
+              key={item._id}
+              className="border max-w-[400px] border-soft/40 rounded-2xl p-5 "
             >
               {/* Image Placeholder */}
-              <div className="h-[300px] bg-soft/30 rounded-xl mb-4 flex items-center justify-center text-gray-500 font-semibold">
-                Image
+              <div className="h-[350px] bg-soft/30 rounded-xl mb-4 flex items-center justify-center text-gray-500 font-semibold">
+                <Image src={item.images[0]} alt={item.title} width={300} height={350} className='w-full h-full object-cover object-center' />
               </div>
 
               {/* Info */}
-              <div className='flex justify-between items-center'>
-                <div>
-                    <h2 className="text-xl font-bold">{item.name}</h2>
-                    <p className="text-sm text-gray-500 mb-4">{item.description}</p>
+              <div className='flex justify-between flex-col items-center'>
+                <div className='flex flex-col items-center justify-center'>
+                    <h2 className="text-xl font-bold">{item.title}</h2>
+                    <p className="text-sm text-gray-500 mb-4">{item.description.length > 45 ? item.description.slice(0,45) + "...." : item.description}</p>
                 </div>
                 <p>Rs. {item.price}</p>
               </div>
@@ -98,7 +96,7 @@ const BuildYourBox = () => {
               {/* Quantity Controls */}
               <div className="flex items-center justify-between">
                 <button
-                  onClick={() => decrease(item.id)}
+                  onClick={() => decrease(parseInt(item._id))}
                   className="w-10 h-10 flex items-center justify-center text-xl border rounded-lg hover:bg-gray-100"
                 >
                   -
@@ -107,7 +105,7 @@ const BuildYourBox = () => {
                 <span className="text-xl font-bold">{qty}</span>
 
                 <button
-                  onClick={() => increase(item.id)}
+                  onClick={() => increase(parseInt(item._id))}
                   className={`w-10 h-10 flex items-center justify-center text-xl border rounded-lg transition 
                     ${totalSelected >= boxSize ? 'opacity-40 cursor-not-allowed' : 'hover:bg-soft hover:text-white'}`}
                 >
