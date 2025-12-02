@@ -115,6 +115,7 @@ const FilterClient = ({ cookies }: { cookies: CookieType[] }) => {
                   endDate={cookie.endDate!}
                   soldOut={cookie.soldOut}
                   active={cookie.active}
+                  data={cookie}
                 />
               </div>
             </div>

@@ -86,6 +86,7 @@ const LimitedCard = ({ data, button }: Props) => {
                       endDate={drop.endDate!}
                       soldOut={drop.soldOut}
                       active={drop.active}
+                      data={drop}
                     />
 
                     {/* Release Date */}

@@ -66,7 +66,7 @@ const SingleProduct = async ({data}: {data: DropType}) => {
           )}
 
           {/* Add to Box Button */}
-          <AddToCart releaseDate={data.releaseDate!} endDate={data.endDate!} soldOut={data.soldOut} active={data.active} />
+          <AddToCart releaseDate={data.releaseDate!} endDate={data.endDate!} soldOut={data.soldOut} active={data.active} data={data} />
           <div className="mt-6 space-y-3">
 
             <Accordion title="Heating Instructions">
