@@ -1,16 +1,16 @@
 import LimitedCard from '@/components/mainComp/LimitedCard'
+import { connectDB } from '@/lib/config/databse';
+import CookieSchema from '@/lib/models/CookieSchema';
+
+export const revalidate = 60;
 
 const Drops = async () => {
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/drops`, {next: {revalidate: 60}})
+  await connectDB()
 
-   if (!res.ok) {
-    throw new Error("Failed to fetch drops");
-  }
+  const res = await CookieSchema.find({category: "limited"}).lean()
+  const json = JSON.parse(JSON.stringify(res))
   
-  const json = await res.json()
-
-
   return (
     <section className='width'>
       <h2 className='sectionTitle'>Limited Flavours</h2>
