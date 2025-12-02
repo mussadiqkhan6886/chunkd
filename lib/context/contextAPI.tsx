@@ -17,7 +17,7 @@ export interface CartItem {
   type: "simple" | "drop" | "box"; // ⭐ distinguishes 3 product types
 
   title: string;
-  images: string[];
+  images: string;
 
   price: number; // dynamic for box
   quantity: number;

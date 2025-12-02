@@ -88,7 +88,7 @@ const BuildYourBox = () => {
       title: `Build Your Box (${boxData.size})`,
       price: boxData.totalPrice,
       quantity: 1,
-      images: ['/box.png'],
+      images: '/box.png',
       boxType: {
         size: boxData.size,
         boxTotalPrice: boxData.totalPrice,

@@ -71,7 +71,7 @@ export const POST = async (req: NextRequest) => {
 
 
    for (const item of orderData.items) {
-  const product = await Product.findById(item.id);
+  const product = await CookieSchema.findById(item.id);
 
   if (product) {
     // Calculate new stock
@@ -79,7 +79,7 @@ export const POST = async (req: NextRequest) => {
     if (newStock < 0) newStock = 0;
 
     // Update stock and inStock flag
-    await Product.findByIdAndUpdate(item.id, {
+    await CookieSchema.findByIdAndUpdate(item.id, {
       stock: newStock,
       inStock: newStock > 0, // true if stock > 0, false if 0
     });

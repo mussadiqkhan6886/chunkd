@@ -30,7 +30,7 @@ const AddToCart = ({
       price: data.price,
       images: data.images[0],
       quantity: 1,
-      totalLimit: data.totalLimit,
+      totalLimit: data.totalLimit!,
     });
     setTimeout(() => setLoading(false), 700);
   };

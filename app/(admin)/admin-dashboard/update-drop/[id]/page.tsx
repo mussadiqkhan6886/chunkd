@@ -5,8 +5,6 @@ import axios from "axios";
 import Image from "next/image";
 import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
-import { Product } from "@/lib/models/ProductSchema";
-import DateTimePicker from "@/components/mainComp/DateTimePicker";
 
 const UpdateDrop = ({ params }: { params: Promise<{ id: string }> }) => {
   const [files, setFiles] = useState<File[]>([]);
@@ -284,20 +282,38 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
             required
           />
         </div>
-        <div>
+               <div>
           <label className="block font-semibold mb-1">Release Date</label>
-          <DateTimePicker
-            value={data.releaseDate}
-            placeholder="Select Release Date & Time"
-            onChange={(value) => setData((prev) => ({ ...prev, releaseDate: value }))}
+          <input
+            name="releaseDate"
+            type="date"
+            value={data.releaseDate ? data.releaseDate.split("T")[0] : ""}
+            onChange={(e) =>
+              setData((prev) => ({
+                ...prev,
+                releaseDate: `${e.target.value}T00:00`
+              }))
+            }
+            className="w-full border rounded-lg p-2"
+            required
           />
         </div>
+
+        {/* End Date */}
         <div>
           <label className="block font-semibold mb-1">End Date</label>
-          <DateTimePicker
-            value={data.endDate}
-            placeholder="Select End Date & Time"
-            onChange={(value) => setData((prev) => ({ ...prev, endDate: value }))}
+          <input
+            name="endDate"
+            type="date"
+            value={data.endDate ? data.endDate.split("T")[0] : ""}
+            onChange={(e) =>
+              setData((prev) => ({
+                ...prev,
+                endDate: `${e.target.value}T23:59`
+              }))
+            }
+            className="w-full border rounded-lg p-2"
+            required
           />
         </div>
         <div>
