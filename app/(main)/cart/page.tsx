@@ -4,12 +4,10 @@ import Image from "next/image";
 import { useDrop } from "@/lib/context/contextAPI";
 
 const CartPage = () => {
-  const { cart, removeFromCart, updateQuantity } = useDrop();
-
-  const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const { cart, removeFromCart, updateQuantity, totalAmount } = useDrop();
 
   return (
-    <main className="max-w-6xl mx-auto px-5 pt-28 pb-20">
+    <main className="max-w-6xl bg-secondary mx-auto px-5 pt-28 pb-20">
       <h1 className="text-5xl font-bold mb-10 text-center">Your Cart</h1>
 
       {cart.length === 0 ? (
@@ -22,19 +20,47 @@ const CartPage = () => {
               className="border p-6 rounded-2xl shadow-sm bg-white flex flex-col md:flex-row gap-5"
             >
               {/* PRODUCT IMAGE */}
-              <div className="w-full md:w-40 h-40 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
-                <Image
-                  src={
-                    typeof item.images === "string"
-                      ? item.images
-                      : item.images[0]
-                  }
-                  alt={item.title}
-                  width={160}
-                  height={160}
-                  className="object-cover h-full w-full"
-                />
-              </div>
+              {item.boxType ? (
+                    <div className="grid grid-cols-2 gap-3 p-3 bg-gradient-to-br from-soft/10 to-white rounded-2xl shadow-sm border border-soft/20">
+                        {item.boxType.cookies.map((singleCookie, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-col items-center bg-white rounded-xl shadow-sm p-2 border border-gray-200 hover:shadow-md transition"
+                        >
+                            <div className="w-24 h-24 rounded-lg overflow-hidden mb-2">
+                            <Image
+                                src={singleCookie.image}
+                                alt={singleCookie.title}
+                                width={100}
+                                height={100}
+                                className="w-full h-full object-cover object-center"
+                            />
+                            </div>
+
+                            <p className="text-sm font-semibold text-gray-600 text-center truncate  w-full">
+                            {singleCookie.title} 
+                            </p>
+
+                            <p className="text-xs text-gray-500">Qty: {singleCookie.qty}</p>
+                        </div>
+                        ))}
+                    </div>
+                    ) : (
+                    <div className="w-full md:w-40 h-40 bg-white border border-gray-200 rounded-xl shadow-sm flex items-center justify-center overflow-hidden hover:shadow-md transition">
+                        <Image
+                        src={
+                            typeof item.images === "string"
+                            ? item.images
+                            : item.images[0]
+                        }
+                        alt={item.title}
+                        width={160}
+                        height={160}
+                        className="object-cover h-full w-full"
+                        />
+                    </div>
+                    )}
+
 
               {/* DETAILS */}
               <div className="flex-1 flex flex-col justify-between">
@@ -122,7 +148,7 @@ const CartPage = () => {
 
       {/* CART TOTAL */}
       <div className="text-right mt-10">
-        <h2 className="text-3xl font-bold">Total: Rs. {cartTotal}</h2>
+        <h2 className="text-3xl font-bold">Total: Rs. {totalAmount}</h2>
 
         <button className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl hover:bg-soft/90 transition">
           Checkout
