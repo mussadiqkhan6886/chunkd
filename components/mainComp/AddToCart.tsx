@@ -16,8 +16,24 @@ const AddToCart = ({
   active: boolean;
   data: CookieType;
 }) => {
-  const { getStatus, addToCart, cart } = useDrop();
+  const { getStatus, addToCart} = useDrop();
   const [loading, setLoading] = useState(false);
+
+ const [liveStatus, setLiveStatus] = useState(false);
+
+useEffect(() => {
+  const now = new Date();
+  const release = new Date(data.releaseDate!);
+  const end = new Date(data.endDate!);
+
+  if(data.releaseDate === undefined && data.endDate === undefined){
+    setLiveStatus(true)
+  }else{
+    setLiveStatus(now >= release && now <= end);
+  }
+}, [data]);
+
+
 
   const status = getStatus(releaseDate, endDate, soldOut, active);
 
@@ -26,6 +42,7 @@ const AddToCart = ({
     await addToCart({
       id: data._id,
       type,
+      isLive: liveStatus,
       title: data.title,
       price: data.price,
       images: data.images[0],

@@ -48,7 +48,7 @@ const BuildYourBox = () => {
     cookies: [] as {
       id: string;
       title: string;
-      image: string;
+      image: string; 
       qty: number;
       price: number;
     }[],

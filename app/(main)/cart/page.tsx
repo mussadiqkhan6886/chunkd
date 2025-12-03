@@ -7,6 +7,8 @@ import Link from "next/link";
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity, totalAmount } = useDrop();
 
+  console.log(cart)
+
   return (
     <main className="max-w-6xl bg-secondary mx-auto px-5 pt-28 pb-20">
       <h1 className="text-5xl font-bold mb-10 text-center">Your Cart</h1>
@@ -18,7 +20,7 @@ const CartPage = () => {
           {cart.map((item) => (
             <div
               key={item.id}
-              className="border p-6 rounded-2xl shadow-sm bg-white flex flex-col md:flex-row gap-5"
+              className="border-r-10 border-b-10 border p-6 border-soft bg-white flex flex-col md:flex-row gap-5"
             >
               {/* PRODUCT IMAGE */}
               {item.boxType ? (
@@ -28,6 +30,7 @@ const CartPage = () => {
                             key={index}
                             className="flex flex-col items-center bg-white rounded-xl shadow-sm p-2 border border-gray-200 hover:shadow-md transition"
                         >
+                          
                             <div className="w-24 h-24 rounded-lg overflow-hidden mb-2">
                             <Image
                                 src={singleCookie.image}
@@ -47,7 +50,8 @@ const CartPage = () => {
                         ))}
                     </div>
                     ) : (
-                    <div className="w-full md:w-40 h-40 bg-white border border-gray-200 rounded-xl shadow-sm flex items-center justify-center overflow-hidden hover:shadow-md transition">
+                    <div className="w-full md:w-40 h-40 bg-white border border-gray-200 rounded-xl shadow-sm flex items-center justify-center overflow-hidden hover:shadow-md transition relative">
+                      {(!item.isLive && item.type === "drop") && <div className="bg-soft text-black font-bold capitalize absolute px-2 top-0 text-sm">Only Pre Order</div>}
                         <Image
                         src={
                             typeof item.images === "string"
@@ -65,7 +69,9 @@ const CartPage = () => {
 
               {/* DETAILS */}
               <div className="flex-1 flex flex-col justify-between">
+                
                 <div>
+                  
                   <h2 className="text-2xl font-bold">{item.title}</h2>
 
                   {/* TYPE BADGE */}

@@ -24,7 +24,7 @@ export interface CartItem {
 
   // Only for limited drops
   totalLimit?: number;
-
+  isLive?: boolean;
   // Only for build-a-box
   boxType?: {
     size: number; // 4 or 6
