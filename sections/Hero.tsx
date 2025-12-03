@@ -1,10 +1,14 @@
+'use client';
+
 import Link from 'next/link'
-import React from 'react'
 import BlurText from '@/components/mainComp/ui/SplitText'
+import NoticeBanner from '@/components/mainComp/NoticeBanner';
 
 const Hero = () => {
+ 
   return (
     <section className='width relative h-screen pt-30 md:h-[80vh] bg-soft/80' > 
+    <NoticeBanner />
       <div className="absolute w-full lg:w-[50%] left-1/2 top-1/2 -translate-x-1/2 translate-y-10 md:translate-y-20 flex items-center flex-col gap-4">
         <BlurText
           text="Thick, gooey, freshly baked cookies for serious cravings!"
