@@ -16,6 +16,7 @@ const CookieSchema = new mongoose.Schema(
     soldOut: { type: Boolean, default: false },
     // BADGES
     hotSeller: { type: Boolean, default: false },
+    allowedForBox: {type: Boolean, required: true},
     // SAFETY INFO
     allergens: { type: [String], default: [] },
     storage: { type: String, default: "" },

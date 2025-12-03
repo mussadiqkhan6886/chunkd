@@ -36,7 +36,8 @@ const BuildYourBox = () => {
         { next: { revalidate: 60 } }
       );
       const json = await res.json();
-      setData(json.data);
+      const formattedData = json.data.filter((item: CookieType) => item.allowedForBox === true)
+      setData(formattedData);
     };
 
     fetchData();

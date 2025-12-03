@@ -56,6 +56,7 @@ export const PATCH = async (
     const endDate = formData.get("endDate")
     const durationDays = formData.get("durationDays")
     const totalLimit = formData.get("totalLimit")
+    const allowedForBox = formData.get("allowedForBox") === "true";
     const files = formData.getAll("images") as File[];
     const uploadedImages: string[] = [];
 
@@ -101,6 +102,7 @@ export const PATCH = async (
       durationDays,
       totalLimit,
       active,
+      allowedForBox,
       images: updatedImages, // just overwrite with merged array
     };
 

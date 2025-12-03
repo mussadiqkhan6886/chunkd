@@ -19,6 +19,7 @@ interface CookieType {
   active: boolean;
   createdAt: string; // ISO string
   updatedAt: string; // ISO string
+  allowedForBox:boolean
 }
 
 interface DropType {
@@ -40,6 +41,7 @@ interface DropType {
   active: boolean;
   totalLimit: number;
   soldCount: number;
+  allowedForBox:boolean
   createdAt: string;   // ISO string
   updatedAt: string;   // ISO string
   __v?: number;        // mongoose version key, optional

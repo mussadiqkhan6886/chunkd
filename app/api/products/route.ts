@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
     .map((x) => JSON.parse(x));
     const storage = formData.get("storage")
     const heating = formData.get("heating")
+    const allowedForBox = formData.get("allowedForBox") === "true";
 
     if (!title || !description || !price) {
       throw new Error("Missing required fields");
@@ -79,6 +80,7 @@ export async function POST(req: NextRequest) {
         allergens,
         storage,
         heating,
+        allowedForBox,
         images: uploadedImages,
     });
     await newProduct.save();

@@ -85,6 +85,7 @@ export default function DropTable({ products }: ProductTableProps) {
   { field: 'totalLimit', headerName: 'Total Limit', width: 120 },
   { field: 'soldCount', headerName: 'Sold Count', width: 100 },
   { field: 'soldOut', headerName: 'Sold Out', width: 80, type: 'boolean' },
+  { field: 'allowedForBox', headerName: 'Allowed For Box', width: 100, type: 'boolean' },
   { field: 'hotSeller', headerName: 'Hot Seller', width: 80, type: 'boolean' },
   { field: 'active', headerName: 'Active', width: 80, type: 'boolean' },
     {

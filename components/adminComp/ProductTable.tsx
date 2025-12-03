@@ -58,6 +58,12 @@ export default function ProductTable({ products }: ProductTableProps) {
     type: 'boolean',
   },
   {
+    field: 'allowedForBox',
+    headerName: 'Allowed For Box',
+    width: 120,
+    type: 'boolean',
+  },
+  {
     field: 'hotSeller',
     headerName: 'Hot Seller',
     width: 100,

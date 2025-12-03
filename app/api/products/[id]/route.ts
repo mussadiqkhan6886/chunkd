@@ -52,6 +52,7 @@ export const PATCH = async (
     const hotSeller = formData.get("hotSeller") === "true";
     const soldCount = Number(formData.get("soldCount"))
     const active = formData.get("active") === "true"
+    const allowedForBox = formData.get("allowedForBox") === "true";
     const files = formData.getAll("images") as File[];
     const uploadedImages: string[] = [];
 
@@ -93,6 +94,7 @@ export const PATCH = async (
       hotSeller,
       soldCount,
       active,
+      allowedForBox,
       images: updatedImages, // just overwrite with merged array
     };
 

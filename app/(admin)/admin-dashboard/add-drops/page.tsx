@@ -25,6 +25,7 @@ const AddProduct = () => {
     endDate: "",
     durationDays: "",
     totalLimit: "",
+    allowedForBox: false
   });
 
   // Slug generator
@@ -113,6 +114,7 @@ const AddProduct = () => {
           endDate: "",
           durationDays: "",
           totalLimit: "",
+          allowedForBox: false
         });
         setFiles([]);
         setPreviews([]);
@@ -188,6 +190,16 @@ const AddProduct = () => {
             className="w-full border rounded-lg p-2"
             required
           />
+        </div>
+         <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            name="allowedForBox"
+            checked={data.allowedForBox}
+            onChange={handleChange}
+            required
+          />
+          <label className="font-semibold">Allowed For Box</label>
         </div>
 
         <div>

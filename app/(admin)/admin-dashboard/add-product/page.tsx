@@ -20,7 +20,8 @@ const AddProduct = () => {
     images: [] as string[],
     allergens: [] as string[],
     storage: "",
-    heating: ""
+    heating: "",
+    allowedForBox: false
   });
 
   // Slug generator
@@ -104,7 +105,8 @@ const AddProduct = () => {
           allergens: [],
           storage: "",
           heating: "",
-          category: "classic"
+          category: "classic",
+          allowedForBox: false
         });
         setFiles([]);
         setPreviews([]);
@@ -180,6 +182,17 @@ const AddProduct = () => {
             className="w-full border rounded-lg p-2"
             required
           />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            name="allowedForBox"
+            checked={data.allowedForBox}
+            onChange={handleChange}
+            required
+          />
+          <label className="font-semibold">Allowed For Box</label>
         </div>
 
        <div>

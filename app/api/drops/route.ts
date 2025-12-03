@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
     .getAll("allergens")
     .filter((x): x is string => typeof x === "string")
     .map((x) => JSON.parse(x));
+    const allowedForBox = formData.get("allowedForBox") === "true"
     const storage = formData.get("storage") as string
     const heating = formData.get("heating") as string
     const releaseDate = formData.get("releaseDate")
@@ -87,6 +88,7 @@ export async function POST(req: NextRequest) {
         endDate,
         durationDays,
         totalLimit,
+        allowedForBox,
         images: uploadedImages,
     });
     await newProduct.save();

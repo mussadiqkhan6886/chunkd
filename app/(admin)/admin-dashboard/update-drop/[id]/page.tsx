@@ -30,7 +30,8 @@ const UpdateDrop = ({ params }: { params: Promise<{ id: string }> }) => {
     soldOut: false,
     hotSeller: false,
     active: true,
-    soldCount: ""
+    soldCount: "",
+    allowedForBox: false
   });
 
   const router = useRouter();
@@ -70,7 +71,8 @@ const UpdateDrop = ({ params }: { params: Promise<{ id: string }> }) => {
             soldOut: product.soldOut || false,
             hotSeller: product.hotSeller || false,
             active: product.active || true,
-            soldCount: product.soldCount
+            soldCount: product.soldCount,
+            allowedForBox: product.allowedForBox
         });
 
         setExistingImages(product.images || []);
@@ -228,6 +230,15 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
             onChange={handleChange}
           />
           <label className="font-semibold">Sold Out</label>
+        </div>
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            name="allowedForBox"
+            checked={data.allowedForBox}
+            onChange={handleChange}
+          />
+          <label className="font-semibold">Allowed For Box</label>
         </div>
 
         <div className="flex items-center gap-2">
