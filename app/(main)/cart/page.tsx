@@ -3,16 +3,27 @@
 import Image from "next/image";
 import { useDrop } from "@/lib/context/contextAPI";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity, totalAmount } = useDrop();
+  const [same, setSame] = useState(false)
 
-  console.log(cart)
+  useEffect(() => {
+    setSame(cart.some(item => item.isLive === false))
+  }, [cart])
+
+    
+
 
   return (
     <main className="max-w-6xl bg-secondary mx-auto px-5 pt-28 pb-20">
       <h1 className="text-5xl font-bold mb-10 text-center">Your Cart</h1>
-
+      {same && (
+        <div className="bg-red-100 border border-red-400 text-red-800 px-4 py-3 rounded-md mb-4 text-center font-semibold shadow-sm">
+          ⚠️ Your cart has both live and non-live cookies. Please separate them into different orders.
+        </div>
+      )}
       {cart.length === 0 ? (
         <p className="text-center text-gray-600">Your cart is empty.</p>
       ) : (
@@ -157,7 +168,7 @@ const CartPage = () => {
       <div className="text-right mt-10">
         <h2 className="text-3xl font-bold">Total: Rs. {totalAmount}</h2>
 
-        {cart.length > 0 ? <Link href={"/checkout"} className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl hover:bg-soft/90 transition inline-block">Checkout</Link> : <button
+        {(cart.length > 0 && !same) ? <Link href={"/checkout"} className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl hover:bg-soft/90 transition inline-block">Checkout</Link> : <button
             disabled
             className="mt-6 bg-soft/40 text-white px-10 py-4 text-xl rounded-2xl ">
           Checkout
