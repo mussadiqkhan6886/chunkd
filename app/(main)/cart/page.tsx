@@ -10,11 +10,10 @@ const CartPage = () => {
   const [same, setSame] = useState(false)
 
   useEffect(() => {
-    setSame(cart.some(item => item.isLive === false))
+    const hasLive = cart.some(item => item.isLive) 
+    const noLive = cart.some(item => !item.isLive)
+    setSame(hasLive && noLive)
   }, [cart])
-
-    
-
 
   return (
     <main className="max-w-6xl bg-secondary mx-auto px-5 pt-28 pb-20">
@@ -121,7 +120,8 @@ const CartPage = () => {
 
                   {/* PRICE */}
                   <p className="text-xl font-semibold mt-4">
-                    Rs. {item.price * item.quantity}
+                    Rs. {item.price}
+                    <span className="inline-block  ml-1 text-sm font-[400]">x {item.quantity}</span>
                   </p>
                 </div>
 
