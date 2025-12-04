@@ -60,7 +60,7 @@ const HeaderWithMenu = () => {
           </Link>
           <Link href={"/cart"}><FiShoppingCart className='text-xl' /></Link>
         </motion.div>
-      ): <div className='w-[70px] md:w-[75px]'></div>}
+      ): <div className='w-[70px] md:w-[107px]'></div>}
     </AnimatePresence>
 
       {/* Aside Menu */}
