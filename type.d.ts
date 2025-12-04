@@ -54,3 +54,11 @@ interface reviewType {
   rating: number
   message: string
 }
+
+interface CouponType {
+code: string 
+createdAt: string
+discount: number
+__v: number
+_id: string
+}
