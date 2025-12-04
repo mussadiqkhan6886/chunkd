@@ -11,11 +11,12 @@ const CartPage = () => {
 
   const [same, setSame] = useState(false);
 
-  const [orderType, setOrderType] = useState<"delivery" | "pickup" | null>(null);
+  const [orderType, setOrderType] = useState<"delivery" | "pickup" | "preOrder" |null>(null);
   const [showTimingPopup, setShowTimingPopup] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-
+  const [address, setAddress] = useState("")
+  const [city, setCity] = useState("lahore")
   const [finalOrder, setFinalOrder] = useState<any>(null);
 
   const hasLive = cart.some((item) => item.isLive === true);
@@ -27,21 +28,22 @@ const CartPage = () => {
 
   // ⭐ Save to final order object whenever everything is ready
   useEffect(() => {
-    if (orderType && selectedDate && selectedTime) {
+    if (orderType && selectedDate && selectedTime && address && city) {
       setFinalOrder({
         cart,
         orderType,
         date: selectedDate,
         time: selectedTime,
-        totalAmount,
+        address,
+        city
       });
     }
-  }, [orderType, selectedDate, selectedTime, cart, totalAmount]);
+  }, [orderType, selectedDate, selectedTime, cart, totalAmount, address, city]);
 
   // ⭐ Handler for delivery or pickup click
-  const handleOrderType = (type: "delivery" | "pickup") => {
+  const handleOrderType = (type: "delivery" | "pickup" | "preOrder") => {
     setOrderType(type);
-
+    
     // Pickup always needs timing
     if (type === "pickup") {
       setShowTimingPopup(true);
@@ -54,11 +56,12 @@ const CartPage = () => {
       setShowTimingPopup(true);
     } else {
       // live delivery → skip popup
+      setShowTimingPopup(true);
       setSelectedDate("today");
-      setSelectedTime("Live Delivery");
+      setSelectedTime("now");
     }
   };
-
+  
   // ⭐ Save popup timing
   const handleSaveTiming = () => {
     if (!selectedDate || !selectedTime) return;
@@ -77,7 +80,7 @@ const CartPage = () => {
       )}
 
       {!orderType && cart.length > 0 && !same && (
-        <p>Please choose delivery or pickup</p>
+        <p className="text-center">Please choose delivery or pickup</p>
       )}
 
       {/* ⭐ Delivery / Pickup */}
@@ -85,12 +88,18 @@ const CartPage = () => {
         <div className="flex gap-4 my-6 max-w-xl mx-auto justify-center">
           
           {/* Delivery Button */}
-          <button
+          {hasPreOrder && <button
+            onClick={() => handleOrderType("preOrder")}
+            className={`${orderType === "delivery" ? "bg-soft text-white scale-105" : "bg-secondary text-black"} w-full border border-black/20 px-5 py-3 rounded-xl transition`}
+          >
+            Pre Order
+          </button>}
+          {!hasPreOrder && <button
             onClick={() => handleOrderType("delivery")}
             className={`${orderType === "delivery" ? "bg-soft text-white scale-105" : "bg-secondary text-black"} w-full border border-black/20 px-5 py-3 rounded-xl transition`}
           >
-            {hasPreOrder ? "Pre Order Delivery" : "Delivery"}
-          </button>
+            Delivery
+          </button>}
 
           {/* Pickup always available */}
           <button
@@ -108,8 +117,8 @@ const CartPage = () => {
           <div className="bg-white p-6 rounded-xl relative w-80 shadow-xl">
           <FiX className="absolute top-5 right-5" onClick={() => setShowTimingPopup(false)} />
 
-            <h2 className="text-2xl font-bold mb-4 text-center">
-              {orderType === "pickup" ? "Pickup Timing" : "Pre-Order Delivery Timing"}
+            <h2 className="text-xl font-bold mb-4 text-center">
+              {orderType === "pickup" ? "Pickup Timing" : orderType === "delivery" ? "Delivery Timing & Address" : "Pre-Order Timing & Address"}
             </h2>
 
             {/* Date */}
@@ -148,6 +157,18 @@ const CartPage = () => {
               )}
             </select>
 
+              <div>
+              <label className="block">Full Address: </label>
+              <textarea placeholder="Enter Full Address"></textarea>
+              </div>
+              <div>
+                <label>City: </label>
+                <select>
+                  <option value="">Select City</option>
+                  <option value="">Lahore</option>
+                </select>
+                
+              </div>
             <button
               onClick={handleSaveTiming}
               disabled={!selectedDate || !selectedTime}
