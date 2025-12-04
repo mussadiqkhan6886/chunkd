@@ -30,7 +30,7 @@ export default function NoticeBanner() {
           className="
             absolute top-18 left-10
             bg-yellow-300 text-yellow-900
-            px-7 text-sm py-4 shadow-lg font-semibold
+            px-7 text-[12px] md:text-sm py-4 shadow-lg font-semibold
             rounded-full
           "
         >

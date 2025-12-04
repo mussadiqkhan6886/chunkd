@@ -35,7 +35,7 @@ const FilterClient = ({ cookies }: { cookies: CookieType[] }) => {
             Showing {filteredCookies.length} cookie
             {filteredCookies.length !== 1 ? "s" : ""}
         </div>
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-4 px-3 items-center">
             <input
             type="text"
             placeholder="Search cookies..."
