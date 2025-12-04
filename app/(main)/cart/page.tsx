@@ -7,22 +7,120 @@ import { useEffect, useState } from "react";
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity, totalAmount } = useDrop();
-  const [same, setSame] = useState(false)
+
+  // Live vs non-live conflict
+  const [same, setSame] = useState(false);
+
+  // Delivery / Pickup & timing
+  const [orderType, setOrderType] = useState<"delivery" | "pickup" | null>(null);
+  const [showTimingPopup, setShowTimingPopup] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+
+  // Pre-order / live logic
+  const hasLive = cart.some((item) => item.isLive === true);
+  const hasPreOrder = cart.some((item) => item.isLive === false);
 
   useEffect(() => {
-    const hasLive = cart.some(item => item.isLive) 
-    const noLive = cart.some(item => !item.isLive)
-    setSame(hasLive && noLive)
-  }, [cart])
+    // If both true → conflict
+    setSame(hasLive && hasPreOrder);
+  }, [cart]);
 
   return (
     <main className="max-w-6xl bg-secondary mx-auto px-5 pt-28 pb-20">
       <h1 className="text-5xl font-bold mb-10 text-center">Your Cart</h1>
+
+      {/* ⚠️ Conflict warning */}
       {same && (
         <div className="bg-red-100 border border-red-400 text-red-800 px-4 py-3 rounded-md mb-4 text-center font-semibold shadow-sm">
-          ⚠️ Your cart has both live and non-live cookies. Please separate them into different orders.
+          ⚠️ Your cart has both live and pre-order cookies.  
+          Please separate them into different orders.
         </div>
       )}
+
+      {(orderType === null && cart.length > 0 && !same) && <p>Please Choose any of below </p> }
+      {/* ⭐ Delivery / Pickup options */}
+      {!same && cart.length > 0 && (
+        <div className="flex gap-4 my-6 max-w-xl mx-auto justify-center">
+          <button
+            onClick={() => {
+              setOrderType("delivery");
+              setShowTimingPopup(true);
+            }}
+            className={`${orderType === "delivery" ? "bg-soft text-white" :  "bg-secondary text-black"} w-full border border-black/20 px-5 py-3 rounded-xl`}
+          >
+            {hasPreOrder ? "Pre Order" : "Delivery"}
+          </button>
+
+          {!hasPreOrder && <button
+            onClick={() => {
+              setOrderType("pickup");
+              setShowTimingPopup(true);
+            }}
+            className={`${orderType === "pickup" ? "bg-soft text-white" :  "bg-secondary text-black"} w-full border border-black/20 px-5 py-3 rounded-xl`}
+          >
+            Pickup
+          </button>}
+        </div>
+      )}
+
+      {(orderType === "delivery" && hasPreOrder) && (
+        <p>now Choose pre order datea time pop up appear</p>
+      )}
+      {/* ⭐ Timing Popup */}
+      {(showTimingPopup && orderType !== "delivery") && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-xl w-80 shadow-xl">
+            <h2 className="text-2xl font-bold mb-4 text-center">
+              {orderType === "pickup" ? "Pickup Timing" : "Delivery Timing"}
+            </h2>
+
+            {/* DATE */}
+            <label className="text-sm font-semibold">Select Date</label>
+            <input
+              type="date"
+              className="border p-2 w-full rounded mb-4"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+            />
+
+            {/* TIME SELECTION */}
+            <label className="text-sm font-semibold">Select Time</label>
+            <select
+              className="border p-2 w-full rounded"
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+            >
+              <option value="">Choose a time</option>
+
+              {/* PRE ORDER TIMINGS */}
+              {hasPreOrder && !hasLive && (
+                <>
+                  <option>2:00 PM - 4:00 PM</option>
+                  <option>4:00 PM - 6:00 PM</option>
+                </>
+              )}
+
+              {/* LIVE TIMINGS */}
+              {hasLive && !hasPreOrder && (
+                <>
+                  <option>Within 1 hour</option>
+                  <option>Within 2 hours</option>
+                </>
+              )}
+            </select>
+
+            <button
+              className="mt-4 w-full bg-soft text-white py-2 rounded-xl"
+              onClick={() => setShowTimingPopup(false)}
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* EMPTY CART */}
       {cart.length === 0 ? (
         <p className="text-center text-gray-600">Your cart is empty.</p>
       ) : (
@@ -34,64 +132,65 @@ const CartPage = () => {
             >
               {/* PRODUCT IMAGE */}
               {item.boxType ? (
-                    <div className="grid grid-cols-2 gap-3 p-3 bg-gradient-to-br from-soft/10 to-white rounded-2xl shadow-sm border border-soft/20">
-                        {item.boxType.cookies.map((singleCookie, index) => (
-                        <div
-                            key={index}
-                            className="flex flex-col items-center bg-white rounded-xl shadow-sm p-2 border border-gray-200 hover:shadow-md transition"
-                        >
-                          
-                            <div className="w-24 h-24 rounded-lg overflow-hidden mb-2">
-                            <Image
-                                src={singleCookie.image}
-                                alt={singleCookie.title}
-                                width={100}
-                                height={100}
-                                className="w-full h-full object-cover object-center"
-                            />
-                            </div>
-
-                            <p className="text-sm font-semibold text-gray-600 text-center truncate  w-full">
-                            {singleCookie.title} 
-                            </p>
-
-                            <p className="text-xs text-gray-500">Qty: {singleCookie.qty}</p>
-                        </div>
-                        ))}
-                    </div>
-                    ) : (
-                    <div className="w-full md:w-40 h-40 bg-white border border-gray-200 rounded-xl shadow-sm flex items-center justify-center overflow-hidden hover:shadow-md transition relative">
-                      {(!item.isLive && item.type === "drop") && <div className="bg-soft text-black font-bold capitalize absolute px-2 top-0 text-sm">Only Pre Order</div>}
+                <div className="grid grid-cols-2 gap-3 p-3 bg-gradient-to-br from-soft/10 to-white rounded-2xl shadow-sm border border-soft/20">
+                  {item.boxType.cookies.map((singleCookie, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col items-center bg-white rounded-xl shadow-sm p-2 border border-gray-200 hover:shadow-md transition"
+                    >
+                      <div className="w-24 h-24 rounded-lg overflow-hidden mb-2">
                         <Image
-                        src={
-                            typeof item.images === "string"
-                            ? item.images
-                            : item.images[0]
-                        }
-                        alt={item.title}
-                        width={160}
-                        height={160}
-                        className="object-cover h-full w-full"
+                          src={singleCookie.image}
+                          alt={singleCookie.title}
+                          width={100}
+                          height={100}
+                          className="w-full h-full object-cover object-center"
                         />
-                    </div>
-                    )}
+                      </div>
 
+                      <p className="text-sm font-semibold text-gray-600 text-center truncate w-full">
+                        {singleCookie.title}
+                      </p>
+
+                      <p className="text-xs text-gray-500">
+                        Qty: {singleCookie.qty}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="w-full md:w-40 h-40 bg-white border border-gray-200 rounded-xl shadow-sm flex items-center justify-center overflow-hidden hover:shadow-md transition relative">
+                  {!item.isLive && item.type === "drop" && (
+                    <div className="bg-soft text-black font-bold capitalize absolute px-2 top-0 text-sm">
+                      Only Pre Order
+                    </div>
+                  )}
+                  <Image
+                    src={
+                      typeof item.images === "string"
+                        ? item.images
+                        : item.images[0]
+                    }
+                    alt={item.title}
+                    width={160}
+                    height={160}
+                    className="object-cover h-full w-full"
+                  />
+                </div>
+              )}
 
               {/* DETAILS */}
               <div className="flex-1 flex flex-col justify-between">
-                
                 <div>
-                  
                   <h2 className="text-2xl font-bold">{item.title}</h2>
 
-                  {/* TYPE BADGE */}
                   <p className="text-sm mt-1 text-soft font-semibold uppercase">
                     {item.type === "simple" && "COOKIE"}
                     {item.type === "drop" && "LIMITED DROP"}
                     {item.type === "box" && "CUSTOM BOX"}
                   </p>
 
-                  {/* BOX TYPE EXPANDED VIEW */}
+                  {/* BOX TYPE */}
                   {item.type === "box" && item.boxType && (
                     <div className="mt-4 bg-soft/10 p-4 rounded-xl">
                       <p className="font-semibold mb-2">
@@ -118,32 +217,39 @@ const CartPage = () => {
                     </div>
                   )}
 
-                  {/* PRICE */}
                   <p className="text-xl font-semibold mt-4">
                     Rs. {item.price}
-                    <span className="inline-block  ml-1 text-sm font-[400]">x {item.quantity}</span>
+                    <span className="inline-block ml-1 text-sm font-[400]">
+                      × {item.quantity}
+                    </span>
                   </p>
                 </div>
 
-                {/* CONTROLS */}
                 <div className="flex items-center justify-between mt-6">
-                  {/* QUANTITY CONTROLS */}
+                  {/* QUANTITY */}
                   {item.type !== "box" && (
                     <div className="flex items-center gap-3">
                       <button
                         className="w-10 h-10 rounded-lg border flex items-center justify-center"
                         onClick={() =>
-                          updateQuantity(item.id, Math.max(1, item.quantity - 1))
+                          updateQuantity(
+                            item.id,
+                            Math.max(1, item.quantity - 1)
+                          )
                         }
                       >
                         -
                       </button>
 
-                      <span className="text-xl font-bold">{item.quantity}</span>
+                      <span className="text-xl font-bold">
+                        {item.quantity}
+                      </span>
 
                       <button
                         className="w-10 h-10 rounded-lg border flex items-center justify-center"
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity + 1)
+                        }
                       >
                         +
                       </button>
@@ -168,11 +274,32 @@ const CartPage = () => {
       <div className="text-right mt-10">
         <h2 className="text-3xl font-bold">Total: Rs. {totalAmount}</h2>
 
-        {(cart.length > 0 && !same) ? <Link href={"/checkout"} className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl hover:bg-soft/90 transition inline-block">Checkout</Link> : <button
+        {cart.length > 0 &&
+        !same &&
+        selectedDate &&
+        selectedTime &&
+        orderType ? (
+          <Link
+            href={{
+              pathname: "/checkout",
+              query: {
+                date: selectedDate,
+                time: selectedTime,
+                orderType,
+              },
+            }}
+            className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl hover:bg-soft/90 transition inline-block"
+          >
+            Checkout
+          </Link>
+        ) : (
+          <button
             disabled
-            className="mt-6 bg-soft/40 text-white px-10 py-4 text-xl rounded-2xl ">
-          Checkout
-        </button>}
+            className="mt-6 bg-soft/40 text-white px-10 py-4 text-xl rounded-2xl"
+          >
+            Checkout
+          </button>
+        )}
       </div>
     </main>
   );
