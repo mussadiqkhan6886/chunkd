@@ -1,3 +1,4 @@
+import WhatsButton from '@/components/mainComp/WhatsButton'
 import BuildYourBox from '@/sections/BuildYourBox'
 import Drops from '@/sections/Drops'
 import Hero from '@/sections/Hero'
@@ -14,6 +15,7 @@ export const dynamic = 'force-dynamic';
 const Home = () => {
   return (
     <main className='bg-secondary'>
+      <WhatsButton />
       <Hero />
       <Drops />
       <Trending />
