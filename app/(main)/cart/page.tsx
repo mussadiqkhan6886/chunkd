@@ -4,33 +4,71 @@ import Image from "next/image";
 import { useDrop } from "@/lib/context/contextAPI";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FiX } from "react-icons/fi";
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity, totalAmount } = useDrop();
 
-  // Live vs non-live conflict
   const [same, setSame] = useState(false);
 
-  // Delivery / Pickup & timing
   const [orderType, setOrderType] = useState<"delivery" | "pickup" | null>(null);
   const [showTimingPopup, setShowTimingPopup] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
 
-  // Pre-order / live logic
+  const [finalOrder, setFinalOrder] = useState<any>(null);
+
   const hasLive = cart.some((item) => item.isLive === true);
   const hasPreOrder = cart.some((item) => item.isLive === false);
 
   useEffect(() => {
-    // If both true → conflict
     setSame(hasLive && hasPreOrder);
   }, [cart]);
+
+  // ⭐ Save to final order object whenever everything is ready
+  useEffect(() => {
+    if (orderType && selectedDate && selectedTime) {
+      setFinalOrder({
+        cart,
+        orderType,
+        date: selectedDate,
+        time: selectedTime,
+        totalAmount,
+      });
+    }
+  }, [orderType, selectedDate, selectedTime, cart, totalAmount]);
+
+  // ⭐ Handler for delivery or pickup click
+  const handleOrderType = (type: "delivery" | "pickup") => {
+    setOrderType(type);
+
+    // Pickup always needs timing
+    if (type === "pickup") {
+      setShowTimingPopup(true);
+      return;
+    }
+
+    // Delivery logic:
+    if (hasPreOrder) {
+      // pre-order delivery requires timing
+      setShowTimingPopup(true);
+    } else {
+      // live delivery → skip popup
+      setSelectedDate("today");
+      setSelectedTime("Live Delivery");
+    }
+  };
+
+  // ⭐ Save popup timing
+  const handleSaveTiming = () => {
+    if (!selectedDate || !selectedTime) return;
+    setShowTimingPopup(false);
+  };
 
   return (
     <main className="max-w-6xl bg-secondary mx-auto px-5 pt-28 pb-20">
       <h1 className="text-5xl font-bold mb-10 text-center">Your Cart</h1>
 
-      {/* ⚠️ Conflict warning */}
       {same && (
         <div className="bg-red-100 border border-red-400 text-red-800 px-4 py-3 rounded-md mb-4 text-center font-semibold shadow-sm">
           ⚠️ Your cart has both live and pre-order cookies.  
@@ -38,45 +76,44 @@ const CartPage = () => {
         </div>
       )}
 
-      {(orderType === null && cart.length > 0 && !same) && <p>Please Choose any of below </p> }
-      {/* ⭐ Delivery / Pickup options */}
+      {!orderType && cart.length > 0 && !same && (
+        <p>Please choose delivery or pickup</p>
+      )}
+
+      {/* ⭐ Delivery / Pickup */}
       {!same && cart.length > 0 && (
         <div className="flex gap-4 my-6 max-w-xl mx-auto justify-center">
+          
+          {/* Delivery Button */}
           <button
-            onClick={() => {
-              setOrderType("delivery");
-              setShowTimingPopup(true);
-            }}
-            className={`${orderType === "delivery" ? "bg-soft text-white" :  "bg-secondary text-black"} w-full border border-black/20 px-5 py-3 rounded-xl`}
+            onClick={() => handleOrderType("delivery")}
+            className={`${orderType === "delivery" ? "bg-soft text-white scale-105" : "bg-secondary text-black"} w-full border border-black/20 px-5 py-3 rounded-xl transition`}
           >
-            {hasPreOrder ? "Pre Order" : "Delivery"}
+            {hasPreOrder ? "Pre Order Delivery" : "Delivery"}
           </button>
 
-          {!hasPreOrder && <button
-            onClick={() => {
-              setOrderType("pickup");
-              setShowTimingPopup(true);
-            }}
-            className={`${orderType === "pickup" ? "bg-soft text-white" :  "bg-secondary text-black"} w-full border border-black/20 px-5 py-3 rounded-xl`}
+          {/* Pickup always available */}
+          <button
+            onClick={() => handleOrderType("pickup")}
+            className={`${orderType === "pickup" ? "bg-soft text-white scale-105" : "bg-secondary text-black"} w-full border border-black/20 px-5 py-3 rounded-xl transition`}
           >
             Pickup
-          </button>}
+          </button>
         </div>
       )}
 
-      {(orderType === "delivery" && hasPreOrder) && (
-        <p>now Choose pre order datea time pop up appear</p>
-      )}
-      {/* ⭐ Timing Popup */}
-      {(showTimingPopup && orderType !== "delivery") && (
+      {/* ⭐ Pre-order / Pickup Timing Popup */}
+      {showTimingPopup && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl w-80 shadow-xl">
+          <div className="bg-white p-6 rounded-xl relative w-80 shadow-xl">
+          <FiX className="absolute top-5 right-5" onClick={() => setShowTimingPopup(false)} />
+
             <h2 className="text-2xl font-bold mb-4 text-center">
-              {orderType === "pickup" ? "Pickup Timing" : "Delivery Timing"}
+              {orderType === "pickup" ? "Pickup Timing" : "Pre-Order Delivery Timing"}
             </h2>
 
-            {/* DATE */}
-            <label className="text-sm font-semibold">Select Date</label>
+            {/* Date */}
+            <label className="text-sm font-semibold">Choose Date</label>
             <input
               type="date"
               className="border p-2 w-full rounded mb-4"
@@ -84,45 +121,49 @@ const CartPage = () => {
               onChange={(e) => setSelectedDate(e.target.value)}
             />
 
-            {/* TIME SELECTION */}
-            <label className="text-sm font-semibold">Select Time</label>
+            {/* Time */}
+            <label className="text-sm font-semibold">Choose Time</label>
             <select
               className="border p-2 w-full rounded"
               value={selectedTime}
               onChange={(e) => setSelectedTime(e.target.value)}
             >
-              <option value="">Choose a time</option>
+              <option value="">Select Time</option>
 
-              {/* PRE ORDER TIMINGS */}
-              {hasPreOrder && !hasLive && (
+              {/* Pre-order timings */}
+              {hasPreOrder && (
                 <>
                   <option>2:00 PM - 4:00 PM</option>
                   <option>4:00 PM - 6:00 PM</option>
                 </>
               )}
 
-              {/* LIVE TIMINGS */}
-              {hasLive && !hasPreOrder && (
+              {/* Pickup timings (same for all) */}
+              {orderType === "pickup" && (
                 <>
-                  <option>Within 1 hour</option>
-                  <option>Within 2 hours</option>
+                  <option>12:00 PM - 2:00 PM</option>
+                  <option>2:00 PM - 4:00 PM</option>
+                  <option>4:00 PM - 6:00 PM</option>
                 </>
               )}
             </select>
 
             <button
-              className="mt-4 w-full bg-soft text-white py-2 rounded-xl"
-              onClick={() => setShowTimingPopup(false)}
+              onClick={handleSaveTiming}
+              disabled={!selectedDate || !selectedTime}
+              className={`mt-4 w-full py-2 rounded-xl text-white 
+                ${selectedDate && selectedTime ? "bg-soft" : "bg-soft/40"}`}
             >
               Save
             </button>
+
           </div>
         </div>
       )}
 
-      {/* EMPTY CART */}
+      {/* ⭐ Cart Items */}
       {cart.length === 0 ? (
-        <p className="text-center text-gray-600">Your cart is empty.</p>
+        <p className="text-center">Your cart is empty.</p>
       ) : (
         <div className="space-y-8">
           {cart.map((item) => (
@@ -274,21 +315,11 @@ const CartPage = () => {
       <div className="text-right mt-10">
         <h2 className="text-3xl font-bold">Total: Rs. {totalAmount}</h2>
 
-        {cart.length > 0 &&
-        !same &&
-        selectedDate &&
-        selectedTime &&
-        orderType ? (
+        {finalOrder ? (
           <Link
-            href={{
-              pathname: "/checkout",
-              query: {
-                date: selectedDate,
-                time: selectedTime,
-                orderType,
-              },
-            }}
-            className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl hover:bg-soft/90 transition inline-block"
+            href="/checkout"
+            onClick={() => localStorage.setItem("orderData", JSON.stringify(finalOrder))}
+            className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl inline-block"
           >
             Checkout
           </Link>
