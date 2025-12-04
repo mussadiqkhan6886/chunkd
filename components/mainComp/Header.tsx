@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { menuItems } from '@/lib/constants';
-import {FiMenu, FiX} from "react-icons/fi"
+import {FiMenu, FiShoppingCart, FiX} from "react-icons/fi"
 
 const HeaderWithMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,6 +50,7 @@ const HeaderWithMenu = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ duration: 1, ease: 'easeOut', delay:0.3 }}
+          className='flex gap-3put items-center'
         >
           <Link
             href="/menu"
@@ -57,6 +58,7 @@ const HeaderWithMenu = () => {
           >
             Order 
           </Link>
+          <Link href={"/cart"}><FiShoppingCart className='text-xl' /></Link>
         </motion.div>
       ): <div className='w-[70px] md:w-[75px]'></div>}
     </AnimatePresence>
