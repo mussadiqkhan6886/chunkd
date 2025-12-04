@@ -90,6 +90,7 @@ const BuildYourBox = () => {
       price: boxData.totalPrice,
       quantity: 1,
       images: '/box.png',
+      isLive: true,
       boxType: {
         size: boxData.size,
         boxTotalPrice: boxData.totalPrice,
@@ -100,7 +101,7 @@ const BuildYourBox = () => {
     setTimeout(() => {
     setQuantities({});
     setBoxSize(4);
-    setBoxData({ size: 4, cookies: [], totalPrice: 0 });
+    setBoxData({ size: 4, cookies: [], totalPrice: 0});
   }, 900);
   };
 
@@ -157,7 +158,12 @@ const BuildYourBox = () => {
 
           return (
             <div key={item._id} className="border border-soft/40 rounded-2xl p-5">
-              <div className="h-[350px] bg-soft/30 rounded-xl mb-4 flex items-center justify-center">
+              <div className="h-[350px] bg-soft/30 rounded-xl mb-4 flex items-center justify-center relative">
+              {item.releaseDate && new Date(item.releaseDate).getTime() > Date.now() && (
+                <div className="absolute top-0 left-0 bg-soft text-black text-sm px-3 py-1 rounded-br-md shadow-sm">
+                  Only Pre Order, Not Live Yet
+                </div>
+              )}
                 <Image
                   src={item.images[0]}
                   alt={item.title}
