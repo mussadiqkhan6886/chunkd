@@ -26,7 +26,7 @@ const LimitedCard = ({ data, button }: Props) => {
     <>
       <div>
         {data.length > 0 ? (
-          <div className="grid max-w-5xl mx-auto grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid max-w-5xl mx-auto grid-cols-1 md:grid-cols-2 gap-14">
 
             {data.map((drop: CookieType) => {
               const status = getStatus(drop.releaseDate!, drop.endDate!, drop.soldOut, drop.active);
@@ -36,7 +36,7 @@ const LimitedCard = ({ data, button }: Props) => {
               return (
                 <div
                   key={drop._id}
-                  className="border relative md:w-[470px] border-soft/40 rounded-2xl overflow-hidden bg-white"
+                  className="border relative md:w-[400px] border-soft/40 rounded-2xl overflow-hidden bg-white"
                 >
                   {/* Image Section */}
                   {drop.soldOut || !drop.active ? (

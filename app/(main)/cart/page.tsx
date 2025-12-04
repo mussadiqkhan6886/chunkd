@@ -103,7 +103,7 @@ const CartPage = () => {
 
 {showTimingPopup && (
   <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-    <div className="bg-white p-6 rounded-xl relative w-80 shadow-xl">
+    <div className="bg-white p-6 rounded-xl relative w-98 shadow-xl">
       <FiX className="absolute top-5 right-5 cursor-pointer" onClick={() => setShowTimingPopup(false)} />
       <h2 className="text-xl font-bold mb-4 text-center">
         {orderType === "pickup"
@@ -114,6 +114,10 @@ const CartPage = () => {
       </h2>
 
       {/* Date/Time only for pickup/preOrder */}
+      {orderType === "pickup" && <div className="my-2">
+          <p className="font-medium ">Address: </p>
+          <p>(pickup address)</p>
+        </div>}
       {(orderType === "pickup" || orderType === "preOrder") && (
         <>
           <label className="text-sm font-semibold">Choose Date</label>

@@ -197,7 +197,6 @@ const AddProduct = () => {
             name="allowedForBox"
             checked={data.allowedForBox}
             onChange={handleChange}
-            required
           />
           <label className="font-semibold">Allowed For Box</label>
         </div>
