@@ -6,7 +6,7 @@ export const menuItems = [
     { label: 'Build Your Box', ariaLabel: 'Build your own box', link: '/build-box' },
     { label: 'Snack\'d', ariaLabel: 'Limited Drops', link: '/drops' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' },
-    { label: 'Cart', ariaLabel: 'View Your Cart', link: '/cart' },
+    // { label: 'Cart', ariaLabel: 'View Your Cart', link: '/cart' },
 ];
 
 export const buildYourBoxOptions = [
