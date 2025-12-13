@@ -2,6 +2,7 @@
 
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { MediaType } from '@/type';
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
   // helper function only runs in browser
@@ -67,7 +68,7 @@ interface Item {
   height: number;
 }
 
-interface GridItem extends Item {
+interface GridItem extends MediaType {
   x: number;
   y: number;
   w: number;
@@ -75,7 +76,7 @@ interface GridItem extends Item {
 }
 
 interface MasonryProps {
-  items: Item[];
+  items: MediaType[] | [];
   ease?: string;
   duration?: number;
   stagger?: number;
@@ -163,7 +164,7 @@ const Masonry: React.FC<MasonryProps> = ({
     if (!imagesReady) return;
 
     grid.forEach((item, index) => {
-      const selector = `[data-key="${item.id}"]`;
+      const selector = `[data-key="${item._id}"]`;
       const animProps = { x: item.x, y: item.y, width: item.w, height: item.h };
 
       if (!hasMounted.current) {
@@ -232,13 +233,13 @@ const Masonry: React.FC<MasonryProps> = ({
     <div ref={containerRef} className="relative w-full min-h-screen">
       {grid.map(item => (
         <div
-          key={item.id}
-          data-key={item.id}
+          key={item._id}
+          data-key={item._id}
           className="absolute box-content"
           style={{ willChange: 'transform, width, height, opacity' }}
-          onClick={() => window.open(item.url, '_blank', 'noopener')}
-          onMouseEnter={e => handleMouseEnter(item.id, e.currentTarget)}
-          onMouseLeave={e => handleMouseLeave(item.id, e.currentTarget)}
+          // onClick={() => window.open(item.url, '_blank', 'noopener')}
+          onMouseEnter={e => handleMouseEnter(item._id, e.currentTarget)}
+          onMouseLeave={e => handleMouseLeave(item._id, e.currentTarget)}
         >
           <div
             className="relative w-full h-full bg-cover bg-center rounded-[10px] uppercase text-[10px] leading-[10px]"

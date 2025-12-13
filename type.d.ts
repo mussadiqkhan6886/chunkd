@@ -127,3 +127,9 @@ interface OrderDataType {
   orderType: string
   time: string
 }
+
+interface MediaType {
+  _id: string
+  img: string
+  height: number
+}

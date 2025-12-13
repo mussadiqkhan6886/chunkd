@@ -2,10 +2,23 @@
 
 import Masonry from '@/components/mainComp/ui/Masonry';
 import { items } from '@/lib/constants';
-import React from 'react'
+import { MediaType } from '@/type';
+import React, { useEffect, useState } from 'react'
 
 const InstagramGrid = () => {
 
+  const [items, setItems] = useState<MediaType[] | []>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/media")
+      const json = await res.json()
+      setItems(json.data || [])
+      console.log(json.data)
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <section className='width min-h-screen overflow-auto bg-black text-white px-10'>
