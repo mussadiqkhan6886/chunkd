@@ -51,12 +51,6 @@ const OrderSchema = new Schema({
       enum: ["cod", "bank"],
       default: "cod"
     },
-    paymentProof: {
-      type: String,
-      required: function(){
-        return this.paymentMethod !== "cod"
-      } 
-    }
   },
   { timestamps: true }
 )

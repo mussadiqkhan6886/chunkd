@@ -1,5 +1,6 @@
 "use client";
 
+import { CartItem } from "@/type";
 import { createContext, useContext, useEffect, useState } from "react";
 
 // ------------------ TYPES ------------------
@@ -9,34 +10,6 @@ export interface CookieType {
   name: string;
   price: number;
   image: string;
-}
-
-export interface CartItem {
-  id: string;
-
-  type: "simple" | "drop" | "box"; // ⭐ distinguishes 3 product types
-
-  title: string;
-  images: string;
-
-  price: number; // dynamic for box
-  quantity: number;
-
-  // Only for limited drops
-  totalLimit?: number;
-  isLive?: boolean;
-  // Only for build-a-box
-  boxType?: {
-    size: number; // 4 or 6
-    boxTotalPrice: number; // calculated
-    cookies: {
-      id: string;
-      title: string;
-      image: string;
-      qty: number;
-      price: number;
-    }[],
-  };
 }
 
 type DropContextType = {

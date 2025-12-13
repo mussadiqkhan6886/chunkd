@@ -30,11 +30,11 @@ const CartPage = () => {
     if (!orderType) return;
 
     if (orderType === "delivery" && address && city) {
-      setFinalOrder({ cart, orderType, address, city, date: "now", time: "now" });
+      setFinalOrder({ cart, totalAmount,orderType, address, city, date: "now", time: "now" });
     } else if (orderType === "pickup" && selectedDate && selectedTime) {
-      setFinalOrder({ cart, orderType, date: selectedDate, time: selectedTime });
+      setFinalOrder({ cart, totalAmount,orderType, date: selectedDate, time: selectedTime });
     } else if (orderType === "preOrder" && selectedDate && selectedTime && address && city) {
-      setFinalOrder({ cart, orderType, date: selectedDate, time: selectedTime, address, city });
+      setFinalOrder({ cart, totalAmount,orderType, date: selectedDate, time: selectedTime, address, city });
     } else {
       setFinalOrder(null);
     }
