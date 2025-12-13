@@ -18,7 +18,7 @@ const Header = () => {
     { name: 'Orders', href: '/admin-dashboard/orders-list', icon: <ShoppingBag className="w-4 h-4" /> },
     { name: 'Coupons', href: '/admin-dashboard/coupons', icon: <Ticket className="w-4 h-4" /> },
     { name: 'Delivery Charges', href: '/admin-dashboard/delivery-charges', icon: <LuBus className="w-4 h-4" /> },
-    // { name: 'Media', href: '/admin-dashboard/media', icon: <LuImage className="w-4 h-4" /> },
+    { name: 'Media', href: '/admin-dashboard/media', icon: <LuImage className="w-4 h-4" /> },
   ]
   const pathname = usePathname()
   const router = useRouter()
