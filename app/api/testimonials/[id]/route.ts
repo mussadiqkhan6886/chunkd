@@ -27,3 +27,32 @@ export const DELETE = async (_req: NextRequest, { params }: { params: Promise<{ 
     );
   }
 };
+
+export const PATCH = async (_req: NextRequest, {params}: {params: Promise<{id: string}>}) => {
+
+  try{
+     await connectDB()
+
+    const {id} = await params
+
+    if(!id){
+      return NextResponse.json({success: false, message: "Id Required"}, {status: 404})
+    }
+
+    const review = await Testimonial.findByIdAndUpdate(id, {approved: true}, {new: true})
+
+    if(!review){
+      return NextResponse.json({success: false, message: "No Review Found"}, {status: 404})
+    }
+
+    return NextResponse.json({success: true, message: "Review Updated"}, {status: 200})
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    console.error("APPROVING error:", error);
+    return NextResponse.json(
+      { success: false, message: "Error APPROVING testimonial", error: error.message },
+      { status: 500 }
+    );
+  }
+
+}

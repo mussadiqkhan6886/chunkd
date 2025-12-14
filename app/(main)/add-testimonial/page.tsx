@@ -28,7 +28,7 @@ const AddTestimonialPage = () => {
         setForm({ name: "", rating: 0, message: "" });
         setTimeout(() => {
           router.push("/")
-        }, 1500)
+        }, 4500)
       } else {
         setResult("Failed to add testimonial.");
       }

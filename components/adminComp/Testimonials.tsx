@@ -2,6 +2,8 @@ import Link from "next/link";
 import React from "react";
 import DeleteReview from "./DeleteReview";
 import { Star } from "lucide-react";
+import { reviewType } from "@/type";
+import ApproveSystem from "./ApproveSystem";
 
 
 export default function TestimonialsList({
@@ -41,6 +43,7 @@ export default function TestimonialsList({
             
               <div className="flex gap-3">
                 <DeleteReview id={t._id} />
+                {t.approved ? <div className="bg-green-600 text-white rounded-md px-4 py-1">Approved</div> : <ApproveSystem id={t._id} />}
               </div>
             </div>
           </div>

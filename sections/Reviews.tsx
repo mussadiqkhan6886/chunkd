@@ -20,7 +20,7 @@ const Reviews = () => {
 
       const json = await res.json()
 
-      const formattedData = json.testimonials.filter((item: reviewType) => item.approved === false)
+      const formattedData = json.testimonials.filter((item: reviewType) => item.approved === true)
 
       setData(formattedData)
 
