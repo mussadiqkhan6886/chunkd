@@ -81,6 +81,7 @@ interface reviewType {
   name: string
   rating: number
   message: string
+  approved: boolean
 }
 
 interface CouponType {

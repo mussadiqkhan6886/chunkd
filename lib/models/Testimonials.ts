@@ -5,6 +5,7 @@ const testimonialSchema = new Schema(
     name: { type: String, required: true },
     rating: { type: String }, 
     message: { type: String, required: true },
+    approved: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { FiStar } from "react-icons/fi";
+import { FiStar, FiXCircle } from "react-icons/fi";
 
 const AddTestimonialPage = () => {
   const [form, setForm] = useState({
@@ -13,6 +13,7 @@ const AddTestimonialPage = () => {
   const [result,setResult] = useState("")
   const router = useRouter()
   const stars = [1, 2, 3, 4, 5];
+  const [quit, setQuit] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -34,6 +35,8 @@ const AddTestimonialPage = () => {
     } catch (error) {
       setResult("Something went wrong!")
       console.error(error);
+    } finally{
+      setQuit(true)
     }
   };
 
@@ -43,7 +46,6 @@ const AddTestimonialPage = () => {
       <h1 className="text-3xl font-semibold text-center text-main mb-8">
         Add Review
       </h1>
-
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-xl p-6 space-y-5"
@@ -98,6 +100,12 @@ const AddTestimonialPage = () => {
         <p className="text-center">{result}</p>
       </form>
     </div>
+    {quit && <div className="z-50 bg-black/30 w-full h-full absolute ">
+      <div className="bg-white rounded-md relative shadow-2xl">
+        <FiXCircle className="absolute right-5 top-5 text-lg" onClick={() => setQuit(true)} />
+        <h4 className="text-2xl font-semibold">Review Added! Review Sent for Approval</h4>
+      </div>
+    </div>}
     </main>
   );
 };
