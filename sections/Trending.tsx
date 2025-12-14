@@ -1,5 +1,6 @@
 import { connectDB } from '@/lib/config/databse'
 import CookieSchema from '@/lib/models/CookieSchema'
+import { CookieType } from '@/type';
 import Image from 'next/image';
 import Link from 'next/link'
 import React from 'react'

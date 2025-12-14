@@ -17,7 +17,7 @@
         @apply bg-transparent border border-black text-black px-4 text-[13px] md:text-sm uppercase py-3 rounded-full cursor-pointer text-center
     }
     .sectionTitle{
-        @apply my-6 font-[900] text-left ml-4 md:ml-9 text-[35px] sm:text-[40px] md:text-[60px] lg:text-[70px] uppercase
+        @apply my-6 font-[900] text-left ml-4 md:ml-9 text-[30px] sm:text-[40px] md:text-[60px] lg:text-[70px] uppercase
     }
 }
 
@@ -54,4 +54,33 @@ html {
 .swiper-pagination-bullet-active {
   background-color: rgb(161, 2, 82)!important;
   opacity: 1 !important;
+}
+
+.comeUpBig{
+  animation: up 2s forwards ease-out;
+}
+
+@keyframes up {
+  0%{
+    bottom: -400px;
+    opacity: 0;
+  }
+  100%{
+    bottom: -48px;
+    opacity: 100;
+  }
+}
+.comeUpSmall{
+  animation: upSmall 2s forwards ease-out;
+}
+
+@keyframes upSmall {
+  0%{
+    bottom: -400px;
+    opacity: 0;
+  }
+  100%{
+    bottom: -14px;
+    opacity: 100;
+  }
 }
