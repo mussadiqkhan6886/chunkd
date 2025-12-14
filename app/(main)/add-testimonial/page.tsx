@@ -26,6 +26,7 @@ const AddTestimonialPage = () => {
       if (res.data.success) {
         setResult("Review added successfully!")
         setForm({ name: "", rating: 0, message: "" });
+        setQuit(true)
         setTimeout(() => {
           router.push("/")
         }, 4500)
@@ -35,9 +36,7 @@ const AddTestimonialPage = () => {
     } catch (error) {
       setResult("Something went wrong!")
       console.error(error);
-    } finally{
-      setQuit(true)
-    }
+    } 
   };
 
   return (
@@ -93,19 +92,31 @@ const AddTestimonialPage = () => {
 
         <button
           type="submit"
-          className="w-full bg-black text-white py-2 rounded-lg hover:bg-main/90 transition"
+          disabled={form.rating === 0}
+          className="w-full bg-black text-white disabled:opacity-40 py-2 rounded-lg hover:bg-main/90 transition"
         >
           Submit Review
         </button>
         <p className="text-center">{result}</p>
       </form>
     </div>
-    {quit && <div className="z-50 bg-black/30 w-full h-full absolute ">
-      <div className="bg-white rounded-md relative shadow-2xl">
-        <FiXCircle className="absolute right-5 top-5 text-lg" onClick={() => setQuit(true)} />
-        <h4 className="text-2xl font-semibold">Review Added! Review Sent for Approval</h4>
+    {quit && (
+      <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
+        <div className="bg-white rounded-lg p-6 w-[90%] max-w-md relative shadow-2xl">
+          <FiXCircle
+            className="absolute right-4 top-4 text-2xl cursor-pointer"
+            onClick={() => setQuit(false)}
+          />
+
+          <h4 className="text-2xl font-semibold mb-2">
+            Review Added 🎉
+          </h4>
+          <p className="text-gray-600">
+            Your review has been sent for approval.
+          </p>
+        </div>
       </div>
-    </div>}
+    )}
     </main>
   );
 };
