@@ -3,6 +3,7 @@
 import ProductTable from "@/components/adminComp/ProductTable";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { CookieType } from "@/type";
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<any[]>([]);

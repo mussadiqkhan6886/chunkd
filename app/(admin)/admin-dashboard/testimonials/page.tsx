@@ -1,11 +1,12 @@
 "use client";
 
 import TestimonialsList from "@/components/adminComp/Testimonials";
+import { reviewType } from "@/type";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function TestimonialsPage() {
-  const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [testimonials, setTestimonials] = useState<reviewType[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
