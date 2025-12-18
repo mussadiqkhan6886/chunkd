@@ -36,10 +36,10 @@ const HeaderWithMenu = () => {
       <div></div>
 
       {/* Middle: Logo */}
-      <div className="flex-shrink-0">
+      <Link href={"/"} className="flex-shrink-0 block">
         <Image src="/logo.png" alt="Logo" className='hidden md:block' width={80} height={40} />
         <Image src="/logo.png" alt="Logo" className='block md:hidden' width={70} height={70} />
-      </div>
+      </Link>
 
       <div></div>
       {/* Right: CTA */}

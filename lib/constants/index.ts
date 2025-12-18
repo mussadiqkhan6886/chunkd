@@ -17,6 +17,7 @@ export const buildYourBoxOptions = [
     description:
       "Create your perfect mini box! Pick any 4 freshly baked cookies from our signature menu. Mix, match, and craft your own flavor experience — ideal for gifting, cravings, or trying new flavors.",
     price: "Depending On Cookies Flavour", // in PKR or your currency of choice
+    image: "/boxoffour.png"
   },
   {
     id: "box-6",
@@ -25,6 +26,7 @@ export const buildYourBoxOptions = [
     description:
       "The ultimate cookie treat. Choose any 6 premium cookies to build your dream box. More cookies, more flavor, more happiness — perfect for sharing or indulging all by yourself.",
     price: "Depending On Cookies Flavour", // in PKR or your currency
+    image: "/boxofsix.png"
   }
 ];
 

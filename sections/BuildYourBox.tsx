@@ -1,4 +1,5 @@
 import { buildYourBoxOptions } from '@/lib/constants'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -15,12 +16,14 @@ const BuildYourBox = () => {
             }`}
           >
             {/* Image */}
-            <div className="w-[300px] h-[400px] bg-soft/40 md:w-1/2">
-              {/* <img
-                src={item.image || "/placeholder.png"} 
+            <div className="h-[430px]  md:w-1/2">
+              <Image
+                src={item.image} 
                 alt={item.name}
-                className="w-full h-72 object-cover rounded-2xl shadow-lg"
-              /> */}
+                className="w-full h-full object-cover rounded-2xl shadow-lg"
+                width={400}
+                height={400}
+              />
             </div>
 
             {/* Text Content */}

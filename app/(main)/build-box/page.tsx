@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useDrop } from '@/lib/context/contextAPI';
+import { CookieType } from '@/type';
 
 const BuildYourBox = () => {
   const { addToCart, cart } = useDrop();
