@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import AddToCart from './AddToCart';
 import Image from 'next/image';
+import { CookieType } from '@/type';
 
 type Props = {
   data: CookieType[],
