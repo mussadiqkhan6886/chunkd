@@ -214,7 +214,7 @@ const CartPage = () => {
                       key={index}
                       className="flex flex-col items-center bg-white rounded-xl shadow-sm p-2 border border-gray-200 hover:shadow-md transition"
                     >
-                      <div className="w-24 h-24 rounded-lg overflow-hidden mb-2">
+                      <div className="w-30 h-30 rounded-lg overflow-hidden mb-2">
                         <Image
                           src={singleCookie.image}
                           alt={singleCookie.title}
