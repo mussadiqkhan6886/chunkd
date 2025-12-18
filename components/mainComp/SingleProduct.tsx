@@ -8,6 +8,7 @@ import CookieSchema from '@/lib/models/CookieSchema';
 import mongoose from 'mongoose';
 import ImageSlider from './ImageSlider';
 import Image from 'next/image';
+import { DropType } from '@/type';
 
 const SingleProduct = async ({data}: {data: DropType}) => {
 
