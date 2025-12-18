@@ -314,7 +314,7 @@ const CartPage = () => {
 
         {finalOrder ? (
           <Link
-            href="/"
+            href="/checkout"
             onClick={() => localStorage.setItem("orderData", JSON.stringify(finalOrder))}
             className="mt-6 bg-soft text-white px-10 py-4 text-xl rounded-2xl inline-block"
           >

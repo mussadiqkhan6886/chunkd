@@ -6,10 +6,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { menuItems } from '@/lib/constants';
 import {FiMenu, FiShoppingCart, FiX} from "react-icons/fi"
+import { usePathname } from 'next/navigation';
 
 const HeaderWithMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const router = usePathname()
+
+  if(router.includes("/checkout")){
+    return null;
+  }
 
   useEffect(() => {
     const handleScroll = () => {
