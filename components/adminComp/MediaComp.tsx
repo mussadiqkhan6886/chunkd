@@ -13,6 +13,8 @@ const MediaComp: React.FC = () => {
   const [media, setMedia] = useState<Media[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false)
+  const [approved, setApproved] = useState(false)
 
   /* ================= FETCH MEDIA ================= */
   const fetchMedia = async () => {
@@ -33,6 +35,9 @@ const MediaComp: React.FC = () => {
 
   /* ================= DELETE MEDIA ================= */
   const deleteMedia = async (id: string) => {
+
+    // const 
+
     if (!confirm('Delete this image?')) return;
 
     setDeletingId(id);
