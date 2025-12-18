@@ -1,6 +1,7 @@
 "use client";
 
 import { useDrop } from "@/lib/context/contextAPI";
+import { CookieType } from "@/type";
 import React, { useEffect, useState } from "react";
 
 const AddToCart = ({

@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import ImageSlider from "@/components/mainComp/ImageSlider";
 import AddToCart from "@/components/mainComp/AddToCart";
+import { CookieType } from "@/type";
 
 const FilterClient = ({ cookies }: { cookies: CookieType[] }) => {
   const [search, setSearch] = useState("");

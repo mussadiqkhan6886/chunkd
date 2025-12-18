@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import axios from 'axios';
 import Link from 'next/link';
 import { Edit, Trash } from 'lucide-react';
+import { CookieType } from '@/type';
 
 interface ProductTableProps {
   products: CookieType[]; // categories with products
