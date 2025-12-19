@@ -14,7 +14,6 @@ const CouponsPage = () => {
 
   const fetchCoupons = async () => {
     const res = await axios.get("/api/coupon");
-    console.log(res)
     setCoupons(res.data);
   };
 

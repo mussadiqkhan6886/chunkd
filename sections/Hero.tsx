@@ -7,7 +7,7 @@ import NoticeBanner from '@/components/mainComp/NoticeBanner';
 const Hero = () => {
  
   return (
-    <section className='width relative h-screen md:h-[80vh]' >
+    <section className='width relative h-[90vh] md:h-[80vh]' >
       <div className='absolute w-full h-full bg-soft/10 inset-0' />
       <video src={"/hero.mp4"} className='w-full h-full object-cover object-center' loop autoPlay muted playsInline /> 
     <NoticeBanner />

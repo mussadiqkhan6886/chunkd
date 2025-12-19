@@ -106,7 +106,14 @@ export const DropProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // 🧹 CLEAR CART (fixed bug)
-  const clearCart = () => setCart([]);
+  const clearCart = () => {
+    
+    setCart([])
+
+    if (typeof window !== "undefined") {
+        localStorage.removeItem("orderData")
+      }
+  };
 
   // ⏱ Update clock every second
   useEffect(() => {

@@ -8,12 +8,12 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-black mt-12 text-white pb-3 pt-12 px-6">
+    <footer className="bg-soft/10 border-t border-soft mt-12 text-black pb-3 pt-12 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* About Section */}
         <div>
           <h3 className="text-xl font-bold mb-4">About Chunk'd</h3>
-          <p className="text-gray-300 mb-2">
+          <p className="text-gray-900 mb-2">
             Freshly baked cookies delivered across Lahore. Choose your box, pick your flavours, and enjoy!
           </p>
         </div>
@@ -21,9 +21,9 @@ const Footer = () => {
         {/* Delivery & Timing */}
         <div>
           <h3 className="text-xl font-bold mb-4">Delivery & Timing</h3>
-          <p className="text-gray-300 mb-1">Delivery: 11:00 AM - 6:00 PM</p>
-          <p className="text-gray-300 mb-1">Pickup Available</p>
-          <p className="text-gray-300">Orders are baked fresh daily.</p>
+          <p className="text-gray-900 mb-1">Delivery: 11:00 AM - 6:00 PM</p>
+          <p className="text-gray-900 mb-1">Pickup Available</p>
+          <p className="text-gray-900">Orders are baked fresh daily.</p>
         </div>
 
         {/* Socials & Links */}
@@ -41,10 +41,10 @@ const Footer = () => {
             </Link>
           </div>
           <div className="flex flex-col gap-2">
-            <Link href="/about" className="text-gray-300 hover:text-white transition">About Us</Link>
-            <Link href="/contact" className="text-gray-300 hover:text-white transition">Contact</Link>
-            <Link href="/terms" className="text-gray-300 hover:text-white transition">Terms & Conditions</Link>
-            <Link href="/privacy" className="text-gray-300 hover:text-white transition">Privacy Policy</Link>
+            <Link href="/about" className="text-gray-900 hover:text-black transition">About Us</Link>
+            <Link href="/contact" className="text-gray-900 hover:text-black transition">Contact</Link>
+            <Link href="/terms" className="text-gray-900 hover:text-black transition">Terms & Conditions</Link>
+            <Link href="/privacy" className="text-gray-900 hover:text-black transition">Privacy Policy</Link>
           </div>
         </div>
       </div>

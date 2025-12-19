@@ -271,6 +271,12 @@ const Checkout = () => {
               </div>
             </>
           )}
+
+          <div className="mt-5">
+            <h3>Enter Coupon for Discount:</h3>
+            <input type="text" placeholder="Enter Coupon Code" className="border border-black/40 rounded-lg p-2 mt-4" />
+            <button className="bg-black text-white px-5 py-2 ml-2 rounded-lg">Add</button>
+          </div>
         </div>
       </main>
     </>
