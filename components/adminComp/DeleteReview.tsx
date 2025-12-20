@@ -4,17 +4,26 @@ import axios from 'axios';
 import { Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
+import AdminCheck from './AdminCheck';
+import { useDrop } from '@/lib/context/contextAPI';
 
 const DeleteReview = ({id}: {id: string}) => {
 
     const [result, setResult] = useState("")
+     const [showAdminCheck, setShowAdminCheck] = React.useState(false)
+      const {isAdmin, setIsAdmin} = useDrop()
 
     const deleteTest = async () => {
-        const res = await axios.delete(`/api/testimonials/${id}`)
-        if(res.data.success){
-            setResult("Review Deleted Successfully")
+        setIsAdmin(false)
+        if(isAdmin){
+            const res = await axios.delete(`/api/testimonials/${id}`)
+            if(res.data.success){
+                setResult("Review Deleted Successfully")
+            }else{
+                setResult("Review Failed to Delete")
+            }
         }else{
-            setResult("Review Failed to Delete")
+            setShowAdminCheck(false)
         }
     }
     
@@ -24,6 +33,9 @@ const DeleteReview = ({id}: {id: string}) => {
     <button onClick={deleteTest} className="text-red-600 cursor-pointer hover:text-red-800">
         <Trash />
     </button>
+     {showAdminCheck && 
+    (<AdminCheck onClose={() => setShowAdminCheck(false)} />)
+    }
     <p>{result}</p>
     </>
   )

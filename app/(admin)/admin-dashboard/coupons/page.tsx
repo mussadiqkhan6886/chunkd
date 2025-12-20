@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { FiTrash } from "react-icons/fi";
 import { CouponType } from "@/type";
+import AdminCheck from "@/components/adminComp/AdminCheck";
+import { useDrop } from "@/lib/context/contextAPI";
 
 const CouponsPage = () => {
   const [code, setCode] = useState("");
@@ -11,6 +13,8 @@ const CouponsPage = () => {
   const [coupons, setCoupons] = useState<CouponType[]>([]);
   const [loading, setLoading] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [showAdminCheck, setShowAdminCheck] = useState(false)
+  const {isAdmin, setIsAdmin} = useDrop()
 
   const fetchCoupons = async () => {
     const res = await axios.get("/api/coupon");
@@ -40,7 +44,9 @@ const CouponsPage = () => {
   };
 
   const handleDelete = async (id: string) => {
-    setDeletingId(id);
+    setIsAdmin(false)
+    if(isAdmin){
+      setDeletingId(id);
     try {
       await axios.delete(`/api/coupon/${id}`);
       fetchCoupons(); // refresh list
@@ -48,7 +54,11 @@ const CouponsPage = () => {
       alert("Error deleting coupon");
     }
     setDeletingId(null);
-  };
+    }else{
+        setShowAdminCheck(true)
+      }
+    };
+    
 
   return (
     <div className="max-w-3xl mx-auto p-6">
@@ -107,6 +117,9 @@ const CouponsPage = () => {
           </div>
         ))}
       </div>
+      {showAdminCheck && (
+        <AdminCheck onClose={() => setShowAdminCheck(false)} />
+      )}
     </div>
   );
 };

@@ -8,6 +8,8 @@ import axios from 'axios';
 import Link from 'next/link';
 import { Edit, Trash } from 'lucide-react';
 import { CookieType } from '@/type';
+import AdminCheck from './AdminCheck';
+import { useDrop } from '@/lib/context/contextAPI';
 
 interface ProductTableProps {
   products: CookieType[]; // categories with products
@@ -15,8 +17,14 @@ interface ProductTableProps {
 
 export default function DropTable({ products }: ProductTableProps) {
 
+  const [showAdminCheck, setShowAdminCheck] = React.useState(false)
+  const {isAdmin, setIsAdmin} = useDrop()
+
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this product?")) return;
+    setIsAdmin(false)
+
+    if(isAdmin){
+        if (!confirm("Are you sure you want to delete this product?")) return;
     try {
       const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/drops/${id}`);
       if (res.status === 200) {
@@ -26,6 +34,10 @@ export default function DropTable({ products }: ProductTableProps) {
       console.error(err);
       alert("Failed to delete product.");
     }
+    }else{
+      setShowAdminCheck(true)
+    }
+  
   };
 
   const columns: GridColDef<any>[] = [
@@ -120,6 +132,9 @@ export default function DropTable({ products }: ProductTableProps) {
         showToolbar
         disableRowSelectionOnClick
       />
+      {showAdminCheck && 
+        (<AdminCheck onClose={() => setShowAdminCheck(false)} />)
+      }
     </Box>
   );
 }

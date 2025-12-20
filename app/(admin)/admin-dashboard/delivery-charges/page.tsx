@@ -3,16 +3,19 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FiTrash } from "react-icons/fi";
+import AdminCheck from "@/components/adminComp/AdminCheck";
+import { useDrop } from "@/lib/context/contextAPI";
 
 const DeliveryPage = () => {
   const [city, setCity] = useState("");
   const [charge, setCharge] = useState<number>(0);
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+   const [showAdminCheck, setShowAdminCheck] = useState(false)
+    const {isAdmin, setIsAdmin} = useDrop()
 
   const fetchData = async () => {
     const res = await axios.get("/api/deliveryCharges");
-    console.log(res)
     setData(res.data);
   };
 
@@ -39,13 +42,19 @@ const DeliveryPage = () => {
   };
 
   const handleDelete = async (id: string) => {
-    setLoading(true);
-    try {
-      await axios.delete(`/api/deliveryCharges/${id}`);
-      fetchData();
-    } catch {
-      alert("Delete error");
+    setIsAdmin(false)
+    if(isAdmin){
+      setLoading(true);
+      try {
+        await axios.delete(`/api/deliveryCharges/${id}`);
+        fetchData();
+      } catch {
+        alert("Delete error");
+      }
+    }else{
+      setShowAdminCheck(true)
     }
+    
     setLoading(false);
   };
 
@@ -95,6 +104,9 @@ const DeliveryPage = () => {
         ))}
       </div>
       )}
+       {showAdminCheck && (
+          <AdminCheck onClose={() => setShowAdminCheck(false)} />
+        )}
     </div>
   );
 };
