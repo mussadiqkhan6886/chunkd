@@ -1,133 +1,180 @@
-'use client';
+"use client";
 
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { useDrop } from "@/lib/context/contextAPI";
 import { CartItem } from "@/type";
-import Link from "next/link";
 
 interface DeliveryChargeType {
-  city: string
-  charge: number
+  city: string;
+  charge: number;
 }
 
 const Checkout = () => {
   const router = useRouter();
+  const { clearCart } = useDrop();
+
+  // ---------------- STATES ----------------
+  const [cart, setCart] = useState<any>(null);
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+  const [couponCode, setCouponCode] = useState("");
+  const [discountPercent, setDiscountPercent] = useState(0);
+  const [isCouponApplied, setIsCouponApplied] = useState(false);
+  const [couponError, setCouponError] = useState("");
+  const [couponSuccess, setCouponSuccess] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
+
+  const [paymentProof, setPaymentProof] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
     email: "",
     notes: "",
-    paymentMethod: "",
-    date: "",
-    orderType: "",
-    time: ""
+    paymentMethod: "card",
   });
 
-  const {clearCart} = useDrop()
+  // ---------------- LOAD CART (HYDRATION SAFE) ----------------
+  useEffect(() => {
+    const data = localStorage.getItem("orderData");
+    setCart(data ? JSON.parse(data) : { cart: [], totalAmount: 0 });
+  }, []);
 
-  const [cart] = useState(() => {
-  if (typeof window === "undefined") return []
-  const data = localStorage.getItem("orderData")
-  return data ? JSON.parse(data) : []
-})
-  const [status, setStatus] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [paymentProof, setPaymentProof] = useState<File | null>(null); 
-  const [preview, setPreview] = useState<string | null>(null);
-  const [deliveryCharges, setDeliveryCharges] = useState(0)
+  // ---------------- DELIVERY CHARGES ----------------
+  useEffect(() => {
+    if (!cart?.city) return;
 
+    const getDeliveryCharges = async () => {
+      try {
+        const res = await fetch("/api/deliveryCharges");
+        const json = await res.json();
 
- useEffect(() => {
-  const getDeliveryCharges = async () => {
-    try {
-      const res = await fetch("/api/deliveryCharges")
-      const json = await res.json()
+        const found = json.find(
+          (item: DeliveryChargeType) =>
+            item.city.toLowerCase() === cart.city.toLowerCase()
+        );
 
-      if (!cart?.city) return
-
-      const currentCharges = json.find(
-        (item: DeliveryChargeType) =>
-          item.city.toLowerCase() === cart.city.toLowerCase()
-      )
-
-      if (currentCharges) {
-        setDeliveryCharges(currentCharges.charge)
+        if (found) setDeliveryCharges(found.charge);
+      } catch (e) {
+        console.error("Delivery charge error", e);
       }
-    } catch (error) {
-      console.error("Failed to fetch delivery charges", error)
-    }
-  }
+    };
 
-  getDeliveryCharges()
-}, [cart.city])
+    getDeliveryCharges();
+  }, [cart?.city]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+  // ---------------- HANDLERS ----------------
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => { if (e.target.files && e.target.files[0]) { setPaymentProof(e.target.files[0]); setPreview(URL.createObjectURL(e.target.files[0])); } };
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      setPaymentProof(e.target.files[0]);
+      setPreview(URL.createObjectURL(e.target.files[0]));
+    }
+  };
 
+  // ---------------- COUPON VERIFY ----------------
+  const verifyCoupon = async () => {
+    setCouponError("");
+    setCouponSuccess("");
+
+    try {
+      const res = await fetch("/api/verifyCoupon", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ couponCode }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setCouponError(data.data || "INVALID COUPON CODE");
+        setIsCouponApplied(false)
+        setDiscountPercent(0)
+        return;
+      }
+
+      setDiscountPercent(data.data.discount);
+      setIsCouponApplied(true);
+      setCouponSuccess(`Coupon applied! ${data.data.discount}% discount`);
+    } catch {
+      setCouponError("Something went wrong");
+    }
+  };
+
+  // ---------------- CALCULATIONS ----------------
+  if (!cart) return null;
+
+  const discountAmount = isCouponApplied
+    ? Math.round((cart.totalAmount * discountPercent) / 100)
+    : 0;
+
+  const finalTotal =
+    cart.totalAmount - discountAmount + deliveryCharges;
+
+  // ---------------- SUBMIT ----------------
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!cart || cart.length === 0) {
-      setStatus("Your cart is empty.");
-      return;
-    }
+    if (!paymentProof) return;
 
-    setStatus("Sending...");
     setLoading(true);
+    setStatus("Placing order...");
 
-    const data = {
-      // include images for each item
+    const orderData = {
       items: cart.cart.map((item: CartItem) => ({
         id: item.id,
         name: item.title,
         price: item.price,
         quantity: item.quantity,
-        images: item.images[0],
+        image: item.images?.[0],
       })),
-      totalPrice: cart.totalAmount + deliveryCharges, 
-      userDetails: {
+      pricing: {
+        subtotal: cart.totalAmount,
+        discountPercent,
+        discountAmount,
+        deliveryCharges,
+        total: finalTotal,
+        couponCode: isCouponApplied ? couponCode : null,
+      },
+      user: {
         fullName: formData.fullName,
         phone: formData.phone,
-        email: formData.email || "No email",
+        email: formData.email || "N/A",
       },
-      notes: formData.notes || "No Notes",
-      shippingAddress: {
-        city: cart.city || "",
-        address: cart.address || "",
+      address: {
+        city: cart.city,
+        address: cart.address,
       },
+      notes: formData.notes || "No notes",
       paymentMethod: formData.paymentMethod,
-      date: cart.date,
-      orderType: cart.orderType,
-      time: cart.time
     };
 
-
-    const formDataToSend = new FormData();
-    if(paymentProof){
-      formDataToSend.append("paymentProof", paymentProof);
-    }
-    formDataToSend.append("orderData", JSON.stringify(data));
+    const fd = new FormData();
+    fd.append("paymentProof", paymentProof);
+    fd.append("orderData", JSON.stringify(orderData));
 
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/order`,
-        formDataToSend,{ headers: { "Content-Type": "multipart/form-data" } }
+        fd
       );
 
-      setStatus("Order placed successfully!");
-
-      clearCart()
-
-      // redirect to thank you page
+      clearCart();
       router.push(`/thank-you/${res.data.order._id}`);
-    } catch (err) {
-      console.error(err);
-      setStatus("Something went wrong. Please try again.");
+    } catch {
+      setStatus("Order failed. Try again.");
     } finally {
       setLoading(false);
     }
@@ -205,12 +252,12 @@ const Checkout = () => {
                 Secure bank transfer. Your payment details are safe.
               </p>
             </div>
-            <div className=" border border-blue-400 bg-blue-50 rounded-lg p-4 space-y-3"> <h3 className="font-semibold text-blue-800 text-lg">Bank Transfer</h3> <p><strong>Bank:</strong> HBL</p> <p><strong>Account Title:</strong> IQRA NAA</p> <p><strong>Account No:</strong> 12877902882799</p>
-            <p><strong>IBAN:</strong> PK84HABB0012877902882799</p><p><strong>BRANCH:</strong> DHUDHIAL</p> <label className="block text-sm font-medium text-gray-700 mt-2"> Upload Payment Proof </label> <input type="file" accept="image/*" onChange={handleFileChange} className="block w-full mt-2 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-300 file:bg-gray-200 hover:file:bg-gray-300" /> {preview && ( <div className="mt-3"> <Image src={preview} alt="Payment proof" width={200} height={200} className="rounded-md border" /> </div> )} </div>
+            <div className=" border border-blue-400 bg-blue-50 rounded-lg p-4 space-y-3"> <h3 className="font-semibold text-blue-800 text-lg">Bank Transfer</h3> <p><strong>Bank:</strong> Meezan Bnk</p> <p><strong>Account Title:</strong> ALI ADNAN KHAN</p> <p><strong>Account No:</strong> 02050111169230</p>
+            <p><strong>IBAN:</strong> PK98MEZN00022050111169230</p><p><strong>BRANCH:</strong> DHA PH III BR-LAHORE</p> <label className="block text-sm font-medium text-gray-700 mt-2"> Upload Payment Proof </label> <input type="file" accept="image/*" onChange={handleFileChange} className="block w-full mt-2 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-300 file:bg-gray-200 hover:file:bg-gray-300" /> {preview && ( <div className="mt-3"> <Image src={preview} alt="Payment proof" width={200} height={200} className="rounded-md border" /> </div> )} </div>
 
             <button
               type="submit"
-              disabled={loading || cart.length === 0 || paymentProof === null}
+              disabled={loading || !cart || paymentProof === null}
               className={`md:col-span-2 w-full cursor-pointer text-white py-3 rounded-md transition ${
                 loading ? "bg-gray-600" : "bg-black not-disabled:hover:bg-gray-800" 
               } disabled:opacity-45 disabled:cursor-not-allowed`}
@@ -228,11 +275,11 @@ const Checkout = () => {
         <div className="w-full md:w-1/3 bg-gray-100 py-6 px-6">
           <h3 className="text-xl font-semibold mb-4">Your Cart</h3>
 
-          {cart.cart.length === 0 ? (
+          {!cart ? (
             <p className="text-gray-500">Your cart is empty.</p>
           ) : (
             <>
-              {cart.cart.map((item: CartItem, i: number) => (
+              {cart?.cart?.map((item: CartItem, i: number) => (
                 <div
                   key={i}
                   className="flex justify-between items-center border-b py-2"
@@ -265,17 +312,25 @@ const Checkout = () => {
                 <span>Shipping:</span>
                 <span>{deliveryCharges} PKR</span>
               </div>
+               {isCouponApplied && (
+              <div className="flex justify-between text-green-600">
+                <span>Discount ({discountPercent}%)</span>
+                <span>-{discountAmount} PKR</span>
+              </div>
+            )}
               <div className="flex justify-between mt-4 font-bold text-lg">
                 <span>Total:</span>
-                <span>{cart.totalAmount + deliveryCharges} PKR</span>
+                <span>{finalTotal} PKR</span>
               </div>
             </>
           )}
 
           <div className="mt-5">
             <h3>Enter Coupon for Discount:</h3>
-            <input type="text" placeholder="Enter Coupon Code" className="border border-black/40 rounded-lg p-2 mt-4" />
-            <button className="bg-black text-white px-5 py-2 ml-2 rounded-lg">Add</button>
+            <input value={couponCode} onChange={(e) => setCouponCode(e.target.value.toUpperCase())} type="text" placeholder="Enter Coupon Code" className="border border-black/40 rounded-lg p-2 mt-4" />
+            <button onClick={verifyCoupon} className="bg-black active:scale-95 text-white px-5 py-2 ml-2 rounded-lg"> {isCouponApplied ? "Applied" : "Verify Coupon"}</button>
+             {couponError && <p className="text-red-500 mt-2">{couponError}</p>}
+          {couponSuccess && <p className="text-green-600 mt-2">{couponSuccess}</p>}
           </div>
         </div>
       </main>

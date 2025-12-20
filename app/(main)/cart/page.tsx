@@ -116,7 +116,7 @@ const CartPage = () => {
       {/* Date/Time only for pickup/preOrder */}
       {orderType === "pickup" && <div className="my-2">
           <p className="font-medium ">Address: </p>
-          <p>(pickup address)</p>
+          <p>116/1 M street 175 Phase 1 DHA</p>
         </div>}
       {(orderType === "pickup" || orderType === "preOrder") && (
         <>

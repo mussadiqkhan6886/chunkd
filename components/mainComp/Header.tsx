@@ -13,10 +13,6 @@ const HeaderWithMenu = () => {
   const [scrolled, setScrolled] = useState(false);
   const router = usePathname()
 
-  if(router.includes("/checkout")){
-    return null;
-  }
-
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -24,6 +20,10 @@ const HeaderWithMenu = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  if(router.includes("/checkout")){
+    return null;
+  }
 
   return (
     <header
