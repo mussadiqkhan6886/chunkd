@@ -3,12 +3,12 @@ import React from "react";
 const Page = () => {
   return (
     <main className="bg-gray-50 min-h-screen py-16 px-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 p-8 space-y-14 animate-fadeIn">
+      <div className="max-w-4xl mx-auto bg-white p-8 space-y-14 animate-fadeIn">
 
         {/* PRIVACY POLICY */}
         <section id="privacy" className="space-y-4">
           <h1 className="text-2xl font-semibold text-gray-900">
-            🔐 Privacy Policy
+            Privacy Policy
           </h1>
 
           <p className="text-gray-600">
@@ -51,7 +51,7 @@ const Page = () => {
         {/* RETURN & REFUND POLICY */}
         <section id="return" className="space-y-4">
           <h2 className="text-2xl font-semibold text-gray-900">
-            🚫 Return & Refund Policy
+            Return & Refund Policy
           </h2>
 
           <p className="text-gray-600">
@@ -82,7 +82,7 @@ const Page = () => {
         {/* SHIPPING POLICY */}
         <section id="shipping" className="space-y-4">
           <h2 className="text-2xl font-semibold text-gray-900">
-            🚚 Shipping & Delivery Policy
+            Shipping & Delivery Policy
           </h2>
 
           <p className="text-gray-600">
@@ -108,7 +108,7 @@ const Page = () => {
         {/* TERMS */}
         <section id="terms" className="space-y-4">
           <h2 className="text-2xl font-semibold text-gray-900">
-            📜 Terms & Conditions
+            Terms & Conditions
           </h2>
 
           <ul className="list-disc list-inside text-gray-600 space-y-1">

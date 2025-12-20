@@ -290,10 +290,11 @@ const Checkout = () => {
               </p>
             </div>
             <div className=" border border-blue-400 bg-blue-50 rounded-lg p-4 space-y-3"> <h3 className="font-semibold text-blue-800 text-lg">Bank Transfer</h3> <p><strong>Bank:</strong> Meezan Bnk</p> <p><strong>Account Title:</strong> ALI ADNAN KHAN</p> <p><strong>Account No:</strong> 02050111169230</p>
-            <p><strong>IBAN:</strong> PK98MEZN00022050111169230</p><p><strong>BRANCH:</strong> DHA PH III BR-LAHORE</p> <label className="block text-sm font-medium text-gray-700 mt-2"> Upload Payment Proof </label> <input type="file" accept="image/*" onChange={handleFileChange} className="block w-full mt-2 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-300 file:bg-gray-200 hover:file:bg-gray-300" /> {preview && ( <div className="mt-3"> <Image src={preview} alt="Payment proof" width={200} height={200} className="rounded-md border" /> </div> )} </div>
+            <p><strong>IBAN:</strong> PK98MEZN00022050111169230</p><p><strong>BRANCH:</strong> DHA PH III BR-LAHORE</p> <label className="block text-sm font-medium text-gray-700 mt-2"> Upload Payment Proof </label> <input type="file" accept="image/*" onChange={handleFileChange} className="block w-full mt-2 text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-300 file:bg-gray-200 hover:file:bg-gray-300" /> {preview && ( <div className="mt-3"> <Image src={preview} alt="Payment proof" width={200} height={200} className="rounded-md border" /> </div> )} 
+            </div>
 
-            <div>
-              <p>By placing an order, you confirm that you have read and agreed to our Privacy Policy, Shipping Policy, Return & Refund Policy, and Terms & Conditions.</p>
+            <div className="md:col-span-2 w-full">
+              <p className="text-gray-700">By placing an order, you confirm that you have read and agreed to our Privacy Policy, Shipping Policy, Return & Refund Policy, and Terms & Conditions.</p>
             </div>
             <button
               type="submit"
