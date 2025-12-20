@@ -18,6 +18,7 @@ interface OrderItem {
   price: number
   quantity: number
   image?: string
+  type: string
 }
 export interface Pricing {
   subtotal: number
@@ -61,7 +62,7 @@ interface Order {
 
 
 export default function OrderTable({ orders }: { orders: Order[] }) {
-
+  console.log(orders)
   const [showAdminCheck, setShowAdminCheck] = React.useState(false)
   const {isAdmin, setIsAdmin} = useDrop()
 
@@ -82,6 +83,7 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
       time: order.time,
       notes: order.notes ?? "-",
       orderType: order.orderType,
+      type: order.items.map(item => item.type),
       couponCode: order.pricing.couponCode === null ? "No Coupon Code" : order.pricing.couponCode,
       discountAmount: order.pricing.discountAmount ?? 0,
     }))
@@ -150,6 +152,7 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
       ),
     },
     { field: "userName", headerName: "Customer", width: 140 },
+    { field: "type", headerName: "Order Type", width: 140 },
     { field: "email", headerName: "Email", width: 160 },
     { field: "phone", headerName: "Phone", width: 120 },
     { field: "orderType", headerName: "Order Type", width: 120 },

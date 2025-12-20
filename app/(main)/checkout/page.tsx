@@ -58,6 +58,8 @@ const Checkout = () => {
     setCart(data ? JSON.parse(data) : { cart: [], totalAmount: 0 });
   }, []);
 
+  console.log(cart)
+
   // ---------------- DELIVERY CHARGES ----------------
   useEffect(() => {
     if (!cart?.city) return;
@@ -142,6 +144,7 @@ const Checkout = () => {
 
     setLoading(true);
     setStatus("Placing order...");
+    console.log(cart)
 
    const orderData = {
     items: cart.cart.map((item: CartItem) => {
@@ -195,7 +198,6 @@ const Checkout = () => {
     paymentMethod: formData.paymentMethod,
   };
 
-  console.log(orderData)
     const fd = new FormData();
     fd.append("paymentProof", paymentProof);
     fd.append("orderData", JSON.stringify(orderData));
