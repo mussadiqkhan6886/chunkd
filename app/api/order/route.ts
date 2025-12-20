@@ -80,21 +80,127 @@ export const POST = async (req: NextRequest) => {
       },
     });
 
-    const html = `
-      <h2>New Order Received!</h2>
-      <a href="https://chunkd.vercel.app/admin-dashboard">Check it out</a>
+    const adminHtml = `
+      <h2>🛒 New Order Received!</h2>
+      <p>A new order has been placed.</p>
+      <a href="https://chunkd.vercel.app/admin-dashboard">
+        👉 View Order in Admin Dashboard
+      </a>
     `;
 
-    // 3️⃣ Mail options
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    await transporter.sendMail({
+      from: `"Chunkd Orders" <${process.env.EMAIL_USER}>`,
       to: "mussadiqkhan6886@gmail.com", // admin email
-      subject: `New Order`,
-      html,
-    };
+      subject: "New Order Received",
+      html: adminHtml,
+    });
 
-    // 4️⃣ Send email
-    await transporter.sendMail(mailOptions);
+    const itemsHtml = orderData.items
+      .map(
+        (item: any) => `
+          <tr>
+            <td style="padding:8px 0;">
+              <strong>${item.name}</strong><br/>
+              <small>Qty: ${item.quantity}</small>
+            </td>
+            <td style="text-align:right; padding:8px 0;">
+              Rs. ${item.price * item.quantity}
+            </td>
+          </tr>
+        `
+      )
+      .join("");
+
+    const customerHtml = `
+    <div style="font-family: Arial, sans-serif; max-width:600px; margin:auto; padding:20px; border:1px solid #e5e7eb;">
+      
+      <h2 style="color:#111827;">✅ Order Confirmed</h2>
+      <p>Hi <strong>${orderData.userDetails.fullName}</strong>,</p>
+
+      <p>Thank you for shopping with <strong>Chunkd</strong> 🍪  
+      Your order has been placed successfully.</p>
+
+      <hr style="margin:20px 0;" />
+
+      <p><strong>Order ID:</strong> ${orderData.orderId || "Generated after confirmation"}</p>
+      <p><strong>Order Date:</strong> ${new Date().toDateString()}</p>
+      <p><strong>Payment Method:</strong> ${orderData.paymentMethod}</p>
+
+      <hr style="margin:20px 0;" />
+
+      <h3 style="margin-bottom:10px;">🛒 Order Items</h3>
+      <table width="100%" cellpadding="0" cellspacing="0">
+        ${itemsHtml}
+      </table>
+
+      <hr style="margin:20px 0;" />
+
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td>Subtotal</td>
+          <td style="text-align:right;">Rs. ${orderData.pricing.subtotal}</td>
+        </tr>
+
+        ${
+          orderData.pricing.discountAmount
+            ? `
+        <tr>
+          <td>Discount</td>
+          <td style="text-align:right; color:green;">
+            - Rs. ${orderData.pricing.discountAmount}
+          </td>
+        </tr>`
+            : ""
+        }
+
+        <tr>
+          <td>Delivery Charges</td>
+          <td style="text-align:right;">Rs. ${orderData.pricing.deliveryCharges}</td>
+        </tr>
+
+        <tr>
+          <td style="padding-top:10px;"><strong>Total</strong></td>
+          <td style="text-align:right; padding-top:10px;">
+            <strong>Rs. ${orderData.pricing.total}</strong>
+          </td>
+        </tr>
+      </table>
+
+      <hr style="margin:20px 0;" />
+
+      <h3>📍 Delivery Address</h3>
+      <p>
+        ${orderData.shippingAddress.address}<br/>
+        ${orderData.shippingAddress.city}
+      </p>
+
+      ${
+        orderData.notes
+          ? `
+          <h3>📝 Order Notes</h3>
+          <p>${orderData.notes}</p>
+          `
+          : ""
+      }
+
+      <p style="font-size:12px; color:#6b7280;">
+        If you have any questions, reply to this email or contact our support.
+      </p>
+
+      <p style="margin-top:20px;">
+        — <strong>Chunkd Team</strong> 🍪
+      </p>
+    </div>
+    `;
+
+
+    await transporter.sendMail({
+      from: `"Chunkd Orders" <${process.env.EMAIL_USER}>`,
+      to: orderData.userDetails.email, // ✅ customer email
+      subject: "Your Order Has Been Placed 🎉",
+      html: customerHtml,
+    });
+
 
     return NextResponse.json({
       success: true,

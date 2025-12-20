@@ -40,7 +40,6 @@ const ThankYouPage = async ({ params }: { params: Promise<{ id: string }> }) => 
   await connectDB()
     const res = await order.findOne({ _id: id });
     const data = JSON.parse(JSON.stringify(res))
-    console.log(data)
   return (
     <main className="flex flex-col pt-24 justify-center items-center min-h-screen bg-gray-50 px-5">
       <div className="bg-white shadow-md rounded-lg p-10 text-center max-w-2xl w-full">
