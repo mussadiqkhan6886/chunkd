@@ -59,9 +59,23 @@ const ThankYouPage = async ({ params }: { params: Promise<{ id: string }> }) => 
           <p className="text-gray-700 mb-1">
             <strong>Phone:</strong> {data.userDetails.phone}
           </p>
-          <p className="text-gray-700 mb-4">
+          {data.shippingAddress?.address && <p className="text-gray-700 mb-2">
             <strong>Address:</strong> {data.shippingAddress.address}
+          </p>}
+          <p className="text-gray-700 mb-2">
+            <strong>Order Type:</strong> {data.orderType}
           </p>
+          {data.orderType === "pickup" && <div className="flex mb-2 gap-7">
+            <p>
+              <strong>Pickup Date:</strong>  {new Date(data.date).toDateString()}
+            </p>
+            <p>
+              <strong>Pickup Time:</strong> {data.time}
+            </p>
+          </div>}
+          {data.orderType === "pickup" && <p className="text-gray-700 mb-4">
+            <strong>Pick up Address:</strong> 116/1 M street 175 Phase 1 DHA
+          </p>}
 
           {/* ✅ Items List */}
           <div className="space-y-3">

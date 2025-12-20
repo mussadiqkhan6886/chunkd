@@ -30,7 +30,7 @@ const OrderSchema = new Schema({
     ],
     pricing: {
       subtotal: {type: String, required: true},
-      discountAmount: {type: String, required: true},
+      discountAmount: {type: String},
       deliveryCharges: {type: String, required: true},
       total: {type: String, required: true},
       couponCode: {type: String, default: null}
@@ -41,15 +41,17 @@ const OrderSchema = new Schema({
       email: {type: String}
     },
     notes: {type: String},
+    orderType: {type: String},
+    date: {type: String, default: null},
+    time: {type: String, default: null},
     status: {
       type: String,
       enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
       default: "pending",
     },
-
     shippingAddress: {
       city: { type: String },
-      address: {type: String, required: true}
+      address: {type: String}
     },
     paymentMethod: {
       type: String,

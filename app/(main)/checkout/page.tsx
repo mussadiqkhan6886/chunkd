@@ -21,6 +21,7 @@ const Checkout = () => {
   const [cart, setCart] = useState<any>(null);
   const [deliveryCharges, setDeliveryCharges] = useState(0);
 
+
   const [couponCode, setCouponCode] = useState("");
   const [discountPercent, setDiscountPercent] = useState(0);
   const [isCouponApplied, setIsCouponApplied] = useState(false);
@@ -132,7 +133,6 @@ const Checkout = () => {
     setLoading(true);
     setStatus("Placing order...");
 
-
     const orderData = {
       items: cart.cart.map((item: CartItem) => ({
         id: item.id,
@@ -153,6 +153,9 @@ const Checkout = () => {
         phone: formData.phone,
         email: formData.email || "N/A",
       },
+      orderType: cart.orderType || "",
+      date: cart.date,
+      time: cart.time,
       shippingAddress: {
         city: cart.city,
         address: cart.address,
