@@ -23,7 +23,7 @@ const DeleteReview = ({id}: {id: string}) => {
                 setResult("Review Failed to Delete")
             }
         }else{
-            setShowAdminCheck(false)
+            setShowAdminCheck(true)
         }
     }
     
