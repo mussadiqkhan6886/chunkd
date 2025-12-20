@@ -131,6 +131,7 @@ interface OrderDataType {
 
 interface MediaType {
   _id: string
-  img: string
+  media: string
+  mediaType: string
   height: number
 }

@@ -14,7 +14,6 @@ const InstagramGrid = () => {
       const res = await fetch("/api/media")
       const json = await res.json()
       setItems(json.data || [])
-      console.log(json.data)
     }
 
     fetchData()

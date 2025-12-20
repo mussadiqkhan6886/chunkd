@@ -137,7 +137,7 @@ const Masonry: React.FC<MasonryProps> = ({
   };
 
   useEffect(() => {
-    preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
+    preloadImages(items.map(i => i.media)).then(() => setImagesReady(true));
   }, [items]);
 
   const grid = useMemo<GridItem[]>(() => {
@@ -231,27 +231,46 @@ const Masonry: React.FC<MasonryProps> = ({
 
   return (
     <div ref={containerRef} className="relative w-full min-h-screen">
-      {grid.map(item => (
-        <div
-          key={item._id}
-          data-key={item._id}
-          className="absolute box-content"
-          style={{ willChange: 'transform, width, height, opacity' }}
-          // onClick={() => window.open(item.url, '_blank', 'noopener')}
-          onMouseEnter={e => handleMouseEnter(item._id, e.currentTarget)}
-          onMouseLeave={e => handleMouseLeave(item._id, e.currentTarget)}
-        >
+  {grid.map(item => (
+    <div
+      key={item._id}
+      data-key={item._id}
+      className="absolute box-content"
+      style={{ willChange: "transform, width, height, opacity" }}
+      onMouseEnter={e => handleMouseEnter(item._id, e.currentTarget)}
+      onMouseLeave={e => handleMouseLeave(item._id, e.currentTarget)}
+    >
+      <div className="relative w-full h-full overflow-hidden rounded-[10px] uppercase text-[10px] leading-[10px]">
+
+        {/* 🖼 IMAGE BACKGROUND */}
+        {item.mediaType === "image" && (
           <div
-            className="relative w-full h-full bg-cover bg-center rounded-[10px] uppercase text-[10px] leading-[10px]"
-            style={{ backgroundImage: `url(${item.img})` }}
-          >
-            {colorShiftOnHover && (
-              <div className="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
-            )}
-          </div>
-        </div>
-      ))}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${item.media})` }}
+          />
+        )}
+
+        {/* 🎥 VIDEO BACKGROUND */}
+        {item.mediaType === "video" && (
+          <video
+            src={item.media}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )}
+
+        {/* 🎨 Hover Overlay */}
+        {colorShiftOnHover && (
+          <div className="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
+        )}
+      </div>
     </div>
+  ))}
+</div>
   );
 };
 
