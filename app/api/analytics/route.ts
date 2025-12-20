@@ -24,7 +24,7 @@ export async function GET() {
   const cookieMap: Record<string, number> = {};
 
   orders.forEach(order => {
-    order.items.forEach((item: OrderDataType) => {
+    order.items.forEach((item: any) => {
       // SIMPLE / DROP ITEMS
       if (item.type !== "box") {
         cookieMap[item.name] =
@@ -33,7 +33,7 @@ export async function GET() {
 
       // BOX ITEMS
       if (item.type === "box") {
-        item.boxData.forEach((cookie: Cookie) => {
+        item.boxData.forEach((cookie: any) => {
           cookieMap[cookie.cookieName] =
             (cookieMap[cookie.cookieName] || 0) + cookie.cookieQty;
         });
