@@ -13,14 +13,24 @@ interface DeliveryChargeType {
   charge: number;
 }
 
+interface CheckoutCart {
+  cart: CartItem[];
+  totalAmount: number;
+  city: string;
+  address: string;
+  orderType?: string;
+  date?: string;
+  time?: string;
+}
+
+
 const Checkout = () => {
   const router = useRouter();
   const { clearCart } = useDrop();
 
   // ---------------- STATES ----------------
-  const [cart, setCart] = useState<any>(null);
+  const [cart, setCart] = useState<CheckoutCart | null>(null);
   const [deliveryCharges, setDeliveryCharges] = useState(0);
-
 
   const [couponCode, setCouponCode] = useState("");
   const [discountPercent, setDiscountPercent] = useState(0);
@@ -133,37 +143,59 @@ const Checkout = () => {
     setLoading(true);
     setStatus("Placing order...");
 
-    const orderData = {
-      items: cart.cart.map((item: CartItem) => ({
-        id: item.id,
-        name: item.title,
-        price: item.price,
-        quantity: item.quantity,
-        image: item.images,
-      })),
-      pricing: {
-        subtotal: cart.totalAmount,
-        discountAmount,
-        deliveryCharges,
-        total: finalTotal,
-        couponCode: isCouponApplied ? couponCode : null,
-      },
-      userDetails: {
-        fullName: formData.fullName,
-        phone: formData.phone,
-        email: formData.email || "N/A",
-      },
-      orderType: cart.orderType || "",
-      date: cart.date,
-      time: cart.time,
-      shippingAddress: {
-        city: cart.city,
-        address: cart.address,
-      },
-      notes: formData.notes || "No notes",
-      paymentMethod: formData.paymentMethod,
-    };
+   const orderData = {
+    items: cart.cart.map((item: CartItem) => {
+      if (item.type === "box") {
+        return {
+          id: item.id,
+          type: "box",
+          name: `Box (${item.boxType?.size})`,
+          size: item.boxType?.size,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.images,
+          boxData: item.boxType?.cookies.map((cookie) => ({
+            cookieId: cookie.id,
+            cookieName: cookie.title,
+            cookieQty: cookie.qty, 
+            cookiePrice: cookie.price,
+          })),
+        };
+      } else {
+        return {
+          id: item.id,
+          type: item.type || "simple",
+          name: item.title,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.images,
+        };
+      }
+    }),
+    pricing: {
+      subtotal: Number(cart.totalAmount),
+      discountAmount: Number(discountAmount),
+      deliveryCharges: Number(deliveryCharges),
+      total: Number(finalTotal),
+      couponCode: isCouponApplied ? couponCode : null,
+    },
+    userDetails: {
+      fullName: formData.fullName,
+      phone: formData.phone,
+      email: formData.email || "N/A",
+    },
+    orderType: cart.orderType || "",
+    date: cart.date || null,
+    time: cart.time || null,
+    shippingAddress: {
+      city: cart.city,
+      address: cart.address,
+    },
+    notes: formData.notes || "No notes",
+    paymentMethod: formData.paymentMethod,
+  };
 
+  console.log(orderData)
     const fd = new FormData();
     fd.append("paymentProof", paymentProof);
     fd.append("orderData", JSON.stringify(orderData));

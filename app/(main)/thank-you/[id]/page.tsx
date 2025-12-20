@@ -4,13 +4,25 @@ import Image from "next/image";
 import { connectDB } from "@/lib/config/databse";
 import order from "@/lib/models/OrderSchema";
 
-interface ItemType {
-  _id: number
-  image: string
-  name: string
-  quantity: number
-  price: number
+export interface BoxItem {
+  cookieId: string;
+  cookieName: string;
+  cookiePrice: number;
+  cookieQty: number;
 }
+
+interface ItemType {
+  _id: string | number; // depends if Mongo _id or custom id
+  id: string;
+  image: string;
+  name: string;
+  quantity: number;
+  price: number;
+  type?: "box" | "single"; // optional, for normal or box items
+  size?: number; // optional, only for boxes
+  boxData?: BoxItem[]; // optional, only for boxes
+}
+
 
 import type { Metadata } from 'next';
 
@@ -93,7 +105,13 @@ const ThankYouPage = async ({ params }: { params: Promise<{ id: string }> }) => 
                     className="w-12 h-12 rounded-md object-cover"
                   />
                   <div>
-                    <p className="font-semibold text-gray-800">{item.name}</p>
+                    <p className="font-semibold text-gray-800">
+                      {item.type !== "box"
+                        ? item.name
+                        : item.boxData
+                            ?.map(boxItem => `${boxItem.cookieName} x${boxItem.cookieQty}`)
+                            .join(", ")}
+                    </p>
                     <p className="text-sm text-gray-600">
                       {item.quantity} × Rs.{item.price}
                     </p>

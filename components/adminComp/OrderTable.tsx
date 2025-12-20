@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Trash } from "lucide-react";
 import AdminCheck from './AdminCheck';
 import { useDrop } from '@/lib/context/contextAPI';
+import { BoxItem } from "@/app/(main)/thank-you/[id]/page";
 
 interface OrderItem {
   id: string
@@ -131,7 +132,18 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
                 height={40}
                 className="rounded-md object-cover border"
               />
-              <span className="text-sm">{item.name} × {item.quantity}</span>
+              <div>
+                    <p className="font-semibold text-gray-800">
+                      {item.type !== "box"
+                        ? item.name + " x" + item.quantity
+                        : item.boxData
+                            ?.map((boxItem: BoxItem) => `${boxItem.cookieName} x${boxItem.cookieQty}`)
+                            .join(", ")}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {item.quantity} × Rs.{item.price}
+                    </p>
+                  </div>
             </div>
           ))}
         </div>

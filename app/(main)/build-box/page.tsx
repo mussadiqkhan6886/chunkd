@@ -90,7 +90,7 @@ const BuildYourBox = () => {
       title: `Build Your Box (${boxData.size})`,
       price: boxData.totalPrice,
       quantity: 1,
-      images: '/box.png',
+      images: boxData.size == 4 ? "/boxoffour.png" : "/boxofsix.png",
       isLive: true,
       boxType: {
         size: boxData.size,
