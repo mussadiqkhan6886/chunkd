@@ -6,28 +6,32 @@ import imageCompression from "browser-image-compression";
 
 const MediaUpload: React.FC = () => {
   const [height, setHeight] = useState<string>('');
-  const [image, setImage] = useState<File | null>(null);
+  const [media, setMedia] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const submitMedia = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!image || !height) {
-      alert('Please select an image and height');
+    if (!media || !height) {
+      alert('Please select an Media and height');
       return;
     }
 
     setLoading(true);
 
+    let compressedFile = media;
+
 // Compress images before upload
-      const compressedFile = await imageCompression(image, {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 1200,
-        useWebWorker: true,
-      });
+    if(media.type.startsWith("image/")){
+    compressedFile = await imageCompression(media, {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1200,
+            useWebWorker: true,
+          });
+    }
       
-      const formData = new FormData();
-      formData.append("img", compressedFile);
+    const formData = new FormData();
+    formData.append("media", compressedFile);
     formData.append('height', height);
 
     try {
@@ -40,7 +44,7 @@ const MediaUpload: React.FC = () => {
 
       alert('Media uploaded successfully');
       setHeight('');
-      setImage(null);
+      setMedia(null);
     } catch (error) {
       alert('Something went wrong');
     } finally {
@@ -50,7 +54,7 @@ const MediaUpload: React.FC = () => {
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
+      setMedia(e.target.files[0]);
     }
   };
 
@@ -66,11 +70,11 @@ const MediaUpload: React.FC = () => {
           {/* Image Upload */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Image
+              Media
             </label>
             <input
               type="file"
-              accept="image/*"
+              accept="image/*,video/*"
               onChange={handleImageChange}
               className="block w-full text-sm text-gray-600
                 file:mr-4 file:py-2 file:px-4

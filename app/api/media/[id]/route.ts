@@ -12,7 +12,7 @@ export async function DELETE(
   try {
     await connectDB();
 
-    const {id} = await params
+    const { id } = await params;
 
     const media = await Media.findById(id);
     if (!media) {
@@ -22,12 +22,12 @@ export async function DELETE(
       );
     }
 
-    /* OPTIONAL: delete from cloudinary */
-    const publicId = media.img.split('/').pop()?.split('.')[0];
-    if (publicId) {
-      await cloudinary.uploader.destroy(`chunkd/${publicId}`);
-    }
+    // ✅ DELETE FROM CLOUDINARY
+    await cloudinary.uploader.destroy(media.publicId, {
+      resource_type: media.mediaType === "video" ? "video" : "image",
+    });
 
+    // ✅ DELETE FROM DB
     await Media.findByIdAndDelete(id);
 
     return NextResponse.json({ success: true }, { status: 200 });

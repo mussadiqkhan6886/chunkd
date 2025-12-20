@@ -8,9 +8,9 @@ export const runtime = "nodejs";
 export async function GET() {
   try {
     await connectDB();
-    const media = await Media.find({});
-    return NextResponse.json({ success: true, data: media }, { status: 200 });
-  } catch (error) {
+    const media = await Media.find({}).sort({ createdAt: -1 });
+    return NextResponse.json({ success: true, data: media });
+  } catch {
     return NextResponse.json(
       { success: false, message: "Failed to fetch media" },
       { status: 500 }
@@ -23,14 +23,12 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     const formData = await req.formData();
-
-    // ✅ SINGLE file
-    const file = formData.get("img");
+    const file = formData.get("media");
     const height = Number(formData.get("height"));
 
     if (!file || !(file instanceof File)) {
       return NextResponse.json(
-        { success: false, message: "Image is required" },
+        { success: false, message: "Media file is required" },
         { status: 400 }
       );
     }
@@ -42,16 +40,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Convert file to buffer
     const buffer = Buffer.from(await file.arrayBuffer());
+    const isVideo = file.type.startsWith("video/");
+    const mediaType = isVideo ? "video" : "image";
 
-    // Upload to Cloudinary
-    const uploadResult = await new Promise<any>((resolve, reject) => {
+    const uploadResult: any = await new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
           {
             folder: "chunkd",
-            resource_type: "image",
+            resource_type: isVideo ? "video" : "image",
+
+            // 🔥 VIDEO OPTIMIZATION
+            ...(isVideo && {
+              transformation: [
+                { quality: "auto" },
+                { fetch_format: "mp4" },
+                { width: 1280, crop: "limit" },
+                { video_codec: "h264" },
+              ],
+            }),
+
+            // 🔥 IMAGE OPTIMIZATION
+            ...(!isVideo && {
+              transformation: [{ quality: "auto", fetch_format: "auto" }],
+            }),
           },
           (error, result) => {
             if (error) reject(error);
@@ -61,16 +74,14 @@ export async function POST(req: NextRequest) {
         .end(buffer);
     });
 
-    // Save to MongoDB
     const media = await Media.create({
-      img: uploadResult.secure_url,
+      media: uploadResult.secure_url,
+      publicId: uploadResult.public_id,
+      mediaType,
       height,
     });
 
-    return NextResponse.json(
-      { success: true, data: media },
-      { status: 201 }
-    );
+    return NextResponse.json({ success: true, data: media }, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
