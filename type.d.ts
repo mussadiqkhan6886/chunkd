@@ -94,21 +94,6 @@ _id: string
 
 import { ObjectId } from "mongodb";
 
-type OrderStatus = "pending" | "paid" | "cancelled" | "refunded";
-
-type OrderDoc = {
-  _id?: ObjectId;
-  items: CartItem[];
-  couponCode?: string | null;
-  status: OrderStatus;
-  createdAt: Date;
-  paidAt?: Date | null;
-  stripeSessionId?: string | null;
-  stripePaymentIntent?: string | null;
-  amount: number; // total in display units (not cents)
-  customerId?: ObjectId | null;
-  stripeSession?: any;
-};
 
 type CustomerDetailsDoc = {
   _id?: ObjectId;

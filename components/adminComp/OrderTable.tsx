@@ -8,35 +8,58 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { Trash } from "lucide-react";
+import { GridToolbar } from "@mui/x-data-grid/internals";
 
-interface Order {
-  _id: string;
-  items: {
-    images: string;
-    name: string;
-    quantity: number;
-    selectedColor: string
-    selectedSize: string
-  }[];
-  orderId: string;
-  userDetails: {
-    fullName: string;
-    phone: string;
-    email: string;
-  };
-  shippingAddress: {
-    city: string;
-    postalCode: string;
-    address: string;
-  };
-  totalPrice: number;
-  status: string;
-  paymentMethod: string;
-  paymentProof?: string;
-  createdAt: string;
+interface OrderItem {
+  id: string
+  name: string
+  price: number
+  quantity: number
+  image?: string
+}
+export interface Pricing {
+  subtotal: number
+  deliveryCharges: number
+  discountAmount?: number
+  total: number
+  couponCode: string | null
+}
+interface UserDetails {
+  fullName: string
+  phone: string
+  email: string
+}
+export interface ShippingAddress {
+  city: string
+  address: string
 }
 
+interface Order {
+  orderId: string
+  _id: string
+  items: OrderItem[]
+
+  pricing: Pricing
+  userDetails: UserDetails
+
+  shippingAddress?: ShippingAddress
+
+  notes?: string
+
+  paymentMethod?: string
+  orderType?: string
+
+  date?: string
+  time?: string
+  status: string
+  paymentProof: string
+  createdAt: string
+  updatedAt: string
+}
+
+
 export default function OrderTable({ orders }: { orders: Order[] }) {
+  console.log(orders)
   const [rows, setRows] = React.useState(() =>
     orders.map((order) => ({
       id: order._id,
@@ -44,13 +67,18 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
       userName: order.userDetails.fullName,
       email: order.userDetails.email,
       phone: order.userDetails.phone,
-      totalPrice: order.totalPrice,
+      totalPrice: order.pricing.total,
       status: order.status,
-      paymentMethod: order.paymentMethod,
       paymentProof: order.paymentProof || "",
-      date: new Date(order.createdAt).toLocaleDateString(),
-      address: order.shippingAddress.address,
+      createdAt: new Date(order.createdAt).toDateString(),
+      address: order.shippingAddress?.address || "",
       items: order.items,
+      date: order.date === undefined ? "now" : new Date(order.date).toDateString(),
+      time: order.time,
+      notes: order.notes ?? "-",
+      orderType: order.orderType,
+      couponCode: order.pricing.couponCode === null ? "No Coupon Code" : order.pricing.couponCode,
+      discountAmount: order.pricing.discountAmount ?? 0,
     }))
   );
 
@@ -84,13 +112,13 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
           {params.value.map((item: any, i: number) => (
             <div key={i} className="flex items-center gap-2 mb-1">
               <Image
-                src={item.images}
+                src={item.image}
                 alt={item.name}
                 width={40}
                 height={40}
                 className="rounded-md object-cover border"
               />
-              <span className="text-sm">{item.name} × {item.quantity} - ({item.selectedColor || item.selectedSize})</span>
+              <span className="text-sm">{item.name} × {item.quantity}</span>
             </div>
           ))}
         </div>
@@ -98,7 +126,11 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
     },
     { field: "userName", headerName: "Customer", width: 140 },
     { field: "email", headerName: "Email", width: 160 },
+    { field: "phone", headerName: "Phone", width: 120 },
+    { field: "orderType", headerName: "Order Type", width: 120 },
     { field: "totalPrice", headerName: "Total (Rs)", width: 90 },
+    { field: "discountAmount", headerName: "Discount Amount", width: 90 },
+    { field: "couponCode", headerName: "Coupon Code", width: 90 },
     {
       field: "status",
       headerName: "Status",
@@ -162,7 +194,6 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
         );
       },
     },
-    { field: "paymentMethod", headerName: "Payment", width: 130 },
     {
   field: "paymentProof",
   headerName: "Payment Proof",
@@ -187,8 +218,11 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
     ),
 },
     { field: "date", headerName: "Date", width: 120 },
-    { field: "phone", headerName: "Phone", width: 120 },
+    { field: "time", headerName: "time", width: 120 },
+    { field: "createdAt", headerName: "Created At", width: 120 },
+    
     { field: "address", headerName: "Address", width: 280 },
+    { field: "notes", headerName: "Note", width: 200 },
     {
       field: "actions",
       headerName: "Actions",
@@ -206,10 +240,10 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
 
   return (
     <div style={{ width: "100%" }}>
-      <h2 className="text-2xl text-center mt-3 font-semibold mb-3">Orders</h2>
       <DataGrid
         rows={rows}
         columns={columns}
+        showToolbar
         disableRowSelectionOnClick
         autoHeight
       />
