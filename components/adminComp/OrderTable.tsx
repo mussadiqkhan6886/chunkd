@@ -8,7 +8,8 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { Trash } from "lucide-react";
-import { GridToolbar } from "@mui/x-data-grid/internals";
+import AdminCheck from './AdminCheck';
+import { useDrop } from '@/lib/context/contextAPI';
 
 interface OrderItem {
   id: string
@@ -59,7 +60,10 @@ interface Order {
 
 
 export default function OrderTable({ orders }: { orders: Order[] }) {
-  console.log(orders)
+
+  const [showAdminCheck, setShowAdminCheck] = React.useState(false)
+  const {isAdmin, setIsAdmin} = useDrop()
+
   const [rows, setRows] = React.useState(() =>
     orders.map((order) => ({
       id: order._id,
@@ -85,19 +89,28 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
   const [updating, setUpdating] = React.useState(false);
 
   const deleteOrder = async (id: string) => {
-    const confirmDelete = confirm("Are you sure you want to delete this order?");
-    if (!confirmDelete) return;
 
-    try {
-      const res = await axios.delete(`/api/order/${id}`);
-      if (res.data.success) {
-        setRows((prev) => prev.filter((order) => order.id !== id));
-      } else {
-        alert("Failed to delete order");
+    setIsAdmin(false)
+    setShowAdminCheck(false)
+
+    if(isAdmin){
+       const confirmDelete = confirm("Are you sure you want to delete this order?");
+      if (!confirmDelete) return;
+
+      try {
+        const res = await axios.delete(`/api/order/${id}`);
+        if (res.data.success) {
+          setRows((prev) => prev.filter((order) => order.id !== id));
+        } else {
+          alert("Failed to delete order");
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
+    }else{
+      setShowAdminCheck(true)
     }
+   
   };
 
   const columns: GridColDef[] = [
@@ -247,6 +260,9 @@ export default function OrderTable({ orders }: { orders: Order[] }) {
         disableRowSelectionOnClick
         autoHeight
       />
+      {showAdminCheck && 
+          (<AdminCheck onClose={() => setShowAdminCheck(false)} />)
+        }
     </div>
   );
 }
