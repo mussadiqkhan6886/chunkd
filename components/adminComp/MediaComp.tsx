@@ -5,7 +5,8 @@ import React, { useEffect, useState } from 'react';
 
 interface Media {
   _id: string;
-  img: string;
+  media: string;
+  mediaType: string
   height: number;
 }
 
@@ -21,7 +22,7 @@ const MediaComp: React.FC = () => {
     try {
       const res = await fetch('/api/media');
       const data = await res.json();
-      setMedia(data.data || []);
+      setMedia(data.data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -31,6 +32,7 @@ const MediaComp: React.FC = () => {
 
   useEffect(() => {
     fetchMedia();
+    console.log(media)
   }, []);
 
   /* ================= DELETE MEDIA ================= */
@@ -38,7 +40,7 @@ const MediaComp: React.FC = () => {
 
     // const 
 
-    if (!confirm('Delete this image?')) return;
+    if (!confirm('Delete this media?')) return;
 
     setDeletingId(id);
 
@@ -77,15 +79,23 @@ const MediaComp: React.FC = () => {
               key={item._id}
               className="relative group rounded-lg overflow-hidden shadow"
             >
-              <Image
+              {item.mediaType === "image" ? <Image
                 width={300}
                 height={300}
-                src={item.img}
+                src={item.media}
                 alt="media"
                 style={{ height: item.height }}
                 className="w-full object-cover"
                 
-              />
+              /> : <video
+                  src={item.media}
+                  controls
+                  muted
+                  playsInline
+                  preload="metadata"
+                  style={{ height: item.height }}
+                  className="w-full object-cover rounded-lg bg-black"
+                />}
 
               {/* DELETE BUTTON */}
               <button
