@@ -190,8 +190,8 @@ const Checkout = () => {
     date: cart.date || null,
     time: cart.time || null,
     shippingAddress: {
-      city: cart.city,
-      address: cart.address,
+      city: cart.city || "lahore",
+      address: cart.address || "pickup",
     },
     notes: formData.notes || "No notes",
     paymentMethod: formData.paymentMethod,

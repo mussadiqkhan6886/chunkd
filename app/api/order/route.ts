@@ -122,7 +122,7 @@ export const POST = async (req: NextRequest) => {
 
       <hr style="margin:20px 0;" />
 
-      <p><strong>Order ID:</strong> ${orderData.orderId || "Generated after confirmation"}</p>
+      <p><strong>Order ID:</strong> ${newOrder.orderId}</p>
       <p><strong>Order Date:</strong> ${new Date().toDateString()}</p>
       <p><strong>Payment Method:</strong> ${orderData.paymentMethod}</p>
 
@@ -171,7 +171,8 @@ export const POST = async (req: NextRequest) => {
       <h3>📍 Delivery Address</h3>
       <p>
         ${orderData.shippingAddress.address}<br/>
-        ${orderData.shippingAddress.city}
+        ${orderData.shippingAddress.city}<br/>
+        Pick up Address: ${orderData.shippingAddress.address === "pickup" && "116/1 M street 175 Phase 1 DHA"}
       </p>
 
       ${
