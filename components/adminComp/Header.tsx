@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import { Home, MessageSquare, Package, PlusCircle, ShoppingBag, Ticket } from 'lucide-react';
+import { Home, HomeIcon, MessageSquare, Package, PlusCircle, ShoppingBag, Ticket } from 'lucide-react';
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation';
 import { FiPlusSquare } from 'react-icons/fi';
@@ -10,6 +10,7 @@ import { LuBus, LuCookie, LuImage } from 'react-icons/lu';
 const Header = () => {
 
      const menuItems = [
+    { name: 'Home', href: '/admin-dashboard', icon: <HomeIcon className="w-4 h-4" /> },
     { name: 'Reviews', href: '/admin-dashboard/testimonials', icon: <MessageSquare className="w-4 h-4" /> },
     { name: 'Cookies', href: '/admin-dashboard/products-list', icon: <LuCookie className="w-4 h-4" /> },
     { name: 'Add Cookies', href: '/admin-dashboard/add-product', icon: <PlusCircle className="w-4 h-4" /> },

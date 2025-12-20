@@ -58,7 +58,6 @@ const Checkout = () => {
     setCart(data ? JSON.parse(data) : { cart: [], totalAmount: 0 });
   }, []);
 
-  console.log(cart)
 
   // ---------------- DELIVERY CHARGES ----------------
   useEffect(() => {
