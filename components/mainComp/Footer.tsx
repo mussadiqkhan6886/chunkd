@@ -30,21 +30,19 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-bold mb-4">Connect with Us</h3>
           <div className="flex gap-4 mb-4">
-            <Link href="https://instagram.com" target="_blank">
+            <Link href="https://www.instagram.com/chunkd.pk/?__pwa=1" target="_blank">
               <FaInstagram size={22} className="hover:text-pink-500 transition"/>
             </Link>
-            <Link href="https://facebook.com" target="_blank">
+            <Link href="https://www.facebook.com/profile.php?id=61580610550539" target="_blank">
               <FaFacebookF size={22} className="hover:text-pink-500 transition"/>
-            </Link>
-            <Link href="https://twitter.com" target="_blank">
-              <FaTwitter size={22} className="hover:text-pink-500 transition"/>
             </Link>
           </div>
           <div className="flex flex-col gap-2">
-            <Link href="/about" className="text-gray-900 hover:text-black transition">About Us</Link>
             <Link href="/contact" className="text-gray-900 hover:text-black transition">Contact</Link>
-            <Link href="/terms" className="text-gray-900 hover:text-black transition">Terms & Conditions</Link>
-            <Link href="/privacy" className="text-gray-900 hover:text-black transition">Privacy Policy</Link>
+            <Link href="/policies/#return" className="text-gray-900 hover:text-black transition">Return and Refund</Link>
+            <Link href="/policies/#terms" className="text-gray-900 hover:text-black transition">Terms & Conditions</Link>
+            <Link href="/policies/#privacy" className="text-gray-900 hover:text-black transition">Privacy Policy</Link>
+            <Link href="/policies/#shipping" className="text-gray-900 hover:text-black transition">Delivery & shipping</Link>
           </div>
         </div>
       </div>

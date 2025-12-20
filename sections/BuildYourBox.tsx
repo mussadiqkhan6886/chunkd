@@ -20,7 +20,7 @@ const BuildYourBox = () => {
               <Image
                 src={item.image} 
                 alt={item.name}
-                className="w-full h-full object-cover rounded-2xl shadow-lg"
+                className="w-full h-full object-cover rounded-2xl"
                 width={400}
                 height={400}
               />
