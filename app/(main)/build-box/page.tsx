@@ -9,6 +9,7 @@ const BuildYourBox = () => {
   const { addToCart, cart } = useDrop();
   const [boxSize, setBoxSize] = useState<4 | 6>(4);
   const [data, setData] = useState<CookieType[]>([]);
+  const [loading, setLoading] = useState(false)
 
   // FIX: keys must be string because ids are string
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
@@ -84,6 +85,8 @@ const BuildYourBox = () => {
   // ---------------- ADD TO CART ----------------
   const addBoxToCart = () => {
     if (totalSelected !== boxSize) return;
+
+    setLoading(true)
     addToCart({
       id: `box-${Date.now()}`,
       type: 'box',
@@ -100,20 +103,16 @@ const BuildYourBox = () => {
     });
 
     setTimeout(() => {
-    setQuantities({});
-    setBoxSize(4);
-    setBoxData({ size: 4, cookies: [], totalPrice: 0});
-  }, 900);
+      setQuantities({});
+      setBoxSize(4);
+      setBoxData({ size: 4, cookies: [], totalPrice: 0});
+      setLoading(false)
+    }, 900);
   };
-
-  useEffect(() => {
-  console.log("UPDATED CART: ", cart);
-}, [cart]);
-
 
   // ---------------- RENDER ----------------
   return (
-    <main className="max-w-7xl mx-auto pt-28 p-5">
+    <main className="max-w-7xl relative mx-auto pt-28 p-5">
       <h1 className="text-6xl font-bold text-center mb-3">
         Build Your Box
       </h1>
@@ -231,6 +230,11 @@ const BuildYourBox = () => {
           Continue — Build My Box
         </button>
       </div>
+      {loading && (
+        <div className="fixed bottom-10 right-5 bg-soft text-black px-4 py-2 rounded-lg shadow-lg animate-bounce-in">
+          Box Added To Cart
+        </div>
+      )}
     </main>
   );
 };
