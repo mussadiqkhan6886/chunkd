@@ -1,7 +1,7 @@
 "use client";
 
 import { CartItem } from "@/type";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
 // ------------------ TYPES ------------------
 
@@ -30,6 +30,8 @@ type DropContextType = {
   removeFromCart: (id: string) => void;
   clearCart: () => void;
   updateQuantity: (id: string, quantity: number) => void;
+  isAdmin: Boolean
+  setIsAdmin: Dispatch<SetStateAction<Boolean>>
 };
 
 // ------------------ DEFAULT VALUE ------------------
@@ -41,6 +43,7 @@ export const DropProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
+  const [isAdmin, setIsAdmin] = useState<Boolean>(false)
 
   // 🧮 Recalculate totals
   useEffect(() => {
@@ -163,6 +166,8 @@ export const DropProvider = ({ children }: { children: React.ReactNode }) => {
         removeFromCart,
         clearCart,
         updateQuantity,
+        isAdmin,
+        setIsAdmin
       }}
     >
       {children}

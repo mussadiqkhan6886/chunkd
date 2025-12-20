@@ -1,21 +1,18 @@
 'use client';
 
+import { useDrop } from '@/lib/context/contextAPI';
+import { MediaType } from '@/type';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import AdminCheck from './AdminCheck';
 
-interface Media {
-  _id: string;
-  media: string;
-  mediaType: string
-  height: number;
-}
 
 const MediaComp: React.FC = () => {
-  const [media, setMedia] = useState<Media[]>([]);
+  const [media, setMedia] = useState<MediaType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [deleting, setDeleting] = useState(false)
-  const [approved, setApproved] = useState(false)
+  const [showAdminCheck, setShowAdminCheck] = useState(false)
+  const {isAdmin, setIsAdmin} = useDrop()
 
   /* ================= FETCH MEDIA ================= */
   const fetchMedia = async () => {
@@ -32,15 +29,15 @@ const MediaComp: React.FC = () => {
 
   useEffect(() => {
     fetchMedia();
-    console.log(media)
   }, []);
 
   /* ================= DELETE MEDIA ================= */
   const deleteMedia = async (id: string) => {
+    setIsAdmin(false)
 
-    // const 
-
-    if (!confirm('Delete this media?')) return;
+    if(isAdmin){
+      if (!confirm('Delete this media?')) return;
+    
 
     setDeletingId(id);
 
@@ -57,6 +54,9 @@ const MediaComp: React.FC = () => {
     } finally {
       setDeletingId(null);
     }
+  }else{
+    setShowAdminCheck(true)
+  }
   };
 
   /* ================= UI ================= */
@@ -112,6 +112,9 @@ const MediaComp: React.FC = () => {
             </div>
           ))}
         </div>
+      )}
+      {showAdminCheck && (
+        <AdminCheck onClose={() => setShowAdminCheck(false)} />
       )}
     </section>
   );
