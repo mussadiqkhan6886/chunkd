@@ -122,7 +122,7 @@ const Checkout = () => {
 
   const finalTotal =
     cart.totalAmount - discountAmount + deliveryCharges;
-
+    
   // ---------------- SUBMIT ----------------
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -132,28 +132,28 @@ const Checkout = () => {
     setLoading(true);
     setStatus("Placing order...");
 
+
     const orderData = {
       items: cart.cart.map((item: CartItem) => ({
         id: item.id,
         name: item.title,
         price: item.price,
         quantity: item.quantity,
-        image: item.images?.[0],
+        image: item.images,
       })),
       pricing: {
         subtotal: cart.totalAmount,
-        discountPercent,
         discountAmount,
         deliveryCharges,
         total: finalTotal,
         couponCode: isCouponApplied ? couponCode : null,
       },
-      user: {
+      userDetails: {
         fullName: formData.fullName,
         phone: formData.phone,
         email: formData.email || "N/A",
       },
-      address: {
+      shippingAddress: {
         city: cart.city,
         address: cart.address,
       },

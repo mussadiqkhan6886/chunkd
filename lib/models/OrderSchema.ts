@@ -22,13 +22,19 @@ const OrderSchema = new Schema({
         required: true,
         min: 1,
       },
-      images: {
+      image: {
         type: String,
         required: true,
       },
     }
     ],
-    totalPrice: { type: Number, required: true },
+    pricing: {
+      subtotal: {type: String, required: true},
+      discountAmount: {type: String, required: true},
+      deliveryCharges: {type: String, required: true},
+      total: {type: String, required: true},
+      couponCode: {type: String, default: null}
+    },
     userDetails: {
       fullName: {type: String, required: true},
       phone: {type: String, required: true},
@@ -43,14 +49,17 @@ const OrderSchema = new Schema({
 
     shippingAddress: {
       city: { type: String },
-      postalCode: { type: String },
       address: {type: String, required: true}
     },
     paymentMethod: {
       type: String,
-      enum: ["cod", "bank"],
-      default: "cod"
+      enum: ["card"],
+      default: "card"
     },
+    paymentProof: {
+      type: String,
+      required: true
+    }
   },
   { timestamps: true }
 )
