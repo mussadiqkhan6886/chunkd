@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import CookieSchema from "@/lib/models/CookieSchema";
 import order from "@/lib/models/OrderSchema";
 import cloudinary from "@/lib/config/cloudinary";
 import { connectDB } from "@/lib/config/databse";
