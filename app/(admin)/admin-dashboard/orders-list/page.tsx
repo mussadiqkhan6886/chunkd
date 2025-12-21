@@ -28,7 +28,7 @@ export default function OrdersPage() {
   if (loading) return <div className="text-center py-10">Loading orders...</div>;
 
   return (
-    <div className="p-5">
+    <div className="lg:p-5">
       <h1 className="text-2xl text-center font-semibold mb-4">Orders</h1>
       <OrderTable orders={orders} />
     </div>

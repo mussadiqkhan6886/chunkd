@@ -27,7 +27,7 @@ export default function AdminDropsPage() {
 
 
   return (
-    <div className="p-5">
+    <div className="lg:p-5">
       <h1 className="text-2xl text-center font-semibold mb-4">Drops List</h1>
       <DropTable products={products} />
     </div>

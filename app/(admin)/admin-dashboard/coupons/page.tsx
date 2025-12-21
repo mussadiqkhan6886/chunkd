@@ -65,20 +65,20 @@ const CouponsPage = () => {
       <h1 className="text-3xl font-bold mb-6">Admin - Manage Coupons</h1>
 
       {/* Add Coupon */}
-      <div className="flex gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <input
           type="text"
           placeholder="Coupon Code"
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          className="border px-3 py-2 rounded w-1/2"
+          className="border w-full px-3 py-2 rounded"
         />
         <input
           type="number"
           placeholder="Discount %"
           value={discount}
           onChange={(e) => setDiscount(Number(e.target.value))}
-          className="border px-3 py-2 rounded w-1/2"
+          className="border w-full px-3 py-2 rounded"
         />
         <button
           onClick={handleAddCoupon}

@@ -28,7 +28,7 @@ export default function AdminProductsPage() {
 
 
   return (
-    <div className="p-5">
+    <div className="lg:p-5">
       <h1 className="text-2xl text-center font-semibold mb-4">Product List</h1>
       <ProductTable products={products} />
     </div>

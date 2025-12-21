@@ -60,8 +60,8 @@ const MediaUpload: React.FC = () => {
 
   return (
     <main className=" flex gap-5 items-center flex-col justify-center bg-gray-100 px-4">
-      <div className='mt-4'>
-         <div className="w-full min-w-md bg-white rounded-2xl shadow-lg p-6">
+      <div className=' mt-4'>
+         <div className="w-full min-w-[330px] bg-white rounded-2xl shadow-lg p-6">
         <h1 className="text-2xl font-semibold text-gray-800 text-center mb-6">
           Add Media
         </h1>
