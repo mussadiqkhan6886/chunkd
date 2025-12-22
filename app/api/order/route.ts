@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import order from "@/lib/models/OrderSchema";
 import cloudinary from "@/lib/config/cloudinary";
 import { connectDB } from "@/lib/config/databse";
+import { BoxType } from "@/type";
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -100,6 +101,19 @@ export const POST = async (req: NextRequest) => {
           <tr>
             <td style="padding:8px 0;">
               <strong>${item.name}</strong><br/>
+              ${item.boxData
+                  ? `
+                    <ul>
+                      ${item.boxData
+                        .map(
+                          (cookie: BoxType) =>
+                            `<li><strong>${cookie.cookieName}</strong> × ${cookie.cookieQty}</li>`
+                        )
+                        .join("")}
+                    </ul>
+                  `
+                  : ""
+                }
               <small>Qty: ${item.quantity}</small>
             </td>
             <td style="text-align:right; padding:8px 0;">
@@ -171,7 +185,9 @@ export const POST = async (req: NextRequest) => {
       <p>
         ${orderData.shippingAddress.address}<br/>
         ${orderData.shippingAddress.city}<br/>
-        Pick up Address: ${orderData.shippingAddress.address === "pickup" && "116/1 M street 175 Phase 1 DHA"}
+        ${orderData.shippingAddress.address === "pickup" ? "Pick up Address: 116/1 M street 175 Phase 1 DHA" : ""}  <br/>
+        ${orderData.date !== "now" ? "Date: " + orderData.date : ""}  <br/>
+        ${orderData.time !== "now" ? "Time: " + orderData.time : ""}  
       </p>
 
       ${

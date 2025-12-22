@@ -120,3 +120,9 @@ interface MediaType {
   mediaType: string
   height: number
 }
+
+interface BoxType {
+  cookieName: string
+  cookieQty: number
+  cookiePrice: number
+}
