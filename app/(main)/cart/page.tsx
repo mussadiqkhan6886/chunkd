@@ -281,7 +281,7 @@ const CartPage = () => {
                 </div>
 
                 <div className="flex items-center justify-between mt-6">
-                  {item.type !== "box" && (
+                  {(item.type !== "box" && item.type !== "drop") && (
                     <div className="flex items-center gap-3">
                       <button
                         className="w-10 h-10 rounded-lg border flex items-center justify-center"
