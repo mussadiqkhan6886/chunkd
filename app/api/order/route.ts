@@ -3,7 +3,8 @@ import nodemailer from "nodemailer";
 import order from "@/lib/models/OrderSchema";
 import cloudinary from "@/lib/config/cloudinary";
 import { connectDB } from "@/lib/config/databse";
-import { BoxType } from "@/type";
+import { BoxType, CartItem } from "@/type";
+import CookieSchema from "@/lib/models/CookieSchema";
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -32,6 +33,8 @@ export const POST = async (req: NextRequest) => {
     const orderData = JSON.parse(formData.get("orderData") as string);
     const paymentProofFile = formData.get("paymentProof") as File | null;
 
+    console.log(orderData)
+
     const uploadedImages : string[] = []
 
     if (paymentProofFile && typeof paymentProofFile === "object") {
@@ -57,7 +60,6 @@ export const POST = async (req: NextRequest) => {
         }
 
 
-    // 🔹 Create new order in MongoDB
     const newOrder = await order.create({
       items: orderData.items,
       pricing: orderData.pricing,
@@ -71,6 +73,51 @@ export const POST = async (req: NextRequest) => {
       paymentProof: uploadedImages[0] || null,
       createdAt: new Date(),
     });
+
+   await Promise.all(
+    orderData.items.map((cookie: CartItem) => 
+      CookieSchema.findByIdAndUpdate(cookie.id, {$inc: {soldCount: cookie.quantity}})
+    )
+   )
+
+  await Promise.all(
+  orderData.items
+    .filter((cookie: CartItem) => cookie.type === "drop")
+    .map((cookie: CartItem) =>
+      CookieSchema.findOneAndUpdate(
+        {
+          _id: cookie.id,
+          totalLimit: { $gte: cookie.quantity }
+        },
+        [
+          {
+            $set: {
+              totalLimit: {
+                $subtract: ["$totalLimit", cookie.quantity]
+              },
+              soldOut: {
+                $cond: [
+                  {
+                    $lte: [
+                      { $subtract: ["$totalLimit", cookie.quantity] },
+                      0
+                    ]
+                  },
+                  true,
+                  false
+                ]
+              }
+            }
+          }
+        ],
+        {
+          updatePipeline: true, // 🔥 REQUIRED
+          new: true
+        }
+      )
+    )
+);
+
 
     const transporter = nodemailer.createTransport({
       service: "gmail",

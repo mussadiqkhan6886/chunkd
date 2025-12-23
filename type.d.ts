@@ -122,6 +122,7 @@ interface MediaType {
 }
 
 interface BoxType {
+  cookieId: number
   cookieName: string
   cookieQty: number
   cookiePrice: number
