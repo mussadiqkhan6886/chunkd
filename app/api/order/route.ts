@@ -33,8 +33,6 @@ export const POST = async (req: NextRequest) => {
     const orderData = JSON.parse(formData.get("orderData") as string);
     const paymentProofFile = formData.get("paymentProof") as File | null;
 
-    console.log(orderData)
-
     const uploadedImages : string[] = []
 
     if (paymentProofFile && typeof paymentProofFile === "object") {
@@ -75,10 +73,25 @@ export const POST = async (req: NextRequest) => {
     });
 
    await Promise.all(
-    orderData.items.map((cookie: CartItem) => 
+    orderData.items.filter((cookie: CartItem) => cookie.type != "box")
+    .map((cookie: CartItem) => 
       CookieSchema.findByIdAndUpdate(cookie.id, {$inc: {soldCount: cookie.quantity}})
     )
    )
+
+   await Promise.all(
+      orderData.items
+        .filter((cookie: CartItem) => cookie.type === "box")
+        .flatMap((cookie: any) =>
+          cookie.boxData.map((item: BoxType) =>
+            CookieSchema.findByIdAndUpdate(
+              item.cookieId,
+              { $inc: { soldCount: item.cookieQty } }
+            )
+          )
+        )
+    );
+
 
   await Promise.all(
   orderData.items

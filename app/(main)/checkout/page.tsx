@@ -28,7 +28,6 @@ const Checkout = () => {
   const router = useRouter();
   const { clearCart } = useDrop();
 
-  // ---------------- STATES ----------------
   const [cart, setCart] = useState<CheckoutCart | null>(null);
   const [deliveryCharges, setDeliveryCharges] = useState(0);
 
@@ -52,14 +51,12 @@ const Checkout = () => {
     paymentMethod: "card",
   });
 
-  // ---------------- LOAD CART (HYDRATION SAFE) ----------------
   useEffect(() => {
     const data = localStorage.getItem("orderData");
     setCart(data ? JSON.parse(data) : { cart: [], totalAmount: 0 });
   }, []);
 
 
-  // ---------------- DELIVERY CHARGES ----------------
   useEffect(() => {
     if (!cart?.city) return;
 
