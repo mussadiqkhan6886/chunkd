@@ -19,9 +19,10 @@ export default function RootLayout({
     <html lang="en">
 
       <body className={`${mainFont.className} antialiased`}>
-        <MetaPixel />
         <DropProvider>
-          {children}</DropProvider>
+          <MetaPixel />
+          {children}
+        </DropProvider>
       </body>
     </html>
   );
