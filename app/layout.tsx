@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { mainFont } from "@/lib/font/font";
 import { DropProvider } from "@/lib/context/contextAPI";
-import dynamic from "next/dynamic";
-const MetaPixel = dynamic(() => import("@/components/adminComp/MetaPixel")) 
+import MetaPixel from "@/components/adminComp/MetaPixel";
 
 export const metadata: Metadata = {
   title: "Chunk'd",
