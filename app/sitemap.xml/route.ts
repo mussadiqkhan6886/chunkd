@@ -39,7 +39,7 @@ export async function GET() {
     // Add static pages
     staticPages.forEach(page => {
       urls.push({
-        loc: `https://chunkd.vercel.app/${page}`,
+        loc: `https://chunkd.vercel.app${page}`,
         changefreq: "weekly",
         priority: 0.7,
       });
