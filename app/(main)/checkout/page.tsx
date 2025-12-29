@@ -140,7 +140,6 @@ const Checkout = () => {
 
     setLoading(true);
     setStatus("Placing order...");
-    console.log(cart)
 
    const orderData = {
     items: cart.cart.map((item: CartItem) => {

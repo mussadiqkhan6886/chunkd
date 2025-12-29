@@ -62,7 +62,6 @@ interface Order {
 
 
 export default function OrderTable({ orders }: { orders: Order[] }) {
-  console.log(orders)
   const [showAdminCheck, setShowAdminCheck] = React.useState(false)
   const {isAdmin, setIsAdmin} = useDrop()
 

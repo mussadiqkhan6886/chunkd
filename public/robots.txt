@@ -1,0 +1,18 @@
+# Allow all search engines to crawl the main site
+User-agent: *
+
+Disallow: /admin-dashboard/
+Disallow: /checkout/
+Disallow: /cart/
+
+Allow: /
+Allow: /add-testimonial/
+Allow: /build-box/
+Allow: /contact/
+Allow: /drops/
+Allow: /menu/
+Allow: /policies/
+Allow: /thank-you/
+
+# Specify the sitemap
+Sitemap: https://chunkd.vercel.app/sitemap.xml

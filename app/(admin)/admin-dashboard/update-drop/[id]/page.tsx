@@ -53,7 +53,6 @@ const UpdateDrop = ({ params }: { params: Promise<{ id: string }> }) => {
         const res = await axios.get(`/api/products/${id}`);
         const product = res.data.product;
         
-        console.log(product)
         setData({
             title: product.title,
             slug: product.slug,

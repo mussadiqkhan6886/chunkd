@@ -47,7 +47,7 @@ interface DropType {
   __v?: number;        // mongoose version key, optional
 }
 
-interface CartItem {
+export interface CartItem {
   id: string;
 
   type: "simple" | "drop" | "box"; // ⭐ distinguishes 3 product types
@@ -91,18 +91,6 @@ discount: number
 __v: number
 _id: string
 }
-
-import { ObjectId } from "mongodb";
-
-
-type CustomerDetailsDoc = {
-  _id?: ObjectId;
-  name: string;
-  email: string;
-  phone?: string | null;
-  address?: string | null;
-  createdAt: Date;
-};
 
 
 interface OrderDataType {
