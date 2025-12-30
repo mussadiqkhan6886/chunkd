@@ -1,5 +1,33 @@
 import React from "react";
 
+import type { Metadata } from 'next';
+
+export const generateMetadata = (): Metadata => {
+  return {
+    title: "Policies",
+
+    description:
+      "Read Chunk’d privacy policy, return and refund policy, shipping and delivery policy, and terms and conditions for all orders.",
+
+    keywords: [
+      "Chunk’d policies",
+      "privacy policy",
+      "return and refund policy",
+      "shipping policy",
+      "delivery policy",
+      "terms and conditions",
+      "food delivery policies",
+      "no refund policy",
+      "Lahore food delivery",
+    ],
+
+    alternates: {
+      canonical: "/policies",
+    },
+  };
+};
+
+
 const Page = () => {
   return (
     <main className="bg-gray-50 min-h-screen py-16 px-4">

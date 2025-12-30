@@ -5,8 +5,8 @@ import { DropProvider } from "@/lib/context/contextAPI";
 
 export const metadata: Metadata = {
   title: {
-    default: "Chunk'd  Delicious Cookies, Freshly Baked",
-    template: "%s | Chunk'd Cookies",
+    default: "Chunk'd Delicious Cookies, Freshly Baked",
+    template: "%s | Chunk'd",
   },
   description: "Chunk'd is your go-to cookie shop offering freshly baked, mouth-watering cookies for every occasion. Order online or pick-up from store!",
   keywords: [
