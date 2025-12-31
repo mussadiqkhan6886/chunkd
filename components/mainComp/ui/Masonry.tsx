@@ -107,23 +107,31 @@ const Masonry: React.FC<MasonryProps> = ({
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
   const [imagesReady, setImagesReady] = useState(false);
    const videoRefs = useRef<Map<string, HTMLVideoElement>>(new Map());
+const observerRef = useRef<IntersectionObserver | null>(null);
 
 
-  const playVideo = (id: string) => {
-    const video = videoRefs.current.get(id);
-    if (!video) return;
+  useEffect(() => {
+  observerRef.current = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        const video = entry.target as HTMLVideoElement;
 
-    video.play().catch(() => {});
-  };
+        if (entry.isIntersecting) {
+          if (!video.src) {
+            video.src = video.dataset.src!;
+          }
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+    },
+    { threshold: 0.6 }
+  );
 
-  const pauseVideo = (id: string) => {
-    const video = videoRefs.current.get(id);
-    if (!video) return;
-
-    video.pause();
-    video.currentTime = 0; // optional
-  };
-
+  return () => observerRef.current?.disconnect();
+}, []);
 
 
   const getInitialPosition = (item: GridItem) => {
@@ -272,19 +280,20 @@ const Masonry: React.FC<MasonryProps> = ({
         {/* 🎥 VIDEO BACKGROUND */}
         {item.mediaType === "video" && (
           <video
-             ref={el => {
-                if (el) videoRefs.current.set(item._id, el);
-                else videoRefs.current.delete(item._id);
-              }}
-            src={item.media}
-            onMouseEnter={() => playVideo(item._id)}
-            onMouseLeave={() => pauseVideo(item._id)}
+            ref={el => {
+              if (!el) return;
+
+              videoRefs.current.set(item._id, el);
+              observerRef.current?.observe(el);
+            }}
+            data-src={item.media}   // ✅ ONLY data-src
             muted
             playsInline
-            preload="metadata"
+            preload="none"
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}
+
 
         {/* 🎨 Hover Overlay */}
         {colorShiftOnHover && (
