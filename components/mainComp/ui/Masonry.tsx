@@ -106,20 +106,24 @@ const Masonry: React.FC<MasonryProps> = ({
 
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
   const [imagesReady, setImagesReady] = useState(false);
-   const videoRef = useRef<HTMLVideoElement | null>(null);
+   const videoRefs = useRef<Map<string, HTMLVideoElement>>(new Map());
 
-  const handleMouseEnterVideo = () => {
-    if (!videoRef.current) return;
-    videoRef.current.play().catch(() => {
-      // autoplay might fail silently in some browsers
-    });
+
+  const playVideo = (id: string) => {
+    const video = videoRefs.current.get(id);
+    if (!video) return;
+
+    video.play().catch(() => {});
   };
 
-  const handleMouseLeaveVideo = () => {
-    if (!videoRef.current) return;
-    videoRef.current.pause();
-    videoRef.current.currentTime = 0; // optional
+  const pauseVideo = (id: string) => {
+    const video = videoRefs.current.get(id);
+    if (!video) return;
+
+    video.pause();
+    video.currentTime = 0; // optional
   };
+
 
 
   const getInitialPosition = (item: GridItem) => {
@@ -268,10 +272,13 @@ const Masonry: React.FC<MasonryProps> = ({
         {/* 🎥 VIDEO BACKGROUND */}
         {item.mediaType === "video" && (
           <video
-            ref={videoRef}
+             ref={el => {
+                if (el) videoRefs.current.set(item._id, el);
+                else videoRefs.current.delete(item._id);
+              }}
             src={item.media}
-            onMouseEnter={handleMouseEnterVideo}
-            onMouseLeave={handleMouseLeaveVideo}
+            onMouseEnter={() => playVideo(item._id)}
+            onMouseLeave={() => pauseVideo(item._id)}
             muted
             playsInline
             preload="metadata"
