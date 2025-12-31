@@ -106,33 +106,6 @@ const Masonry: React.FC<MasonryProps> = ({
 
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
   const [imagesReady, setImagesReady] = useState(false);
-   const videoRefs = useRef<Map<string, HTMLVideoElement>>(new Map());
-const observerRef = useRef<IntersectionObserver | null>(null);
-
-
-  useEffect(() => {
-  observerRef.current = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        const video = entry.target as HTMLVideoElement;
-
-        if (entry.isIntersecting) {
-          if (!video.src) {
-            video.src = video.dataset.src!;
-          }
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-          video.currentTime = 0;
-        }
-      });
-    },
-    { threshold: 0.6 }
-  );
-
-  return () => observerRef.current?.disconnect();
-}, []);
-
 
   const getInitialPosition = (item: GridItem) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
@@ -280,20 +253,16 @@ const observerRef = useRef<IntersectionObserver | null>(null);
         {/* 🎥 VIDEO BACKGROUND */}
         {item.mediaType === "video" && (
           <video
-            ref={el => {
-              if (!el) return;
-
-              videoRefs.current.set(item._id, el);
-              observerRef.current?.observe(el);
-            }}
-            data-src={item.media}   // ✅ ONLY data-src
+             
+            src={item.media}
+           autoPlay
+           loop
             muted
             playsInline
             preload="none"
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}
-
 
         {/* 🎨 Hover Overlay */}
         {colorShiftOnHover && (
