@@ -252,14 +252,13 @@ const Masonry: React.FC<MasonryProps> = ({
 
         {/* 🎥 VIDEO BACKGROUND */}
         {item.mediaType === "video" && (
-          <video
-             
+          <video            
             src={item.media}
            autoPlay
            loop
             muted
             playsInline
-            preload="none"
+            preload="metadata"
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}
