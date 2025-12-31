@@ -1,6 +1,5 @@
 'use client';
 
-import { cookies } from '@/lib/constants';
 import { useDrop } from '@/lib/context/contextAPI';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
