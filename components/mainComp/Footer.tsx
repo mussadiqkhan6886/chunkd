@@ -30,11 +30,11 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-bold mb-4">Connect with Us</h3>
           <div className="flex gap-4 mb-4">
-            <Link href="https://www.instagram.com/chunkd.pk/?__pwa=1" target="_blank">
-              <FaInstagram size={22} className="hover:text-pink-500 transition"/>
+            <Link aria-label='instagram link' href="https://www.instagram.com/chunkd.pk/?__pwa=1" target="_blank">
+              <FaInstagram aria-label='instagram icon' name='instagram icon'  size={22} className="hover:text-pink-500 transition"/>
             </Link>
-            <Link href="https://www.facebook.com/profile.php?id=61580610550539" target="_blank">
-              <FaFacebookF size={22} className="hover:text-pink-500 transition"/>
+            <Link aria-label='facebook link' href="https://www.facebook.com/profile.php?id=61580610550539" target="_blank">
+              <FaFacebookF name='facebook icon' aria-label='facebook icon' size={22} className="hover:text-pink-500 transition"/>
             </Link>
           </div>
           <div className="flex flex-col gap-2">

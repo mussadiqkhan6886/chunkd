@@ -272,8 +272,6 @@ const Masonry: React.FC<MasonryProps> = ({
             src={item.media}
             onMouseEnter={handleMouseEnterVideo}
             onMouseLeave={handleMouseLeaveVideo}
-            
-            
             muted
             playsInline
             preload="metadata"
