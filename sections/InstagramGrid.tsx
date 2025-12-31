@@ -1,7 +1,6 @@
 'use client';
 
 import Masonry from '@/components/mainComp/ui/Masonry';
-import { items } from '@/lib/constants';
 import { MediaType } from '@/type';
 import React, { useEffect, useState } from 'react'
 

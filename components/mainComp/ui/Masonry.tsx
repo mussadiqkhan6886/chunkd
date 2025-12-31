@@ -106,6 +106,21 @@ const Masonry: React.FC<MasonryProps> = ({
 
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
   const [imagesReady, setImagesReady] = useState(false);
+   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const handleMouseEnterVideo = () => {
+    if (!videoRef.current) return;
+    videoRef.current.play().catch(() => {
+      // autoplay might fail silently in some browsers
+    });
+  };
+
+  const handleMouseLeaveVideo = () => {
+    if (!videoRef.current) return;
+    videoRef.current.pause();
+    videoRef.current.currentTime = 0; // optional
+  };
+
 
   const getInitialPosition = (item: GridItem) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
@@ -253,9 +268,12 @@ const Masonry: React.FC<MasonryProps> = ({
         {/* 🎥 VIDEO BACKGROUND */}
         {item.mediaType === "video" && (
           <video
+            ref={videoRef}
             src={item.media}
-            autoPlay
-            loop
+            onMouseEnter={handleMouseEnterVideo}
+            onMouseLeave={handleMouseLeaveVideo}
+            
+            
             muted
             playsInline
             preload="metadata"

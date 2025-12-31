@@ -13,9 +13,10 @@ const WhatsButton = () => {
       href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="whatsapp button link"
       className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-50 transition-all"
     >
-      <FaWhatsapp className="text-3xl" />
+      <FaWhatsapp name="whatsapp button" aria-label="whatsapp button" className="text-3xl" />
     </Link>
   );
 };

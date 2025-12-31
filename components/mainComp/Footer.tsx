@@ -48,7 +48,7 @@ const Footer = () => {
       </div>
 
       {/* Copyright */}
-      <div className="mt-10 text-center text-gray-200 text-sm">
+      <div className="mt-10 text-center text-gray-800 text-sm">
         &copy; {year} Chunk'd. All rights reserved.
       </div>
     </footer>
