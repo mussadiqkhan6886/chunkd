@@ -254,8 +254,8 @@ const Masonry: React.FC<MasonryProps> = ({
         {item.mediaType === "video" && (
           <video            
             src={item.media}
-           autoPlay
-           loop
+            autoPlay
+            loop
             muted
             playsInline
             preload="metadata"
