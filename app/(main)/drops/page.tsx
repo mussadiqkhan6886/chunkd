@@ -1,8 +1,16 @@
 import LimitedCard from '@/components/mainComp/LimitedCard';
 import { connectDB } from '@/lib/config/databse';
 import CookieSchema from '@/lib/models/CookieSchema';
+import type { Metadata } from "next";
 
 export const revalidate = 60
+
+export const metadata: Metadata = {
+  title: "Limited Cookie Drops",
+  description:
+    "Explore Chunk’d Cookies limited drops – exclusive, small-batch stuffed cookies available for a short time only. Once they’re gone, they’re gone.",
+};
+
 
 const DropsPage = async () => {
 

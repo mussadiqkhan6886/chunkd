@@ -1,8 +1,15 @@
 import FilterClient from "@/components/mainComp/Filteration";
 import { connectDB } from "@/lib/config/databse";
 import CookieSchema from "@/lib/models/CookieSchema";
+import { Metadata } from "next";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Cookie Menu ",
+  description:
+    "Explore the Chunk’d Cookies menu featuring thick, stuffed cookies, classic flavors, and limited-time drops baked fresh with premium ingredients.",
+};
 
 const MenuPage = async () => {
 
