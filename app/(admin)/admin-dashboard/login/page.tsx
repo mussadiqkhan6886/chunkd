@@ -31,7 +31,7 @@ const AdminLogin = () => {
   return (
     <main className="flex h-screen items-center justify-center">
       <section className="lg:w-[30%] md:w-[45%] sm:w-[60%] w-[80%]">
-        <h1 className="detailsHeading text-center">Admin Login</h1>
+        <h1 className="text-2xl font-semibold mb-10 text-center">Admin Login</h1>
         <form onSubmit={handleSubmit} className='space-y-2'>
           <label className="block text-gray-700 font-medium mb-1">Username</label>
           <input
@@ -55,7 +55,7 @@ const AdminLogin = () => {
           <input
             type="submit"
             value="Login"
-            className="w-full bg-black text-white cursor-pointer font-semibold py-2 rounded-md hover:bg-white hover:text-black hover:border hover:border-black transition"
+            className="w-full bg-black text-white cursor-pointer font-semibold py-2 rounded-md hover:bg-white hover:text-black hover:border hover:border-black transition border-transparent border"
           />
           {error && <p className="text-red-500 text-center">{error}</p>}
         </form>

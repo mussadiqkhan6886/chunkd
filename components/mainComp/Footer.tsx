@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaTwitter, FaMailchimp } from 'react-icons/fa';
+import { FiMail } from 'react-icons/fi';
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -36,9 +37,11 @@ const Footer = () => {
             <Link aria-label='facebook link' href="https://www.facebook.com/profile.php?id=61580610550539" target="_blank">
               <FaFacebookF name='facebook icon' aria-label='facebook icon' size={22} className="hover:text-pink-500 transition"/>
             </Link>
+            <Link aria-label='gmail link' href="mailto:oeygoeey@gmail.com" target="_blank">
+              <FiMail name='mail icon' aria-label='mail icon' size={22} className="hover:text-pink-500 transition"/>
+            </Link>
           </div>
           <div className="flex flex-col gap-2">
-            <Link href="/contact" className="text-gray-900 hover:text-black transition">Contact</Link>
             <Link href="/policies/#return" className="text-gray-900 hover:text-black transition">Return and Refund</Link>
             <Link href="/policies/#terms" className="text-gray-900 hover:text-black transition">Terms & Conditions</Link>
             <Link href="/policies/#privacy" className="text-gray-900 hover:text-black transition">Privacy Policy</Link>

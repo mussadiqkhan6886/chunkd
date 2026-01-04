@@ -144,13 +144,13 @@ export const POST = async (req: NextRequest) => {
       <h2>🛒 New Order Received!</h2>
       <p>A new order has been placed.</p>
       <a href="https://chunkd.vercel.app/admin-dashboard">
-        👉 View Order in Admin Dashboard
+        👉 V  er in Admin Dashboard
       </a>
     `;
 
     await transporter.sendMail({
-      from: `"Chunkd Orders" <${process.env.EMAIL_USER}>`,
-      to: "mussadiqkhan6886@gmail.com", // admin email
+      from: `"Chunkd Orders"`,
+      to: "oeygoeey@gmail.com", 
       subject: "New Order Received",
       html: adminHtml,
     });
@@ -271,8 +271,8 @@ export const POST = async (req: NextRequest) => {
 
 
     await transporter.sendMail({
-      from: `"Chunkd Orders" <${process.env.EMAIL_USER}>`,
-      to: orderData.userDetails.email, // ✅ customer email
+      from: `"Chunkd Orders"`,
+      to: orderData.userDetails.email, 
       subject: "Your Order Has Been Placed 🎉",
       html: customerHtml,
     });
