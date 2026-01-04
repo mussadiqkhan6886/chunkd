@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FaInstagram, FaFacebookF, FaTwitter, FaMailchimp } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
 
 const Footer = () => {
@@ -11,7 +11,6 @@ const Footer = () => {
   return (
     <footer className="bg-soft/10 border-t border-soft mt-12 text-black pb-3 pt-12 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-        {/* About Section */}
         <div>
           <h3 className="text-xl font-bold mb-4">About Chunk'd</h3>
           <p className="text-gray-900 mb-2">
@@ -19,7 +18,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Delivery & Timing */}
         <div>
           <h3 className="text-xl font-bold mb-4">Delivery & Timing</h3>
           <p className="text-gray-900 mb-1">Delivery: 11:00 AM - 6:00 PM</p>
@@ -27,7 +25,6 @@ const Footer = () => {
           <p className="text-gray-900">Orders are baked fresh daily.</p>
         </div>
 
-        {/* Socials & Links */}
         <div>
           <h3 className="text-xl font-bold mb-4">Connect with Us</h3>
           <div className="flex gap-4 mb-4">
