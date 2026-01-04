@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   authors: [
     { name: "chunk'd", url: "https://chunkd.vercel.app" }
   ],
+  metadataBase: new URL("https://chunkd.vercel.app"),
   creator: "Mussadiq Khan",
   publisher: "Chunk'd Cookies",
   robots: {

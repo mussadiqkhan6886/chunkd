@@ -11,7 +11,6 @@ const BuildYourBox = () => {
   const [data, setData] = useState<CookieType[]>([]);
   const [loading, setLoading] = useState(false)
 
-  // FIX: keys must be string because ids are string
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
 
   const totalSelected = Object.values(quantities).reduce(

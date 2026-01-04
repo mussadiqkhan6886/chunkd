@@ -9,6 +9,52 @@ export const metadata: Metadata = {
   title: "Limited Cookie Drops",
   description:
     "Explore Chunk’d Cookies limited drops – exclusive, small-batch stuffed cookies available for a short time only. Once they’re gone, they’re gone.",
+
+  keywords: [
+    "limited cookie drops",
+    "chunkd cookies",
+    "stuffed cookies",
+    "gourmet cookies",
+    "fresh baked cookies",
+    "exclusive cookies",
+    "small batch cookies",
+    "premium cookies",
+    "cookie drops",
+    "dessert shop",
+    "bakery cookies"
+  ],
+
+  alternates: {
+    canonical: "/drops",
+  },
+
+  openGraph: {
+    title: "Limited Cookie Drops | Chunk’d Cookies",
+    description:
+      "Don’t miss Chunk’d Cookies limited drops – exclusive, small-batch stuffed cookies available for a short time only.",
+    url: "https://chunkdcookies.com/drops",
+    siteName: "Chunk’d Cookies",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Chunk’d Cookies Limited Drops",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Limited Cookie Drops | Chunk’d Cookies",
+    description:
+      "Exclusive limited cookie drops by Chunk’d Cookies. Small-batch, stuffed cookies available for a short time only.",
+    images: ["/logo.png"],
+    creator: "@chunkdcookies",
+  },
+  category: "Food & Beverage",
 };
 
 
