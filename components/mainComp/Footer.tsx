@@ -14,7 +14,7 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-bold mb-4">About Chunk'd</h3>
           <p className="text-gray-900 mb-2">
-            Freshly baked cookies delivered across Lahore. Choose your box, pick your flavours, and enjoy!
+            Freshly baked cookies delivered across Lahore. Choose your box, pick your flavours, mix, match, and savor every delightful bite today, and enjoy!
           </p>
         </div>
 

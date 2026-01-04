@@ -11,7 +11,7 @@ const Hero = () => {
       <div className='absolute w-full h-full bg-soft/10 inset-0' />
       <video src={"/hero.mp4"} className='w-full h-full object-cover object-center' loop autoPlay muted playsInline /> 
     <NoticeBanner />
-      <div className="absolute w-full lg:w-[50%] left-1/2 top-1/2 -translate-x-1/2 translate-y-10 md:translate-y-20 flex items-center flex-col gap-4">
+      <div className="absolute w-full lg:w-[50%] left-1/2 top-1/2 -translate-x-1/2 translate-y-10 md:translate-y-0 xl:translate-y-20 flex items-center flex-col gap-4">
         <BlurText
           text="Thick, gooey, freshly baked cookies for serious cravings!"
           delay={150}

@@ -24,9 +24,9 @@ const Subscribe = () => {
           {/* Newsletter content with gradient border */}
           <div className="relative rounded-2xl p-[1px] border-2 border-transparent bg-clip-padding bg-gradient-to-r from-white via-pink-500 to-pink-400">
             <div className="bg-black rounded-[14px] p-6">
-              <h2 className="sectionTitle mb-2 z-40 uppercase bg-gradient-to-r from-white to-pink-400 bg-clip-text text-transparent">
+              <h3 className="sectionTitle mb-2 z-40 uppercase bg-gradient-to-r from-white to-pink-400 bg-clip-text text-transparent">
                 Join the Chunk'd Drop List
-              </h2>
+              </h3>
               <p className="mb-6 text-lg bg-gradient-to-r from-white to-pink-300 bg-clip-text text-transparent">
                 Be the first to know when new flavours go live. No spam, just cravings
               </p>
