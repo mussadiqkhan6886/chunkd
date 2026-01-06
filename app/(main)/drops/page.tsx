@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: "Limited Cookie Drops | Chunk’d Cookies",
     description:
       "Don’t miss Chunk’d Cookies limited drops – exclusive, small-batch stuffed cookies available for a short time only.",
-    url: "https://chunkdcookies.com/drops",
+    url: "https://www.chunkdpk.com/drops",
     siteName: "Chunk’d Cookies",
     images: [
       {

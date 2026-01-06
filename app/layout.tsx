@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   },
   description: "Chunk'd is your go-to cookie shop offering freshly baked, mouth-watering cookies for every occasion. Order online or pick-up from store!",
   keywords: [
-    "Chunk'd", "Cookies", "Cookie Shop", "Bakery", "Fresh Cookies", "Desserts", "Baked Goods", "bakery", "chocolate", "double chocolate"
+    "Chunk'd", "Cookies", "Cookie Shop", "Fresh Cookies", "Desserts", "Baked Goods", "bakery", "chocolate", "double chocolate", "cookie shop in Pakistan"
   ],
   authors: [
     { name: "chunk'd", url: "https://www.chunkdpk.com/" }
@@ -29,6 +29,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  applicationName: "Chunk'd Cookies",
   openGraph: {
     title: "Chunk'd – Delicious Cookies, Freshly Baked",
     description: "Enjoy freshly baked cookies from Chunk'd – perfect for gifts, parties, or a sweet treat any time.",
@@ -58,7 +59,9 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: "/favicon.ico",
   },
-  
+  alternates: {
+    canonical: "/"
+  }
 };
 
 export default function RootLayout({
