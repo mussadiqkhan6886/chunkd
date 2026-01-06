@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     "Chunk'd", "Cookies", "Cookie Shop", "Bakery", "Fresh Cookies", "Desserts", "Baked Goods", "bakery", "chocolate", "double chocolate"
   ],
   authors: [
-    { name: "chunk'd", url: "https://chunkd.vercel.app" }
+    { name: "chunk'd", url: "https://www.chunkdpk.com/" }
   ],
-  metadataBase: new URL("https://chunkd.vercel.app"),
+  metadataBase: new URL("https://www.chunkdpk.com/"),
   creator: "Mussadiq Khan",
   publisher: "Chunk'd Cookies",
   robots: {
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Chunk'd – Delicious Cookies, Freshly Baked",
     description: "Enjoy freshly baked cookies from Chunk'd – perfect for gifts, parties, or a sweet treat any time.",
-    url: "https://chunkd.vercel.app",
+    url: "https://www.chunkdpk.com/",
     siteName: "Chunk'd Cookies",
     images: [
       {

@@ -39,7 +39,7 @@ export async function GET() {
     // Add static pages
     staticPages.forEach(page => {
       urls.push({
-        loc: `https://chunkd.vercel.app${page}`,
+        loc: `https://www.chunkdpk.com${page}`,
         changefreq: "weekly",
         priority: 0.7,
       });
@@ -48,7 +48,7 @@ export async function GET() {
     // Add menu items
     menuItems.forEach(item => {
       urls.push({
-        loc: `https://chunkd.vercel.app/menu/${item.slug}`,
+        loc: `https://www.chunkdpk.com/menu/${item.slug}`,
         changefreq: "weekly",
         priority: 0.9,
       });
@@ -57,7 +57,7 @@ export async function GET() {
     // Add drops
     drops.forEach(item => {
       urls.push({
-        loc: `https://chunkd.vercel.app/drops/${item.slug}`,
+        loc: `https://www.chunkdpk.com/drops/${item.slug}`,
         changefreq: "weekly",
         priority: 0.8,
       });
