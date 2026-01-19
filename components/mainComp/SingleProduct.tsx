@@ -70,6 +70,10 @@ const SingleProduct = async ({data}: {data: DropType}) => {
           <AddToCart releaseDate={data.releaseDate!} endDate={data.endDate!} soldOut={data.soldOut} active={data.active} data={data} />
           <div className="mt-6 space-y-3">
 
+            <Accordion title="Description">
+                <p>{data.description}</p>
+            </Accordion>
+
             <Accordion title="Heating Instructions">
                 <p>{data.heating}</p>
             </Accordion>
@@ -106,6 +110,9 @@ const SingleProduct = async ({data}: {data: DropType}) => {
                   <h3 className="font-semibold capitalize">{cookie.title}</h3>
                   <p className="text-primary font-bold">Rs {cookie.price}</p>
                 </div>
+                <p className="text-gray-600 text-sm mb-3">
+                  {cookie.description.length > 48 ? cookie.description.slice(0, 48) + "..." : cookie.description}
+                </p>
                 <p className="text-gray-500 text-[13px] text-left mb-2">Category: {cookie.category}</p>
               </div>
             ))}

@@ -101,11 +101,15 @@ const FilterClient = ({ cookies }: { cookies: CookieType[] }) => {
 
               <div className="p-3">
                 <div className="flex justify-between items-center">
-                  <h2>{cookie.title}</h2>
+                  <h2 className="text-lg">{cookie.title}</h2>
                   <h2 className="font-semibold text-lg md:text-xl">
                     Rs.{cookie.price}
                   </h2>
                 </div>
+
+                <p className="text-gray-600 text-sm mb-4 mt-2">
+                  {cookie.description.length > 60 ? cookie.description.slice(0, 60) + "..." : cookie.description}
+                </p>
 
                 <p className="text-gray-500 text-[13px]">
                   Category: {cookie.category}

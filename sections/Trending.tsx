@@ -55,6 +55,9 @@ const Trending = async () => {
               {/* Title + Price */}
               <div className="text-center px-3">
                 <h3 className="text-xl font-semibold">{cookie.title}</h3>
+                 <p className="text-gray-600 mb-4">
+                    {cookie.description.length > 50 ? cookie.description.slice(0, 50) + "..." : cookie.description}
+                  </p>
                 <h4 className="text-2xl font-[200]">Rs. {cookie.price}</h4>
               </div>
             </div>
