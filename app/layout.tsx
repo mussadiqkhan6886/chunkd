@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     canonical: "/"
   },
   verification: {
-    google: "luoONfauEemCAv2CjRAxnNaFBv9-NXdDiHn_qpbubYo"
+    google: "luoONfauEemCAv2CjRAxnNaFBv9-NXdDiHn_qpbubYo",
   }
 };
 
@@ -74,10 +74,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-
+      <head>
+        
+      </head>
       <body className={`${mainFont.className} antialiased`}>
         <DropProvider>
-          
           {children}
         </DropProvider>
       </body>
