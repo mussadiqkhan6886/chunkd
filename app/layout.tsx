@@ -75,7 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        
+        < meta name="facebook-domain-verification" content="gjqfhv9codfk7p68vpya5tx291x1ml" />
       </head>
       <body className={`${mainFont.className} antialiased`}>
         <DropProvider>
