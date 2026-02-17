@@ -58,7 +58,7 @@ const Trending = async () => {
                  <p className="text-gray-600 mb-4">
                     {cookie.description.length > 50 ? cookie.description.slice(0, 50) + "..." : cookie.description}
                   </p>
-                <h4 className="text-2xl font-[200]">Rs. {cookie.price}</h4>
+                {cookie.price !== 0 && <h4 className="text-2xl font-[200]">Rs. {cookie.price}</h4>}
               </div>
             </div>
           ))}

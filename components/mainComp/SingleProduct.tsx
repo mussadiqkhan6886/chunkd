@@ -55,9 +55,9 @@ const SingleProduct = async ({data}: {data: DropType}) => {
           </p>
 
           {/* Price */}
-          <p className="text-3xl font-bold mb-6 text-black">
+          {data.price !== 0 && (<p className="text-3xl font-bold mb-6 text-black">
             Rs {data.price}
-          </p>
+          </p>)}
 
           {/* Hot Seller */}
           {data.hotSeller && (
@@ -67,7 +67,7 @@ const SingleProduct = async ({data}: {data: DropType}) => {
           )}
 
           {/* Add to Box Button */}
-          <AddToCart releaseDate={data.releaseDate!} endDate={data.endDate!} soldOut={data.soldOut} active={data.active} data={data} />
+          {data.price !== 0 && <AddToCart releaseDate={data.releaseDate!} endDate={data.endDate!} soldOut={data.soldOut} active={data.active} data={data} />}
           <div className="mt-6 space-y-3">
 
             <Accordion title="Description">
@@ -108,7 +108,7 @@ const SingleProduct = async ({data}: {data: DropType}) => {
                 </Link>
                 <div className="flex justify-between items-center w-full mb-2">
                   <h3 className="font-semibold capitalize">{cookie.title}</h3>
-                  <p className="text-primary font-bold">Rs {cookie.price}</p>
+                  {cookie.price !== 0 && <p className="text-primary font-bold">Rs {cookie.price}</p>}
                 </div>
                 <p className="text-gray-600 text-sm mb-3">
                   {cookie.description.length > 48 ? cookie.description.slice(0, 48) + "..." : cookie.description}

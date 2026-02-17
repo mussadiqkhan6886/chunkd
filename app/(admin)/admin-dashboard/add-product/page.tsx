@@ -15,7 +15,7 @@ const AddProduct = () => {
     title: "",
     slug: "",
     description: "",
-    price: "",
+    price: 0,
     category: "classic",
     images: [] as string[],
     allergens: [] as string[],
@@ -100,7 +100,7 @@ const AddProduct = () => {
           slug: "",
           title: "",
           description: "",
-          price: "",
+          price: 0,
           images: [],
           allergens: [],
           storage: "",
@@ -172,7 +172,7 @@ const AddProduct = () => {
         </div>
 
         {/* Price */}
-        <div>
+        {/* <div>
           <label className="block font-semibold mb-1">Price</label>
           <input
             name="price"
@@ -182,7 +182,7 @@ const AddProduct = () => {
             className="w-full border rounded-lg p-2"
             required
           />
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-2">
           <input

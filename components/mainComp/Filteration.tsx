@@ -106,9 +106,9 @@ const FilterClient = ({ cookies }: { cookies: CookieType[] }) => {
               <div className="p-3">
                 <div className="flex justify-between items-center">
                   <h2 className="text-lg">{cookie.title}</h2>
-                  <h2 className="font-semibold text-lg md:text-xl">
+                  {cookie.price !== 0 && <h2 className="font-semibold text-lg md:text-xl">
                     Rs.{cookie.price}
-                  </h2>
+                  </h2>}
                 </div>
 
                 <p className="text-gray-600 text-sm mb-4 mt-2">
@@ -119,13 +119,13 @@ const FilterClient = ({ cookies }: { cookies: CookieType[] }) => {
                   Category: {cookie.category}
                 </p>
 
-                <AddToCart
+                {cookie.price !== 0 && <AddToCart
                   releaseDate={cookie.releaseDate!}
                   endDate={cookie.endDate!}
                   soldOut={cookie.soldOut}
                   active={cookie.active}
                   data={cookie}
-                />
+                />}
               </div>
             </div>
           )
