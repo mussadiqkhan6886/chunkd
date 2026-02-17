@@ -1,6 +1,7 @@
 import FilterClient from '@/components/mainComp/Filteration'
 import { connectDB } from '@/lib/config/databse'
 import CookieSchema from '@/lib/models/CookieSchema'
+import { Metadata } from 'next';
 import React from 'react'
 
 export const revalidate = 60;
