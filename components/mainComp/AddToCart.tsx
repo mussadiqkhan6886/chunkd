@@ -38,7 +38,7 @@ useEffect(() => {
 
   const status = getStatus(releaseDate, endDate, soldOut, active);
 
-  const handleAdd = async (type: "simple" | "drop") => {
+  const handleAdd = async (type: "simple" | "drop" | "bundle") => {
     setLoading(true);
     await addToCart({
       id: data._id,
@@ -61,6 +61,16 @@ useEffect(() => {
       <button
         disabled={loading}
         onClick={() => handleAdd("simple")}
+        className="mt-5 w-full py-3 rounded-xl bg-soft text-white font-semibold hover:bg-soft/90 transition"
+      >
+        {loading ? "Adding..." : "Add To Cart"}
+      </button>
+    );
+  if (data.category==="bundle")
+    return (
+      <button
+        disabled={loading}
+        onClick={() => handleAdd("bundle")}
         className="mt-5 w-full py-3 rounded-xl bg-soft text-white font-semibold hover:bg-soft/90 transition"
       >
         {loading ? "Adding..." : "Add To Cart"}

@@ -10,7 +10,7 @@ const CookieSchema = new Schema({
 
 const ItemSchema = new Schema({
   id: { type: String, required: true },
-  type: { type: String, enum: ["box", "simple", "drop"], required: true },
+  type: { type: String, enum: ["box", "simple", "drop", "bundle"], required: true },
   name: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true, min: 1 },

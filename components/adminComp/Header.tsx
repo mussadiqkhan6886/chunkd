@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import { Home, HomeIcon, MessageSquare, Package, PlusCircle, ShoppingBag, Ticket } from 'lucide-react';
+import { Boxes, Home, HomeIcon, MessageSquare, Package, PlusCircle, ShoppingBag, Ticket } from 'lucide-react';
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation';
 import { FiPlusSquare } from 'react-icons/fi';
@@ -15,7 +15,9 @@ const Header = () => {
     { name: 'Cookies', href: '/admin-dashboard/products-list', icon: <LuCookie className="w-4 h-4" /> },
     { name: 'Add Cookies', href: '/admin-dashboard/add-product', icon: <PlusCircle className="w-4 h-4" /> },
     { name: 'Add Drops', href: '/admin-dashboard/add-drops', icon: <FiPlusSquare className="w-4 h-4" /> },
+    { name: 'Add Bundle', href: '/admin-dashboard/add-bundle', icon: <FiPlusSquare className="w-4 h-4" /> },
     { name: 'Drops', href: '/admin-dashboard/drops-list', icon: <Package className="w-4 h-4" /> },
+    { name: 'Bundles', href: '/admin-dashboard/bundles-list', icon: <Boxes className="w-4 h-4" /> },
     { name: 'Orders', href: '/admin-dashboard/orders-list', icon: <ShoppingBag className="w-4 h-4" /> },
     { name: 'Coupons', href: '/admin-dashboard/coupons', icon: <Ticket className="w-4 h-4" /> },
     { name: 'Delivery Charges', href: '/admin-dashboard/delivery-charges', icon: <LuBus className="w-4 h-4" /> },

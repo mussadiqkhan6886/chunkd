@@ -1,6 +1,7 @@
 import SubscribeAb from '@/components/mainComp/SubscribeAb'
 import WhatsButton from '@/components/mainComp/WhatsButton'
 import BuildYourBox from '@/sections/BuildYourBox'
+import Bundles from '@/sections/Bundles'
 import Drops from '@/sections/Drops'
 import Hero from '@/sections/Hero'
 import InstagramGrid from '@/sections/InstagramGrid'
@@ -22,6 +23,7 @@ const Home = () => {
       <Drops />
       <Trending />
       <BuildYourBox />
+      <Bundles />
       <Works />
       <InstagramGrid />
       <Reviews />

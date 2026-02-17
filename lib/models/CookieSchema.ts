@@ -8,7 +8,7 @@ const CookieSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     images: { type: [String], default: [] },
     // CATEGORY
-    category: { type: String, enum: ["classic", "limited"], default: "classic" },
+    category: { type: String, enum: ["classic", "limited", "bundle"], default: "classic" },
     // DROP LOGIC
     releaseDate: { type: Date },
     endDate: { type: Date },

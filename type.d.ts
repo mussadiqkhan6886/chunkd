@@ -50,7 +50,7 @@ interface DropType {
 export interface CartItem {
   id: string;
 
-  type: "simple" | "drop" | "box"; // ⭐ distinguishes 3 product types
+  type: "simple" | "drop" | "box" | "bundle"; // ⭐ distinguishes 3 product types
 
   title: string;
   images: string;

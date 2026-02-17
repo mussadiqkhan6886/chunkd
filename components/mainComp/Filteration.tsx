@@ -86,7 +86,11 @@ const FilterClient = ({ cookies }: { cookies: CookieType[] }) => {
             >
               <Link
                 href={`/${
-                  cookie.category === "limited" ? "drops" : "menu"
+                  cookie.category === "limited" 
+                ? "drops" 
+                : cookie.category === "bundle" 
+                  ? "bundles" 
+                  : "menu"
                 }/${cookie.slug}`}
                 className="h-[420px]"
               >

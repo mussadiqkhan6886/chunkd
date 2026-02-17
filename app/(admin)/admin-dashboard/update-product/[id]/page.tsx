@@ -140,7 +140,9 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
 
       if (res.status === 200) {
         setResult("✅ Product updated successfully!");
-        setTimeout(() => router.push("/admin-dashboard/products-list"), 1500);
+        data.category === "bundle" 
+        ? setTimeout(() => router.push("/admin-dashboard/bundles-list"), 1500) 
+        : setTimeout(() => router.push("/admin-dashboard/products-list"), 1500);
       }
     } catch (err) {
       console.error("Update failed:", err);
@@ -152,7 +154,7 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
 
   return (
    <main className="p-6 flex flex-col items-center lg:px-20 md:px-17 px-5">
-         <h1 className="text-2xl font-bold mb-6">Update Cookie</h1>
+         <h1 className="text-2xl font-bold mb-6">Update {data.category === "bundle" ? "Bundle" : "Cookie"}</h1>
    
          <form className="grid gap-4 w-full md:w-[50%]" onSubmit={handleSubmit}>
            <div>
@@ -266,7 +268,7 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
                required
              />
            </div>
-            <div className="flex items-center gap-2">
+            {data.category !== "bundle" && (<div className="flex items-center gap-2">
             <input
               type="checkbox"
               name="allowedForBox"
@@ -274,7 +276,7 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
               onChange={handleChange}
             />
             <label className="font-semibold">Allowed For Box</label>
-          </div>
+          </div>)}
          
            <div>
              <label className="block font-semibold mb-1">Sold Count</label>
