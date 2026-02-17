@@ -6,6 +6,7 @@ Disallow: /checkout/
 Disallow: /cart/
 
 Allow: /
+Allow: /bundles/
 Allow: /add-testimonial/
 Allow: /build-box/
 Allow: /contact/

@@ -19,8 +19,11 @@ export async function GET() {
     const drops: DropType[] = JSON.parse(JSON.stringify(dropsRes));
 
     // Fetch menu items (classic)
-    const menuRes = await CookieSchema.find({}).lean();
+    const menuRes = await CookieSchema.find({category: "classic"}).lean();
     const menuItems: CookieType[] = JSON.parse(JSON.stringify(menuRes));
+
+    const bundleRes = await CookieSchema.find({category: "bundle"}).lean();
+    const bundleItems: CookieType[] = JSON.parse(JSON.stringify(bundleRes));
 
     // Static pages
     const staticPages = [
@@ -49,6 +52,14 @@ export async function GET() {
     menuItems.forEach(item => {
       urls.push({
         loc: `https://www.chunkdpk.com/menu/${item.slug}`,
+        changefreq: "weekly",
+        priority: 0.9,
+      });
+    });
+
+    bundleItems.forEach(item => {
+      urls.push({
+        loc: `https://www.chunkdpk.com/bundles/${item.slug}`,
         changefreq: "weekly",
         priority: 0.9,
       });
